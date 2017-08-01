@@ -1,0 +1,15 @@
+build/
+data/
+bin/
+.idea/
+.metadata/
+.recommenders
+RemoteSystemsTempFiles/
+.gradle/
+out/
+*.iml
+*.ipr
+*.iws
+*.bak
+*~*
+all-files/
