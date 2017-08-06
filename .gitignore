@@ -13,3 +13,8 @@ out/
 *.bak
 *~*
 all-files/
+/src/main/resources/templates/js
+/src/main/resources/templates/css
+/src/main/resources/templates/img
+/src/main/resources/templates/fonts
+
