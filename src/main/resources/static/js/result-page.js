@@ -13,6 +13,7 @@ $( document ).ready(function() {
             $( this ).children(".caption-top").css("visibility","visible");
         }
     );
+    filterBar();
 });
 
 $( window ).resize(function() {
@@ -25,4 +26,45 @@ function update_image_desc() {
     $(".caption").css("width",imageWidth);
     $(".caption-top").css("width",imageWidth);
     $(".caption-top").css("width",imageWidth);
+
+    // wid=$(".filters-btn-text").width();
+    // hei=$(".filters-btn-text").height();
+    // alert(wid);
+    // alert(hei);
+    // $("#filter-btn").css("width",wid);
+    // $("#filter-btn").css("height",hei);
+}
+
+
+// nav bar js
+
+function filterBar(){
+    var trigger = $('.hamburger'),
+        overlay = $('.overlay'),
+        isClosed = false;
+
+    trigger.click(function () {
+        hamburger_cross();
+    });
+
+    function hamburger_cross() {
+
+        if (isClosed == true) {
+            overlay.hide();
+            trigger.removeClass('is-open');
+            trigger.addClass('is-closed');
+            isClosed = false;
+            $('.filters-btn-text').html('filters');
+        } else {
+            overlay.show();
+            trigger.removeClass('is-closed');
+            trigger.addClass('is-open');
+            $('.filters-btn-text').html('close');
+            isClosed = true;
+        }
+    }
+
+    $('[data-toggle="offcanvas"]').click(function () {
+        $('#wrapper').toggleClass('toggled');
+    });
 }
