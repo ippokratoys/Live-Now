@@ -8,6 +8,17 @@ body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
+.caption-top{
+    width: 100%;
+    top: 0;
+    position: absolute;
+    background:#000;
+    background: -webkit-linear-gradient(bottom, #000 40%, rgba(0, 0, 0, 0) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: -moz-linear-gradient(bottom, #000 40%, rgba(0, 0, 0, 0) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: -o-linear-gradient(bottom, #000 40%, rgba(0, 0, 0, 0) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: linear-gradient(to top, #000 40%, rgba(0, 0, 0, 0) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
 .caption {
     width: 100%;
     bottom: .0rem;
@@ -23,6 +34,11 @@ body {
     color: #fff;
     -webkit-font-smoothing: antialiased;
 }
+
+.caption-top p{
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+}
 .portfolio-item {
     margin-bottom: 25px;
 }
@@ -33,11 +49,11 @@ footer {
 
 .hotel-type
 {
-    position: absolute;
-    /*top: 50%;*/
-    top: 0%;
-
-    /*righti: 100%;*/
+    /*position: absolute;*/
+    /*top: 100%;*/
+    /*bottom: 0;*/
+    /*left: 5%;*/
+    /*width: 100%*/
 }
 
 .number-of-beds{
