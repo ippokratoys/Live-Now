@@ -3,6 +3,15 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
+html,
+body,h1,h2,h3,h4,h5,h6
+{
+    /*font-family: Verdana, sans-serif;*/
+    font-size: 15px;
+    line-height: 1.5;
+    font-family: "Raleway", Arial, Helvetica, sans-serif
+
+}
 
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
