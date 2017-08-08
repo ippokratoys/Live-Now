@@ -4,6 +4,11 @@
     <title>Hotel Name</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!--bootstrap and jquery-->
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
 
     <!--fonts and icons-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"/>
@@ -13,11 +18,10 @@
     <link rel="stylesheet" href="css/hotel-page.css"/>
     <script src="js/hotel-page.js"></script>
 
-    <!--bootstrap and jquery-->
-    <link href="css/bootstrap.min.css" rel="stylesheet"/>
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-
+    <!--for date range picker-->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="js/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/daterangepicker.css"/>
     <style>
         body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
         .mySlides {display:none}
@@ -71,14 +75,15 @@
             <h6>per night</h6>
             <hr/>
             <form action="/action_page.php" method="post" target="_blank">
-                <p><label><i class="fa fa-calendar-check-o"></i> Check In</label></p>
+                <p><label><i class="fa fa-calendar-check-o"></i> Check In - Check Out</label></p>
                 <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckIn" required="true"/>
-                <p><label><i class="fa fa-calendar-o"></i> Check Out</label></p>
-                <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckOut" required="true"/>
+
+                <!--<p><label><i class="fa fa-calendar-o"></i> Check Out</label></p>-->
+                <!--<input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckOut" required="true"/>-->
+
                 <p><label><i class="fa fa-male"></i> Adults</label></p>
                 <input class="w3-input w3-border" type="number" value="1" name="Adults" min="1" max="6"/>
-                <p><label><i class="fa fa-child"></i> Kids</label></p>
-                <input class="w3-input w3-border" type="number" value="0" name="Kids" min="0" max="6"/>
+
                 <p><button class="w3-button w3-block w3-green w3-left-align" type="submit"><i class="fa fa-search w3-margin-right"></i> Search availability</button></p>
             </form>
         </div>
@@ -226,5 +231,47 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function isValidRange(start, end) {
+        var dataObj = $('input[name="CheckIn"]').data('daterangepicker');
+        if(start.format('YYYY-MM-DD') < '2017-08-10'  && end.format('YYYY-MM-DD')>'2017-08-10'){
+            dataObj.setStartDate(new Date());
+            dataObj.setEndDate(new Date());
+            alert("not valid date range");
+            dataObj.show();
+        }else if( start.format('YYYY-MM-DD') < new moment().format('YYYY-MM-DD') ){
+            dataObj.setStartDate(new Date());
+            dataObj.setEndDate(new Date());
+            alert("please select a day in the future");
+            dataObj.show();
+        }else{
+            ;
+        }
+    }
+    // attach daterangepicker plugin
+
+
+
+    var funIsInvalid=function isInvalid(date) {
+        if (date.format('YYYY-MM-DD') == '2017-08-10') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $(function() {
+        $('input[name="CheckIn"]').daterangepicker({
+            isInvalidDate:funIsInvalid,
+            autoApply: true
+        })
+        $('input[name="CheckIn"]').on('apply.daterangepicker', function(ev, picker) {
+//            console.log(picker.startDate.format('YYYY-MM-DD'));
+//            console.log(picker.endDate.format('YYYY-MM-DD'));
+            isValidRange(picker.startDate,picker.endDate);
+        });
+    });
+
+</script>
 </body>
 </html>
