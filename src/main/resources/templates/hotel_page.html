@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml">
 <head>
     <title>Hotel Name</title>
     <meta charset="UTF-8"/>
@@ -231,9 +231,10 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     function isValidRange(start, end) {
         var dataObj = $('input[name="CheckIn"]').data('daterangepicker');
+        /*<![CDATA[*/
         if(start.format('YYYY-MM-DD') < '2017-08-10'  && end.format('YYYY-MM-DD')>'2017-08-10'){
             dataObj.setStartDate(new Date());
             dataObj.setEndDate(new Date());
@@ -246,7 +247,7 @@
             dataObj.show();
         }else{
             ;
-        }
+        }/*]]>*/
     }
     // attach daterangepicker plugin
 
