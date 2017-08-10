@@ -88,10 +88,6 @@ public class Apartment implements Serializable {
 	@Column(name="`wi-fi`")
 	private byte wi_fi;
 
-	//bi-directional many-to-one association to Calendar
-	@OneToMany(mappedBy="apartment")
-	private List<Calendar> calendars;
-
 	//bi-directional many-to-one association to HostInfo
 	@ManyToOne
 	@JoinColumn(name="HostInfo_login_username")
@@ -362,28 +358,6 @@ public class Apartment implements Serializable {
 
 	public void setWi_fi(byte wi_fi) {
 		this.wi_fi = wi_fi;
-	}
-
-	public List<Calendar> getCalendars() {
-		return this.calendars;
-	}
-
-	public void setCalendars(List<Calendar> calendars) {
-		this.calendars = calendars;
-	}
-
-	public Calendar addCalendar(Calendar calendar) {
-		getCalendars().add(calendar);
-		calendar.setApartment(this);
-
-		return calendar;
-	}
-
-	public Calendar removeCalendar(Calendar calendar) {
-		getCalendars().remove(calendar);
-		calendar.setApartment(null);
-
-		return calendar;
 	}
 
 	public HostInfo getHostInfo() {
