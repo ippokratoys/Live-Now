@@ -1,4 +1,9 @@
-package model;
+package application.database;
+
+import application.database.CoustomerInfo;
+
+import application.database.HostInfo;
+import application.database.UserRole;
 
 import java.io.Serializable;
 import javax.persistence.*;

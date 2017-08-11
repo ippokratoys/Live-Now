@@ -1,4 +1,7 @@
-package model;
+package application.database;
+
+import application.database.Login;
+
 
 import java.io.Serializable;
 import javax.persistence.*;

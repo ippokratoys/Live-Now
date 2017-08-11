@@ -1,8 +1,7 @@
-package model;
+package application.database.repositories;
 
+import application.database.AdminLogin;
 import org.springframework.data.repository.CrudRepository;
-
-import model.AdminLogin;
 
 
 public interface AdminLoginRepository extends CrudRepository<AdminLogin, String> {

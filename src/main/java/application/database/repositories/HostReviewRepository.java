@@ -1,10 +1,9 @@
-package model;
+package application.database.repositories;
 
+import application.database.HostReview;
 import org.springframework.data.repository.CrudRepository;
 
-import model.HostReview;
 
-
-public interface hostReviewRepository extends CrudRepository<HostReview,Integer> {
+public interface HostReviewRepository extends CrudRepository<HostReview,Integer> {
 
 }

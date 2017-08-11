@@ -1,4 +1,4 @@
-package model;
+package application.database;
 
 import java.io.Serializable;
 import javax.persistence.*;

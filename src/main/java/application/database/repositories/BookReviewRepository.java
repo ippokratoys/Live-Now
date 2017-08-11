@@ -1,8 +1,7 @@
-package model;
+package application.database.repositories;
 
+import application.database.BookReview;
 import org.springframework.data.repository.CrudRepository;
-
-import model.BookReview;
 
 
 public interface BookReviewRepository extends CrudRepository<BookReview, Integer> {
