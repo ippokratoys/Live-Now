@@ -4,6 +4,7 @@
     <title>Hotel Name</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
     <!--bootstrap and jquery-->
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
     <script src="js/jquery.js"></script>
@@ -29,7 +30,7 @@
 </head>
 <body>
 <!--Top bar menu-->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav th:replace=" top_bar :: 'nav-bar-only-login'" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -63,8 +64,9 @@
         </div>
         <!-- /.navbar-collapse -->
     </div>
-    <!-- /.container -->
+
 </nav>
+
 <div class="w3-content w3-border-left w3-border-right">
     <!-- Sidebar/menu -->
     <nav class="w3-sidebar w3-light-grey w3-collapse w3-top" style="z-index:3;width:260px" id="mySidebar">
