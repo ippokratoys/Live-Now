@@ -40,6 +40,18 @@ function showDivs(n) {
     dots[slideIndex-1].className += " w3-opacity-off";
 }
 
+function closeSlides() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("demo");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+    }
+}
+
 $( document ).ready(function() {
     ;
 });

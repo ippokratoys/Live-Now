@@ -185,7 +185,6 @@ textarea {
 
 html,
 body {
-    /*font-family: Verdana, sans-serif;*/
     font-size: 15px;
     line-height: 1.5
 }
@@ -1481,4 +1480,13 @@ a {
 .w3-border-gray,
 .w3-hover-border-gray:hover {
     border-color: #bbb!important
+}
+
+.close-photo-div{
+    /*top left but not sticky*/
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    cursor: pointer;
 }
