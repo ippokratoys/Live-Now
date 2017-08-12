@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
 
     <!-- Website CSS style -->
+    <link href="css/main.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="css/login.css"/>
 
     <!-- Website Font style -->
@@ -13,10 +14,14 @@
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'/>
     <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
     <title>Register</title>
 </head>
 <body>
+<nav th:replace=" top_bar :: 'nav-bar-only-login'" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+</nav>
 <div class="container">
     <div class="row main">
         <div class="panel-heading">
