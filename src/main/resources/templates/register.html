@@ -31,27 +31,13 @@
             </div>
         </div>
         <div class="main-login main-center">
-            <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/register">
 
-                <div class="form-group">
-                    <label for="name" class="cols-sm-2 control-label">Your Name</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
-                        </div>
-                    </div>
-                </div>
+            <h5 th:if="${param.error}" class="alert alert-danger">username already in use</h5>
+            <h5 th:if="${param.error}" class="alert alert-danger">password not good</h5>
+            <h5 th:if="${param.error}" class="alert alert-danger">you need to fill all the fields</h5>
 
-                <div class="form-group">
-                    <label for="email" class="cols-sm-2 control-label">Your Email</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
-                        </div>
-                    </div>
-                </div>
+            <h2 class="text-center login-label">REGISTER</h2>
+            <form th:action="@{/login}" action="/register" class="form-horizontal" method="post" enctype="multipart/form-data">
 
                 <div class="form-group">
                     <label for="username" class="cols-sm-2 control-label">Username</label>
@@ -79,6 +65,47 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                             <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="name" class="cols-sm-2 control-label">Your Name</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="surname" class="cols-sm-2 control-label">Surname</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="surname" id="surname"  placeholder="Enter your Surname"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="telephone" class="cols-sm-2 control-label">Contact Number</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                            <input type="number" class="form-control" name="telephone" id="telephone"  placeholder="Enter your number"/>
                         </div>
                     </div>
                 </div>

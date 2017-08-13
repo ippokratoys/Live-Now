@@ -31,8 +31,10 @@
             </div>
         </div>
         <div class="main-login main-center">
-            <form class="form-horizontal" method="post" action="/login">
+            <h2 class="text-center login-label">LOGIN</h2>
+            <h5 th:if="${param.error}" class="alert alert-danger">username does not exists, or needs to be aprooved</h5>
 
+            <form class="form-horizontal" method="post" action="/login">
                 <div class="form-group">
                     <label for="username" class="cols-sm-2 control-label">Username</label>
                     <div class="cols-sm-10">

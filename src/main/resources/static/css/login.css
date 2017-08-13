@@ -69,3 +69,15 @@ input::-webkit-input-placeholder {
     font-size: 11px;
     text-align: center;
 }
+
+.login-label{
+    position: relative;
+    top: 0px;
+    color: blue;
+}
+
+.error-message{
+    background-color: rgb(255, 100, 70);
+    color : black;
+    text-align: center;
+}
