@@ -68,3 +68,7 @@ function filterBar(){
         $('#wrapper').toggleClass('toggled');
     });
 }
+
+function clearFilters(){
+    $('input').value = "";
+}

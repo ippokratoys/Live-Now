@@ -75,39 +75,54 @@
             <li class="sidebar-brand">
                 FILTERS
             </li>
+
+            <li>
+                <!--<label for="f-room-type">Room type</label>-->
+                <select id="f-room-type" name="room-type">
+                    <option value="">Apartment or Room</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="room">Room</option>
+                </select>
+            </li>
+            <li>
+                <label for="f-elevator">Max Cost</label>
+                <input type="number" name="max-cost" id="f-max-cost"/>
+            </li>
+
+            <li>
+                <label for="f-wifi">wi-fi</label>
+                <input type="checkbox" name="wifi" id="f-wifi"/>
+            </li>
+            <li>
+                <label for="f-fridge">Fridge</label>
+                <input type="checkbox" name="fridge" id="f-fridge"/>
+            </li>
+            <li>
+                <label for="f-kitchen">Kitchen</label>
+                <input type="checkbox" name="kitchen" id="f-kitchen"/>
+            </li>
+            <li>
+                <label for="f-tv">TV</label>
+                <input type="checkbox" name="tv" id="f-tv"/>
+            </li>
+            <li>
+                <label for="f-parking">parking</label>
+                <input type="checkbox" name="parking" id="f-parking"/>
+            </li>
             <li>
                 <label for="f-elevator">Elevator</label>
                 <input type="checkbox" name="elevator" id="f-elevator"/>
+            </li>
+            <li>
+                <button onclick="clearFilters()">Clear</button>
             </li>
             <li>
                 <label for="f-air-condition">Air Condition</label>
                 <input type="checkbox" name="air-condition" id="f-air-condition"/>
             </li>
             <li>
-                <a href="#">About</a>
-            </li>
-            <li>
-                <a href="#">Events</a>
-            </li>
-            <li>
-                <a href="#">Team</a>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Works <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li class="dropdown-header">Dropdown heading</li>
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">Services</a>
-            </li>
-            <li>
-                <a href="#">Contact</a>
+                <!--<label for="f-air-condition">Air Condition</label>-->
+                <input type="submit" name="submit" value="Submit Filters" id="f-submit"/>
             </li>
         </ul>
     </form>
