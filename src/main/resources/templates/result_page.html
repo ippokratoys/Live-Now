@@ -12,6 +12,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/daterangepicker.css"/>
 
     <!-- Custom CSS -->
     <link href="css/main.css" rel="stylesheet"/>
@@ -77,6 +78,19 @@
             </li>
 
             <li>
+                <input class="date-range" type="text" placeholder="Select Date" required="required" name="date-range" id="date-range" />
+            </li>
+
+            <li>
+                <input class="place-name" type="text" placeholder="Select City-Neighbor" required="required" name="city" id="city" />
+            </li>
+
+            <li>
+                <input class="people" type="number" placeholder="4 Persons" required="required" name="people" id="people" />
+            </li>
+
+
+            <li>
                 <!--<label for="f-room-type">Room type</label>-->
                 <select id="f-room-type" name="room-type">
                     <option value="">Apartment or Room</option>
@@ -114,11 +128,11 @@
                 <input type="checkbox" name="elevator" id="f-elevator"/>
             </li>
             <li>
-                <button onclick="clearFilters()">Clear</button>
-            </li>
-            <li>
                 <label for="f-air-condition">Air Condition</label>
                 <input type="checkbox" name="air-condition" id="f-air-condition"/>
+            </li>
+            <li>
+                <button onclick="clearFilters()">Clear</button>
             </li>
             <li>
                 <!--<label for="f-air-condition">Air Condition</label>-->
@@ -281,14 +295,56 @@
 </div>
 <!-- /.container -->
 
+</div>
+</div>
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
 <script src="js/result-page.js"></script>
-</div>
-</div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="js/daterangepicker.js"></script>
+
+<script type="text/javascript" th:inline="javascript">
+    function isValidRange(start, end) {
+        var dataObj = $('input[name="date-range"]').data('daterangepicker');
+        /*<![CDATA[*/
+        if( start.format('YYYY-MM-DD') < new moment().format('YYYY-MM-DD') ){
+            dataObj.setStartDate(new Date());
+            dataObj.setEndDate(new Date());
+            alert("please select a day in the future");
+            dataObj.show();
+        }else{
+            ;
+        }/*]]>*/
+    }
+    //     attach daterangepicker plugin
+
+
+
+    var funIsInvalid=function isInvalid(date) {
+        /*<![CDATA[*/
+        if (date.format('YYYY-MM-DD') < new moment().format('YYYY-MM-DD') ) {
+            return true;
+        } else {
+            return false;
+        }/*]]>*/
+    }
+
+    $(function() {
+        $('input[name="date-range"]').daterangepicker({
+            isInvalidDate:funIsInvalid,
+            autoApply: true
+        });
+        $('input[name="date-range"]').on('apply.daterangepicker', function(ev, picker) {
+//            console.log(picker.startDate.format('YYYY-MM-DD'));
+//            console.log(picker.endDate.format('YYYY-MM-DD'));
+            isValidRange(picker.startDate,picker.endDate);
+        });
+    });
+</script>
+
 </body>
 
 </html>
