@@ -334,6 +334,8 @@
 
     $(function() {
         $('input[name="date-range"]').daterangepicker({
+            startDate : [[${oldDateStr}]].toString().split("-")[0].trim(),
+            endDate : [[${oldDateStr}]].toString().split("-")[1].trim(),
             isInvalidDate:funIsInvalid,
             autoApply: true
         });
@@ -342,7 +344,20 @@
 //            console.log(picker.endDate.format('YYYY-MM-DD'));
             isValidRange(picker.startDate,picker.endDate);
         });
+
+    /*<![CDATA[*/
+        $('#city').val([[${oldValues.city}]]);
+
+//        console.log($('#city').value());
+
+        $('#people').val( [[${oldValues.numberOfPerson}]] );
+//        alert($('#people').value());
+    /*]]>*/
     });
+
+
+</script>
+<script type="text/javascript" th:inline="javascript">
 </script>
 
 </body>
