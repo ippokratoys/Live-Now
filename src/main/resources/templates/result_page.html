@@ -352,7 +352,32 @@
 
         $('#people').val( [[${oldValues.numberOfPerson}]] );
 //        alert($('#people').value());
-    /*]]>*/
+        if([[${oldValues.hasWifi}]] ==true){
+            $('#f-wifi').attr('checked',true);
+        }
+        if([[${oldValues.hasFrige}]] ==true){
+            $('#f-fridge').attr('checked',true);
+        }
+        if([[${oldValues.hasKitchen}]] ==true){
+            $('#f-kitchen').attr('checked',true);
+        }
+        if([[${oldValues.hasTV}]] ==true){
+            $('#f-tv').attr('checked',true);
+        }
+        if([[${oldValues.hasParking}]] ==true){
+            $('#f-parking').attr('checked',true);
+        }
+        if([[${oldValues.hasElevator}]] ==true){
+            $('#f-elevator').attr('checked',true);
+        }
+        if([[${oldValues.hasAircondition}]] ==true){
+            $('#f-air-condition').attr('checked',true);
+        }
+        if([[${oldValues.maxCost>0}]]){
+            $('#f-max-cost').val([[${oldValues.maxCost}]]);
+        }
+
+        /*]]>*/
     });
 
 
