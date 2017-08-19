@@ -240,6 +240,7 @@
 <script async="async" defer="defer"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPDlSnR5Vfez6gsdfC_JZDc2KXRCjgf6c&amp;callback=initMap">
 </script>
+<th:block th:if="${hotelIsBusy==true}"><script>alert("Hotel is no longer available in this dates");</script></th:block>
 <script>
     function initMap() {
         var uluru = {lat: -25.363, lng: 131.044};
@@ -283,12 +284,22 @@
             return false;
         }
     }
-
     $(function() {
-        $('input[name="CheckIn"]').daterangepicker({
-            isInvalidDate:funIsInvalid,
-            autoApply: true
-        });
+        /*<![CDATA[*/
+        if([[${hotelIsBusy}]]==false){
+            $('input[name="CheckIn"]').daterangepicker({
+                startDate : [[${dateRange}]].toString().split("-")[0].trim(),
+                endDate : [[${dateRange}]].toString().split("-")[1].trim(),
+                isInvalidDate:funIsInvalid,
+                autoApply: true
+            });
+        }else{
+            $('input[name="CheckIn"]').daterangepicker({
+                isInvalidDate:funIsInvalid,
+                autoApply: true
+            });
+        }
+        /*]]>*/
         $('input[name="CheckIn"]').on('apply.daterangepicker', function(ev, picker) {
 //            console.log(picker.startDate.format('YYYY-MM-DD'));
 //            console.log(picker.endDate.format('YYYY-MM-DD'));

@@ -76,4 +76,32 @@ public class HomePage {
         model.addAttribute("oldValues",filters);
         return "result_page";
     }
+    @RequestMapping("/hotel")
+    String hotePageController(Model model,
+                              @RequestParam(name = "hotel-id") int hotelId,
+                              @RequestParam(name = "date-range",required = false,defaultValue = "") String dateRange
+    ){
+        Date from = null;
+        Date to = null;
+        System.out.println("model = [" + model + "], hotelId = [" + hotelId + "], dateRange = [" + dateRange + "]");
+        System.out.println(dateRange);
+        if(dateRange!=null && !dateRange.trim().equals("")){
+            String buff[] = dateRange.split("-") ;
+            try {
+                from = dateFormat.parse(buff[0]);
+                to = dateFormat.parse(buff[1]);
+            }catch (Exception e){
+                e.printStackTrace();
+                return "redirect:/";
+            }
+            model.addAttribute("dateRange",dateRange);
+//            if(isHotelAvailable(from,to)==true){
+            if(true){
+                model.addAttribute("hotelIsBusy",false);
+            }else{
+                model.addAttribute("hotelIsBusy",true);
+            }
+        }
+        return "hotel_page";
+    }
 }

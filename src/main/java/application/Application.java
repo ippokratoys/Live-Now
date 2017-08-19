@@ -35,7 +35,7 @@ public class Application extends WebMvcConfigurerAdapter{
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
 //        registry.addViewController("/result").setViewName("result_page");
-        registry.addViewController("/hotel").setViewName("hotel_page");
+//        registry.addViewController("/hotel").setViewName("hotel_page");
         registry.addViewController("/register").setViewName("register");
         registry.addViewController("/login").setViewName("login");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
