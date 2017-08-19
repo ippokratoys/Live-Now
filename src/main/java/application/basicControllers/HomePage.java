@@ -79,7 +79,8 @@ public class HomePage {
     @RequestMapping("/hotel")
     String hotePageController(Model model,
                               @RequestParam(name = "hotel-id") int hotelId,
-                              @RequestParam(name = "date-range",required = false,defaultValue = "") String dateRange
+                              @RequestParam(name = "date-range",required = false,defaultValue = "") String dateRange,
+                              @RequestParam(name = "people",required = false,defaultValue = "1") Integer people
     ){
         Date from = null;
         Date to = null;
@@ -102,6 +103,7 @@ public class HomePage {
                 model.addAttribute("hotelIsBusy",true);
             }
         }
+        model.addAttribute(people);
         return "hotel_page";
     }
 }
