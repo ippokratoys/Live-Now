@@ -22,6 +22,7 @@ public class CoustomerInfo implements Serializable {
 	private String loginUsername;
 
 	//bi-directional one-to-one association to Login
+	@JoinColumn(name="login_username", insertable=false, updatable=false)
 	@OneToOne
 	private Login login;
 

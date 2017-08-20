@@ -37,6 +37,7 @@ public class HostInfo implements Serializable {
 	private byte verified;
 
 	//bi-directional one-to-one association to Login
+	@JoinColumn(name="login_username", insertable=false, updatable=false)
 	@OneToOne
 	private Login login;
 
