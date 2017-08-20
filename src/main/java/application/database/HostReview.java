@@ -1,23 +1,23 @@
 package application.database;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
 import java.util.List;
 
 
 /**
- * The persistent class for the hostReview database table.
- * 
+ * The persistent class for the host_review database table.
+ *
  */
 @Entity
-@Table(name="hostReview")
+@Table(name="host_review")
 @NamedQuery(name="HostReview.findAll", query="SELECT h FROM HostReview h")
 public class HostReview implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int reviewID;
+	@Column(name="review_id")
+	private int reviewId;
 
 	//bi-directional many-to-one association to BookInfo
 	@OneToMany(mappedBy="hostReview")
@@ -25,18 +25,17 @@ public class HostReview implements Serializable {
 
 	//bi-directional many-to-one association to HostInfo
 	@ManyToOne
-	@JoinColumn(name="HostInfo_login_username")
 	private HostInfo hostInfo;
 
 	public HostReview() {
 	}
 
-	public int getReviewID() {
-		return this.reviewID;
+	public int getReviewId() {
+		return this.reviewId;
 	}
 
-	public void setReviewID(int reviewID) {
-		this.reviewID = reviewID;
+	public void setReviewId(int reviewId) {
+		this.reviewId = reviewId;
 	}
 
 	public List<BookInfo> getBookInfos() {

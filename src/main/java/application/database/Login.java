@@ -1,10 +1,5 @@
 package application.database;
 
-import application.database.CoustomerInfo;
-
-import application.database.HostInfo;
-import application.database.UserRole;
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +7,7 @@ import java.util.List;
 
 /**
  * The persistent class for the login database table.
- * 
+ *
  */
 @Entity
 @Table(name="login")
@@ -27,8 +22,10 @@ public class Login implements Serializable {
 
 	private byte enabled;
 
+	@Column(name="is_customer")
 	private byte isCustomer;
 
+	@Column(name="is_host")
 	private byte isHost;
 
 	private String logincol;
@@ -45,9 +42,9 @@ public class Login implements Serializable {
 
 	private short valid;
 
-	//bi-directional one-to-one association to CoustomerInfo
+	//bi-directional one-to-one association to CustomerInfo
 	@OneToOne(mappedBy="login")
-	private CoustomerInfo coustomerInfo;
+	private CustomerInfo customerInfo;
 
 	//bi-directional one-to-one association to HostInfo
 	@OneToOne(mappedBy="login")
@@ -148,12 +145,12 @@ public class Login implements Serializable {
 		this.valid = valid;
 	}
 
-	public CoustomerInfo getCoustomerInfo() {
-		return this.coustomerInfo;
+	public CustomerInfo getCustomerInfo() {
+		return this.customerInfo;
 	}
 
-	public void setCoustomerInfo(CoustomerInfo coustomerInfo) {
-		this.coustomerInfo = coustomerInfo;
+	public void setCustomerInfo(CustomerInfo customerInfo) {
+		this.customerInfo = customerInfo;
 	}
 
 	public HostInfo getHostInfo() {

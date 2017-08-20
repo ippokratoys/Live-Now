@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the admin_login database table.
- * 
+ *
  */
 @Entity
 @Table(name="admin_login")

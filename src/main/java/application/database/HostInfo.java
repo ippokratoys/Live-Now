@@ -1,6 +1,5 @@
 package application.database;
 
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -8,10 +7,11 @@ import java.util.List;
 
 
 /**
- * The persistent class for the HostInfo database table.
- * 
+ * The persistent class for the host_info database table.
+ *
  */
 @Entity
+@Table(name="host_info")
 @NamedQuery(name="HostInfo.findAll", query="SELECT h FROM HostInfo h")
 public class HostInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -36,13 +36,14 @@ public class HostInfo implements Serializable {
 
 	private byte verified;
 
-	//bi-directional one-to-one association to Login
-	@OneToOne
-	private Login login;
-
 	//bi-directional many-to-one association to Apartment
 	@OneToMany(mappedBy="hostInfo")
 	private List<Apartment> apartments;
+
+	//bi-directional one-to-one association to Login
+	@OneToOne
+	@JoinColumn(name="Login_email", insertable=false, updatable=false)
+	private Login login;
 
 	//bi-directional many-to-one association to HostReview
 	@OneToMany(mappedBy="hostInfo")
@@ -107,14 +108,6 @@ public class HostInfo implements Serializable {
 		this.verified = verified;
 	}
 
-	public Login getLogin() {
-		return this.login;
-	}
-
-	public void setLogin(Login login) {
-		this.login = login;
-	}
-
 	public List<Apartment> getApartments() {
 		return this.apartments;
 	}
@@ -135,6 +128,14 @@ public class HostInfo implements Serializable {
 		apartment.setHostInfo(null);
 
 		return apartment;
+	}
+
+	public Login getLogin() {
+		return this.login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 	public List<HostReview> getHostReviews() {

@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * The persistent class for the apartment database table.
- * 
+ *
  */
 @Entity
 @Table(name="apartment")
@@ -17,7 +17,8 @@ public class Apartment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int apartmentID;
+	@Column(name="apartment_id")
+	private int apartmentId;
 
 	private byte aircondition;
 
@@ -27,7 +28,8 @@ public class Apartment implements Serializable {
 
 	private short bed;
 
-	private BigDecimal cleanprice;
+	@Column(name="clean_price")
+	private BigDecimal cleanPrice;
 
 	private byte events;
 
@@ -51,9 +53,11 @@ public class Apartment implements Serializable {
 
 	private BigDecimal lon;
 
+	@Column(name="max_people")
 	private short maxPeople;
 
-	private short minpeople;
+	@Column(name="min_people")
+	private short minPeople;
 
 	private String name;
 
@@ -90,7 +94,7 @@ public class Apartment implements Serializable {
 
 	//bi-directional many-to-one association to HostInfo
 	@ManyToOne
-	@JoinColumn(name="HostInfo_login_username")
+	@JoinColumn(name="host_info_login_username")
 	private HostInfo hostInfo;
 
 	//bi-directional many-to-one association to BookInfo
@@ -101,15 +105,19 @@ public class Apartment implements Serializable {
 	@OneToMany(mappedBy="apartment")
 	private List<BookReview> bookReviews;
 
+	//bi-directional many-to-one association to Chat
+	@OneToMany(mappedBy="apartment")
+	private List<Chat> chats;
+
 	public Apartment() {
 	}
 
-	public int getApartmentID() {
-		return this.apartmentID;
+	public int getApartmentId() {
+		return this.apartmentId;
 	}
 
-	public void setApartmentID(int apartmentID) {
-		this.apartmentID = apartmentID;
+	public void setApartmentId(int apartmentId) {
+		this.apartmentId = apartmentId;
 	}
 
 	public byte getAircondition() {
@@ -144,12 +152,12 @@ public class Apartment implements Serializable {
 		this.bed = bed;
 	}
 
-	public BigDecimal getCleanprice() {
-		return this.cleanprice;
+	public BigDecimal getCleanPrice() {
+		return this.cleanPrice;
 	}
 
-	public void setCleanprice(BigDecimal cleanprice) {
-		this.cleanprice = cleanprice;
+	public void setCleanPrice(BigDecimal cleanPrice) {
+		this.cleanPrice = cleanPrice;
 	}
 
 	public byte getEvents() {
@@ -240,12 +248,12 @@ public class Apartment implements Serializable {
 		this.maxPeople = maxPeople;
 	}
 
-	public short getMinpeople() {
-		return this.minpeople;
+	public short getMinPeople() {
+		return this.minPeople;
 	}
 
-	public void setMinpeople(short minpeople) {
-		this.minpeople = minpeople;
+	public void setMinPeople(short minPeople) {
+		this.minPeople = minPeople;
 	}
 
 	public String getName() {
@@ -410,6 +418,28 @@ public class Apartment implements Serializable {
 		bookReview.setApartment(null);
 
 		return bookReview;
+	}
+
+	public List<Chat> getChats() {
+		return this.chats;
+	}
+
+	public void setChats(List<Chat> chats) {
+		this.chats = chats;
+	}
+
+	public Chat addChat(Chat chat) {
+		getChats().add(chat);
+		chat.setApartment(this);
+
+		return chat;
+	}
+
+	public Chat removeChat(Chat chat) {
+		getChats().remove(chat);
+		chat.setApartment(null);
+
+		return chat;
 	}
 
 }
