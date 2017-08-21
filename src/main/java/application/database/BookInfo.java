@@ -7,17 +7,18 @@ import java.util.List;
 
 
 /**
- * The persistent class for the bookInfo database table.
- * 
+ * The persistent class for the book_info database table.
+ *
  */
 @Entity
-@Table(name="bookInfo")
+@Table(name="book_info")
 @NamedQuery(name="BookInfo.findAll", query="SELECT b FROM BookInfo b")
 public class BookInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int bookID;
+	@Column(name="book_id")
+	private int bookId;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="book_in")
@@ -32,13 +33,14 @@ public class BookInfo implements Serializable {
 	@JoinColumn(name="apartment")
 	private Apartment apartmentBean;
 
-	//bi-directional many-to-one association to CoustomerInfo
+	//bi-directional many-to-one association to CustomerInfo
 	@ManyToOne
-	@JoinColumn(name="CoustomerInfo_login_username")
-	private CoustomerInfo coustomerInfo;
+	@JoinColumn(name="customer_info_login_username")
+	private CustomerInfo customerInfo;
 
 	//bi-directional many-to-one association to HostReview
 	@ManyToOne
+	@JoinColumn(name="host_review_id")
 	private HostReview hostReview;
 
 	//bi-directional many-to-one association to BookReview
@@ -48,12 +50,12 @@ public class BookInfo implements Serializable {
 	public BookInfo() {
 	}
 
-	public int getBookID() {
-		return this.bookID;
+	public int getBookId() {
+		return this.bookId;
 	}
 
-	public void setBookID(int bookID) {
-		this.bookID = bookID;
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
 	}
 
 	public Date getBookIn() {
@@ -80,12 +82,12 @@ public class BookInfo implements Serializable {
 		this.apartmentBean = apartmentBean;
 	}
 
-	public CoustomerInfo getCoustomerInfo() {
-		return this.coustomerInfo;
+	public CustomerInfo getCustomerInfo() {
+		return this.customerInfo;
 	}
 
-	public void setCoustomerInfo(CoustomerInfo coustomerInfo) {
-		this.coustomerInfo = coustomerInfo;
+	public void setCustomerInfo(CustomerInfo customerInfo) {
+		this.customerInfo = customerInfo;
 	}
 
 	public HostReview getHostReview() {

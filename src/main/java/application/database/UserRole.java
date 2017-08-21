@@ -5,17 +5,18 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the userRole database table.
- * 
+ * The persistent class for the user_role database table.
+ *
  */
 @Entity
-@Table(name="userRole")
+@Table(name="user_role")
 @NamedQuery(name="UserRole.findAll", query="SELECT u FROM UserRole u")
 public class UserRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int roleID;
+	@Column(name="role_id")
+	private int roleId;
 
 	private String role;
 
@@ -27,12 +28,12 @@ public class UserRole implements Serializable {
 	public UserRole() {
 	}
 
-	public int getRoleID() {
-		return this.roleID;
+	public int getRoleId() {
+		return this.roleId;
 	}
 
-	public void setRoleID(int roleID) {
-		this.roleID = roleID;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getRole() {

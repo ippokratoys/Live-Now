@@ -6,17 +6,18 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the bookReview database table.
- * 
+ * The persistent class for the book_review database table.
+ *
  */
 @Entity
-@Table(name="bookReview")
+@Table(name="book_review")
 @NamedQuery(name="BookReview.findAll", query="SELECT b FROM BookReview b")
 public class BookReview implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int reviewID;
+	@Column(name="review_id")
+	private int reviewId;
 
 	private String comment;
 
@@ -27,22 +28,23 @@ public class BookReview implements Serializable {
 
 	//bi-directional many-to-one association to BookInfo
 	@ManyToOne
-	@JoinColumn(name="bookId")
+	@JoinColumn(name="book_id")
 	private BookInfo bookInfo;
 
 	//bi-directional many-to-one association to Apartment
 	@ManyToOne
+	@JoinColumn(name="apartment_id")
 	private Apartment apartment;
 
 	public BookReview() {
 	}
 
-	public int getReviewID() {
-		return this.reviewID;
+	public int getReviewId() {
+		return this.reviewId;
 	}
 
-	public void setReviewID(int reviewID) {
-		this.reviewID = reviewID;
+	public void setReviewId(int reviewId) {
+		this.reviewId = reviewId;
 	}
 
 	public String getComment() {
