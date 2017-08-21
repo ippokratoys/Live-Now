@@ -42,6 +42,7 @@ public class HostInfo implements Serializable {
 
 	//bi-directional one-to-one association to Login
 	@OneToOne
+	@JoinColumn(name="Login_email", insertable=false, updatable=false)
 	private Login login;
 
 	//bi-directional many-to-one association to HostReview

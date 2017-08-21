@@ -28,7 +28,6 @@ public class CustomerInfo implements Serializable {
 	private List<Chat> chats;
 
 	//bi-directional one-to-one association to Login
-	@JoinColumn(name="login_username", insertable=false, updatable=false)
 	@OneToOne
 	@JoinColumn(name="Login_email", insertable=false, updatable=false)
 	private Login login;
