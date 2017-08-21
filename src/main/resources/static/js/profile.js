@@ -8,4 +8,17 @@ function editInfo() {
     });
     $("#edit-info").addClass("hidden");
     $("input[type='submit']").removeClass("hidden");
+};
+
+function editApartment(apartmentId) {
+    $("#edit_actual").addClass("hidden");
+    $("#edit_loading").removeClass("hidden");
+    setTimeout(function(){
+        $("#edit_actual").removeClass("hidden");
+        $("#edit_loading").addClass("hidden");
+    }, 500);
+}
+
+function viewApartmentMsg(apartmentId) {
+
 }

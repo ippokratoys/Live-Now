@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml">
+<head>
+    <!--bootstrap and jquery-->
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!--fonts and icons-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!--for date range picker-->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="js/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/daterangepicker.css"/>
+
+    <!--custom css/js-->
+    <link rel="stylesheet" type="text/css" href="css/profile.css"/>
+    <script type="text/javascript" src="js/profile.js"></script>
+
+    <meta charset="UTF-8"/>
+    <title>profile_host</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="nav-side-menu">
+                <div class="brand"><a style="color: inherit" href="/" th:href="@{/}">Hotel</a></div>
+                <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+                <div class="menu-list">
+
+                    <ul id="menu-content" class="menu-content collapse out">
+                        <li>
+                            <a href="/profile">
+                                <i class="fa fa-user fa-lg"></i> Profile
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a href="/apartments" class="active">
+                                <i class="fa fa-bed fa-lg"></i> Apartments
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/new_apartment">
+                                <i class="fa fa-plus fa-lg"></i> Add Apartment
+                            </a>
+                        </li>
+
+                        <li data-toggle="collapse" data-target="#products" class="collapsed">
+                            <a href="#"><i class="fa fa-gift fa-lg"></i> UI Elements <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse" id="products">
+                            <li><a href="#">CSS3 Animation</a></li>
+                            <li><a href="#">General</a></li>
+                            <li><a href="#">Buttons</a></li>
+                            <li><a href="#">Tabs Accordions</a></li>
+                            <li><a href="#">Typography</a></li>
+                            <li><a href="#">FontAwesome</a></li>
+                            <li><a href="#">Slider</a></li>
+                            <li><a href="#">Panels</a></li>
+                            <li><a href="#">Widgets</a></li>
+                            <li><a href="#">Bootstrap Model</a></li>
+                        </ul>
+
+
+                        <li data-toggle="collapse" data-target="#service" class="collapsed">
+                            <a href="#"><i class="fa fa-globe fa-lg"></i> Services <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse" id="service">
+                            <li>New Service 1</li>
+                            <li>New Service 2</li>
+                            <li>New Service 3</li>
+                        </ul>
+
+
+                        <li data-toggle="collapse" data-target="#new" class="collapsed">
+                            <a href="#"><i class="fa fa-car fa-lg"></i> New <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse" id="new">
+                            <li>New New 1</li>
+                            <li>New New 2</li>
+                            <li>New New 3</li>
+                        </ul>
+
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-users fa-lg"></i> Users
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div><!--end of side bar-->
+        </div><!--end of col-3 for the bar -->
+        <!--main content of profile-->
+        <div id="my_info" class="col-sm-">
+            <h1>My Apartments</h1>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr>
+                        <th class="text-center">Apartment Name</th>
+                        <th class="text-center">Edit Apartment</th>
+                        <th class="text-center">View Messages</th>
+                    </tr>
+                    <tr>
+                        <td class="text-center">Hooola</td>
+                        <!--onclick="editApartment(1);"-->
+                        <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit_apartment" onclick="editApartment(1);">Edit Info</button></td>
+                        <td class="text-center"><button onclick="viewApartmentMsg(1);" type="button" class="btn btn-primary btn-block">Messages</button></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="edit_apartment" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+
+                     <!--Modal content-->
+                    <div id="edit_actual" class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title text-center">Edit Apartment Info</h3>
+                        </div>
+                        <div class="modal-body">
+                            <form method="get" action="apartments">
+                                <label for="f-aircondition">aircondition</label>
+                                <input type="checkbox" id="f-aircondition" name="aircondition"><br/>
+
+                                <label for="f-events">events</label>
+                                <input type="checkbox" id="f-events" name="events"><br/>
+
+                                <label for="f-garage">garage</label>
+                                <input type="checkbox" id="f-garage" name="garage"><br/>
+
+                                <label for="f-heat">heat</label>
+                                <input type="checkbox" id="f-heat" name="heat"><br/>
+
+                                <label for="f-kitchen">kitchen</label>
+                                <input type="checkbox" id="f-kitchen" name="kitchen"><br/>
+
+                                <label for="f-lift">lift</label>
+                                <input type="checkbox" id="f-lift" name="lift"><br/>
+
+                                <label for="f-parkings">parkings</label>
+                                <input type="checkbox" id="f-parkings" name="parkings"><br/>
+
+                                <label for="f-pets">pets</label>
+                                <input type="checkbox" id="f-pets" name="pets"><br/>
+
+                                <label for="f-smoking">smoking</label>
+                                <input type="checkbox" id="f-smoking" name="smoking"><br/>
+
+                                <label for="f-tv">tv</label>
+                                <input type="checkbox" id="f-tv" name="tv"><br/>
+
+                                <label for="f-wifi">wifi</label>
+                                <input type="checkbox" id="f-wifi" name="wifi"><br/>
+
+                                <label for="f-wifi">wifi</label>
+                                <input type="checkbox" id="f-wifi" name="wifi"><br/>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                    <div id="edit_loading" class="modal-content">
+                        <div class="modal-header text-center">
+                            <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!--<form method="post" action="/profile">-->
+                <!--<div class="a-field">-->
+                    <!--<label for="f-image" class="a-label hidden">Photo : </label>-->
+                    <!--<span class="a-value"><img class="img-responsive" src="http://www.andyworthington.co.uk/wp-content/uploads/shaker-aamer-nov-2012-1.jpg"/></span>-->
+                    <!--<input id="f-image" class="a-input hidden" type="file" name="image" value=""/>-->
+                <!--</div>-->
+                <!--<div class="a-field">-->
+                    <!--<label for="f-name" class="a-label">Name : </label>-->
+                    <!--<span class="a-value"> Tns</span>-->
+                    <!--<input id="f-name" class="a-input hidden" type="text" name="name" value=""/>-->
+                <!--</div>-->
+
+                <!--<div class="a-field">-->
+                    <!--<label for="f-surname" class="a-label">Surname : </label>-->
+                    <!--<span class="a-value">Pol</span>-->
+                    <!--<input id="f-surname" class="a-input hidden" type="text" name="surname" value=""/>-->
+                <!--</div>-->
+
+                <!--<div class="a-field">-->
+                    <!--<label for="f-telephone" class="a-label">Telephone : </label>-->
+                    <!--<span class="a-value">210-1111</span>-->
+                    <!--<input id="f-telephone" class="a-input hidden" type="text" name="telephone" value=""/>-->
+                <!--</div>-->
+
+                <!--<input class="hidden" type="submit" value="Submit edits"/>-->
+            <!--</form>-->
+
+        </div>
+    </div>
+    <div class="row col-sm-offset-3">
+        <button class="bottom-right" id="edit-info" onclick="editInfo()">Edit My Info</button>
+    </div>
+</div>
+</body>
+
+</html>

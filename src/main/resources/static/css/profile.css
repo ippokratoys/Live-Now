@@ -163,3 +163,17 @@ body {
 .img-responsive{
     max-width: 250px;
 }
+
+.add-place-form > label{
+    margin: 10px;
+}
+
+#new-place-btn{
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+
+.location-map{
+    width: 100%;
+    height: 100%;
+}
