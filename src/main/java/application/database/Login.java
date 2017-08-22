@@ -28,8 +28,6 @@ public class Login implements Serializable {
 	@Column(name="is_host")
 	private byte isHost;
 
-	private String logincol;
-
 	private String name;
 
 	@Column(name="phone_num")
@@ -95,14 +93,6 @@ public class Login implements Serializable {
 
 	public void setIsHost(byte isHost) {
 		this.isHost = isHost;
-	}
-
-	public String getLogincol() {
-		return this.logincol;
-	}
-
-	public void setLogincol(String logincol) {
-		this.logincol = logincol;
 	}
 
 	public String getName() {
