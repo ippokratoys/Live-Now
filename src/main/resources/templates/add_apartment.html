@@ -100,8 +100,22 @@
         <!--main content of profile-->
         <div id="my_info" class="col-sm-9">
             <h1>Add new Apartment</h1>
-            <div id="map" class="location-map"></div>
             <form class="add-place-form" method="get" action="apartments" id="new-apartment">
+                <div class="form-row">
+                    <div class="form-group col-xs-12 col-md-6">
+                        <label class="col-form-label" for="f-price">Basic Price</label>
+                        <input class="form-control" type="number" min="1" max="40000" name="location-name" id="f-price" required="required">
+                    </div>
+                    <div class="form-group col-xs-12 col-md-6">
+                        <label class="col-form-label" for="f-apartment-type">Apartment Type</label>
+                        <select class="form-control" name="apartment-type" id="f-apartment-type">
+                            <option value="apartment">Whole Apartment</option>
+                            <option value="private-room">Private Room</option>
+                            <option value="shared-room">Shared Room</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="form-row">
                     <div class="form-group col-xs-12 col-md-4">
                         <label class="col-form-label" for="f-name">Name</label>
@@ -159,7 +173,6 @@
                         <input class="form-control" type="number" min="1" max="1000" name="location-name" id="f-standard-people" required="required">
                     </div>
                 </div>
-
                 <div class="form-row">
                     <div class="form-group col-xs-12">
                         <label class="col-form-label" for="f-description">Description (max 255)</label>
@@ -251,11 +264,12 @@
                                 <h3 class="modal-title text-center">Choose Location On Map</h3>
                             </div>
                             <div class="modal-body">
-                                <!--<div id="map" class="location-map"></div>-->
-                                <!--<div id="locationField">-->
-                                    <!--<input id="autocomplete" placeholder="Enter your address"-->
-                                           <!--onFocus="geolocate()" type="text"></input>-->
-                                <!--</div>-->
+                                <div class="location-map" id="map"></div>
+                                <div id="locationField">
+                                    <input id="autocomplete" placeholder="Enter your address"
+                                           type="text"></input>
+                                </div>
+                                <button class="btn-block btn-primary" onclick="clearPoints()">Clear</button>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" id="btn-close-location" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -263,9 +277,73 @@
                         </div>
                     </div>
                 </div>
-                <input id="f-lat" name="lat" type="hidden"/>
-                <input id="f-lon" name="lon" type="hidden"/>
+                <input id="f-lat" name="lat" class="hidden" required="required"/>
+                <input id="f-lon" name="lon" class="hidden" required="required"/>
             </form>
+            <script>
+                var placeSearch, autocomplete;
+                var apartmentPosition = null;
+                var apartmentMarker = null;
+                var map = null;
+                function initMap() {
+                    var uluru = {lat: 37.9833333, lng: 23.7333333};
+                    autocomplete = new google.maps.places.Autocomplete(
+                        /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+                        {types: ['geocode']});
+
+                    // When the user selects an address from the dropdown, populate the address
+                    // fields in the form.
+                    autocomplete.addListener('place_changed', fillInAddress);
+
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 4,
+                        center: uluru
+                    });
+                    map.addListener('click', function(e) {
+                        placeMarkerAndPanTo(e.latLng, map);
+                    });
+                }
+                
+                function locationPicked(pos) {
+                    apartmentPosition=pos;
+                    apartmentMarker = new google.maps.Marker({
+                        position: apartmentPosition,
+                        map: map
+                    });
+                    $("#autocomplete").prop('disabled', true);
+                    $("#f-lat").val(pos.lat);
+                    $("#f-lon").val(pos.lon);
+                    map.panTo(pos);
+                }
+                function clearPoints() {
+                    if(apartmentPosition!=null){
+                        apartmentMarker.setMap(null);
+                        apartmentPosition = null;
+                        $("#autocomplete").prop('disabled', false);
+                        $("#f-lat").val("");
+                        $("#f-lon").val("");
+                    }
+                }
+                function placeMarkerAndPanTo(latLng, map) {
+                    if(apartmentPosition==null){
+                        locationPicked(latLng);
+                    }else{
+                        return;
+                    }
+                }
+                function fillInAddress() {
+                    // Get the place details from the autocomplete object.
+                    var place = autocomplete.getPlace();
+                    locationPicked(place.geometry.location);
+
+                    // Get each component of the address from the place details
+                    // and fill the corresponding field on the form.
+                }
+            </script>
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPDlSnR5Vfez6gsdfC_JZDc2KXRCjgf6c&libraries=places&callback=initMap">
+            </script>
+
         </div>
     </div>
 
