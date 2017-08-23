@@ -100,7 +100,7 @@
         <!--main content of profile-->
         <div id="my_info" class="col-sm-9">
             <h1>Add new Apartment</h1>
-            <form class="add-place-form" method="get" action="apartments" id="new-apartment">
+            <form class="add-place-form" th:object="${Apartment}" method="post" action="add_apartment" id="new-apartment">
                 <div class="form-row">
                     <div class="form-group col-xs-12 col-md-6">
                         <label class="col-form-label" for="f-price">Basic Price</label>
@@ -119,7 +119,7 @@
                 <div class="form-row">
                     <div class="form-group col-xs-12 col-md-4">
                         <label class="col-form-label" for="f-name">Name</label>
-                        <input class="form-control" name="name" id="f-name" required="required"/>
+                        <input th:field="*{name}" type="text" class="form-control" id="f-name" required="required"/>
                     </div>
                     <div class="form-group col-xs-12 col-md-4">
                         <label class="col-form-label" for="f-location-name">Location</label>
