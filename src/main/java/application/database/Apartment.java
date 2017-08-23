@@ -431,4 +431,44 @@ public class Apartment implements Serializable {
 		return chat;
 	}
 
+	@Override
+	public String toString() {
+		return "Apartment{" +
+				"apartmentId=" + apartmentId +
+				", aircondition=" + aircondition +
+				", area=" + area +
+				", baths=" + baths +
+				", bed=" + bed +
+				", cleanPrice=" + cleanPrice +
+				", events=" + events +
+				", garage=" + garage +
+				", heat=" + heat +
+				", houseDescription='" + houseDescription + '\'' +
+				", kitchen=" + kitchen +
+				", lat=" + lat +
+				", leavingRoom=" + leavingRoom +
+				", lift=" + lift +
+				", location='" + location + '\'' +
+				", lon=" + lon +
+				", maxPeople=" + maxPeople +
+				", minPeople=" + minPeople +
+				", name='" + name + '\'' +
+				", parking=" + parking +
+				", pets=" + pets +
+				", plusPrice=" + plusPrice +
+				", price=" + price +
+				", rooms=" + rooms +
+				", rules='" + rules + '\'' +
+				", smoking=" + smoking +
+				", standardPeople=" + standardPeople +
+				", trasnportationDescription='" + trasnportationDescription + '\'' +
+				", tv=" + tv +
+				", type='" + type + '\'' +
+				", wi_fi=" + wi_fi +
+				", hostInfo=" + hostInfo +
+				", bookInfos=" + bookInfos +
+				", bookReviews=" + bookReviews +
+				", chats=" + chats +
+				'}';
+	}
 }

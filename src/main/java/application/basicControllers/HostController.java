@@ -16,16 +16,15 @@ public class HostController {
     String addApartmentController(Model model,
                                   @ModelAttribute Apartment formApartment
     ){
-        formApartment.toString();
+        System.out.println( formApartment.toString() );
         System.out.println(formApartment.getName());
         return "redirect:/";
     }
+
     @RequestMapping(value = "/add_apartment",method = RequestMethod.GET)
     String addApartmentController(Model model
     ){
-        System.out.println("att added");
         Apartment apartment = new Apartment();
-        apartment.setName("mon kolonaki");
         model.addAttribute("apartment",apartment);
         return "/add_apartment";
     }
