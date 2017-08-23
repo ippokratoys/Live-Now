@@ -20,11 +20,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-//@EnableJpaRepositories(basePackages="application.database.*")
+@EnableJpaRepositories(basePackages="application.database.*")
 @ComponentScan("application.*")
 @SpringBootApplication
 @EnableWebSecurity
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
+//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
 public class Application extends WebMvcConfigurerAdapter{
 
     public static void main(String[] args) {

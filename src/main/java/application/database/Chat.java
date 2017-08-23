@@ -19,14 +19,17 @@ public class Chat implements Serializable {
 	@Column(name="chat_id")
 	private int chatId;
 
+	@Column(name="contact_with")
+	private int contactWith;
+
 	//bi-directional many-to-one association to Apartment
+
 	@ManyToOne
 	private Apartment apartment;
 
-	//bi-directional many-to-one association to CustomerInfo
+	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="customer_info_login_username")
-	private CustomerInfo customerInfo;
+	private Login login;
 
 	//bi-directional many-to-one association to Message
 	@OneToMany(mappedBy="chat")
@@ -34,7 +37,6 @@ public class Chat implements Serializable {
 
 	public Chat() {
 	}
-
 	public int getChatId() {
 		return this.chatId;
 	}
@@ -49,14 +51,6 @@ public class Chat implements Serializable {
 
 	public void setApartment(Apartment apartment) {
 		this.apartment = apartment;
-	}
-
-	public CustomerInfo getCustomerInfo() {
-		return this.customerInfo;
-	}
-
-	public void setCustomerInfo(CustomerInfo customerInfo) {
-		this.customerInfo = customerInfo;
 	}
 
 	public List<Message> getMessages() {
@@ -79,6 +73,22 @@ public class Chat implements Serializable {
 		message.setChat(null);
 
 		return message;
+	}
+
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
+	public int getContactWith() {
+		return contactWith;
+	}
+
+	public void setContactWith(int contactWith) {
+		this.contactWith = contactWith;
 	}
 
 }

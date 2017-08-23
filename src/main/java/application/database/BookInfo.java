@@ -33,20 +33,19 @@ public class BookInfo implements Serializable {
 	@JoinColumn(name="apartment")
 	private Apartment apartmentBean;
 
-	//bi-directional many-to-one association to CustomerInfo
-	@ManyToOne
-	@JoinColumn(name="customer_info_login_username")
-	private CustomerInfo customerInfo;
+	//bi-directional many-to-one association to Login
 
+	@ManyToOne
+	private Login login;
 	//bi-directional many-to-one association to HostReview
+
 	@ManyToOne
 	@JoinColumn(name="host_review_id")
 	private HostReview hostReview;
-
 	//bi-directional many-to-one association to BookReview
+
 	@OneToMany(mappedBy="bookInfo")
 	private List<BookReview> bookReviews;
-
 	public BookInfo() {
 	}
 
@@ -82,14 +81,6 @@ public class BookInfo implements Serializable {
 		this.apartmentBean = apartmentBean;
 	}
 
-	public CustomerInfo getCustomerInfo() {
-		return this.customerInfo;
-	}
-
-	public void setCustomerInfo(CustomerInfo customerInfo) {
-		this.customerInfo = customerInfo;
-	}
-
 	public HostReview getHostReview() {
 		return this.hostReview;
 	}
@@ -118,6 +109,14 @@ public class BookInfo implements Serializable {
 		bookReview.setBookInfo(null);
 
 		return bookReview;
+	}
+
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 }

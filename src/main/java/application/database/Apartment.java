@@ -89,11 +89,6 @@ public class Apartment implements Serializable {
 	@Column(name="`wi-fi`")
 	private boolean wi_fi;
 
-	//bi-directional many-to-one association to HostInfo
-	@ManyToOne
-	@JoinColumn(name="host_info_login_username")
-	private HostInfo hostInfo;
-
 	//bi-directional many-to-one association to BookInfo
 	@OneToMany(mappedBy="apartmentBean")
 	private List<BookInfo> bookInfos;
@@ -105,6 +100,14 @@ public class Apartment implements Serializable {
 	//bi-directional many-to-one association to Chat
 	@OneToMany(mappedBy="apartment")
 	private List<Chat> chats;
+
+	//bi-directional many-to-one association to Image
+	@OneToMany(mappedBy="apartment")
+	private List<Image> images;
+
+	@ManyToOne
+	@JoinColumn(name="login_username")
+	private Login login;
 
 	public Apartment() {
 	}
@@ -357,13 +360,6 @@ public class Apartment implements Serializable {
 		this.wi_fi = wi_fi;
 	}
 
-	public HostInfo getHostInfo() {
-		return this.hostInfo;
-	}
-
-	public void setHostInfo(HostInfo hostInfo) {
-		this.hostInfo = hostInfo;
-	}
 
 	public List<BookInfo> getBookInfos() {
 		return this.bookInfos;
@@ -431,4 +427,33 @@ public class Apartment implements Serializable {
 		return chat;
 	}
 
+	public List<Image> getImages() {
+		return this.images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images= images;
+	}
+
+	public Image addImage(Image image) {
+		getImages().add(image);
+		image.setApartment(this);
+
+		return image;
+	}
+
+	public Image removeImage(Image image) {
+		getImages().remove(image);
+		image.setApartment(null);
+
+		return image;
+	}
+
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
 }
