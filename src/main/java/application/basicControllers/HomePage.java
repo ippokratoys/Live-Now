@@ -24,6 +24,7 @@ public class HomePage {
 
     @Autowired
     SearchService searchService;
+
     @RequestMapping("/")
     String homeController(Model model,
                           @RequestParam("date-range") String dateRange,
@@ -76,6 +77,7 @@ public class HomePage {
         model.addAttribute("oldValues",filters);
         return "result_page";
     }
+
     @RequestMapping("/hotel")
     String hotePageController(Model model,
                               @RequestParam(name = "hotel-id") int hotelId,
