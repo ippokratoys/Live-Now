@@ -19,16 +19,24 @@ public class Message implements Serializable {
 	@Column(name="message_id")
 	private int messageId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date date;
+
+	public Date getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
+
+	private Date dateTime;
 
 	@Column(name="from_to")
 	private byte fromTo;
 
-	private String index;
+	private String content;
 
 	//bi-directional many-to-one association to Chat
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Chat chat;
 
 	public Message() {
@@ -42,14 +50,6 @@ public class Message implements Serializable {
 		this.messageId = messageId;
 	}
 
-	public Date getDate() {
-		return this.date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
 	public byte getFromTo() {
 		return this.fromTo;
 	}
@@ -58,12 +58,12 @@ public class Message implements Serializable {
 		this.fromTo = fromTo;
 	}
 
-	public String getIndex() {
-		return this.index;
+	public String getContent() {
+		return this.content;
 	}
 
-	public void setIndex(String index) {
-		this.index = index;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public Chat getChat() {
