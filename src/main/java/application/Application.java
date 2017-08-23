@@ -20,11 +20,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-@EnableJpaRepositories(basePackages="application.database.*")
+//@EnableJpaRepositories(basePackages="application.database.*")
 @ComponentScan("application.*")
 @SpringBootApplication
 @EnableWebSecurity
-//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
 public class Application extends WebMvcConfigurerAdapter{
 
     public static void main(String[] args) {
@@ -38,6 +38,9 @@ public class Application extends WebMvcConfigurerAdapter{
 //        registry.addViewController("/hotel").setViewName("hotel_page");
         registry.addViewController("/register").setViewName("register");
         registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/profile").setViewName("profile");
+        registry.addViewController("/apartments").setViewName("apartments");
+        registry.addViewController("/add_apartment").setViewName("add_apartment");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }

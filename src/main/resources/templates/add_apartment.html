@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <!--bootstrap and jquery-->
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!--fonts and icons-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!--for date range picker-->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="js/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/daterangepicker.css"/>
+
+    <!--custom css/js-->
+    <link rel="stylesheet" type="text/css" href="css/profile.css"/>
+    <script type="text/javascript" src="js/profile.js"></script>
+
+    <title>Add apartment</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="nav-side-menu">
+                <div class="brand"><a style="color: inherit" href="/" th:href="@{/}">Hotel</a></div>
+                <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+                <div class="menu-list">
+
+                    <ul id="menu-content" class="menu-content collapse out">
+                        <li>
+                            <a href="/profile">
+                                <i class="fa fa-user fa-lg"></i> Profile
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/apartments">
+                                <i class="fa fa-bed fa-lg"></i> Apartments
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a href="/new_apartment" class="active">
+                                <i class="fa fa-plus fa-lg"></i> Add Apartment
+                            </a>
+                        </li>
+
+                        <li data-toggle="collapse" data-target="#products" class="collapsed">
+                            <a href="#"><i class="fa fa-gift fa-lg"></i> UI Elements <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse" id="products">
+                            <li><a href="#">CSS3 Animation</a></li>
+                            <li><a href="#">General</a></li>
+                            <li><a href="#">Buttons</a></li>
+                            <li><a href="#">Tabs Accordions</a></li>
+                            <li><a href="#">Typography</a></li>
+                            <li><a href="#">FontAwesome</a></li>
+                            <li><a href="#">Slider</a></li>
+                            <li><a href="#">Panels</a></li>
+                            <li><a href="#">Widgets</a></li>
+                            <li><a href="#">Bootstrap Model</a></li>
+                        </ul>
+
+
+                        <li data-toggle="collapse" data-target="#service" class="collapsed">
+                            <a href="#"><i class="fa fa-globe fa-lg"></i> Services <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse" id="service">
+                            <li>New Service 1</li>
+                            <li>New Service 2</li>
+                            <li>New Service 3</li>
+                        </ul>
+
+
+                        <li data-toggle="collapse" data-target="#new" class="collapsed">
+                            <a href="#"><i class="fa fa-car fa-lg"></i> New <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse" id="new">
+                            <li>New New 1</li>
+                            <li>New New 2</li>
+                            <li>New New 3</li>
+                        </ul>
+
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-users fa-lg"></i> Users
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div><!--end of side bar-->
+        </div><!--end of col-3 for the bar -->
+        <!--main content of profile-->
+        <div id="my_info" class="col-sm-9">
+            <h1>Add new Apartment</h1>
+            <form class="add-place-form" method="get" action="apartments" id="new-apartment">
+                <div class="form-row">
+                    <div class="form-group col-xs-12 col-md-6">
+                        <label class="col-form-label" for="f-price">Basic Price</label>
+                        <input class="form-control" type="number" min="1" max="40000" name="price" id="f-price" required="required"/>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-6">
+                        <label class="col-form-label" for="f-apartment-type">Apartment Type</label>
+                        <select class="form-control" name="apartment-type" id="f-apartment-type">
+                            <option value="apartment">Whole Apartment</option>
+                            <option value="private-room">Private Room</option>
+                            <option value="shared-room">Shared Room</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label class="col-form-label" for="f-name">Name</label>
+                        <input class="form-control" name="name" id="f-name" required="required"/>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label class="col-form-label" for="f-location-name">Location</label>
+                        <input class="form-control" name="location-name" id="f-location-name" required="required"/>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label class="col-form-label">Select on map where is this place</label>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#choose-location">Select</button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label class="col-form-label" for="f-area">Area (square metre)</label>
+                        <input class="form-control" type="number" min="1" max="40000" name="area" id="f-area" required="required"/>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label class="col-form-label" for="f-baths">Baths</label>
+                        <input class="form-control" type="number" min="1" max="100" name="baths" id="f-baths" required="required"/>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label class="col-form-label" for="f-bed">Bed</label>
+                        <input class="form-control" type="number" min="1" max="100" name="bed" id="f-bed" required="required"/>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label class="col-form-label" for="f-rooms">Rooms</label>
+                        <input class="form-control" type="number" min="1" max="100" name="rooms" id="f-rooms" required="required"/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-xs-12 col-md-12">
+                        <label class="col-form-label" for="f-clean-price">Cleaning Price (euro)</label>
+                        <input class="form-control" type="number" min="0" max="10000" name="clean-price" id="f-clean-price" required="required"/>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label class="col-form-label" for="f-min-people">Minimum people</label>
+                        <input class="form-control" type="number" min="1" max="1000" name="min-people" id="f-min-people" required="required"/>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label class="col-form-label" for="f-max-people">Maximum people</label>
+                        <input class="form-control" type="number" min="1" max="1000" name="max-people" id="f-max-people" required="required"/>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label class="col-form-label" for="f-plus-price">Extra Cost per people(euro)</label>
+                        <input class="form-control" type="number" min="1" max="1000" name="plus-price" id="f-plus-price" required="required"/>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label class="col-form-label" for="f-standard-people">Standard People</label>
+                        <input class="form-control" type="number" min="1" max="1000" name="standard-people" id="f-standard-people" required="required"/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-xs-12">
+                        <label class="col-form-label" for="f-description">Description (max 255)</label>
+                        <textarea class="form-control" name="description" id="f-description" form="new-apartment" required="required" maxlength="255"> </textarea>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label class="col-form-label" for="f-rules">Rules (max 255)</label>
+                        <textarea class="form-control" name="rules" id="f-rules" form="new-apartment" required="required" maxlength="255"> </textarea>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label class="col-form-label" for="f-transportation">Transportation (max 255)</label>
+                        <textarea class="form-control" name="trasportation" id="f-transportation" form="new-apartment" required="required" maxlength="255"> </textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-xs-12 col-md-6">
+                        <label for="f-aircondition">
+                            <input type="checkbox" id="f-aircondition" name="aircondition"/>
+                            aircondition
+                        </label>
+
+                        <label class="pull-right" for="f-events">
+                            <input type="checkbox" id="f-events" name="events"/>
+                            events
+                        </label>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-md-6">
+                        <label for="f-garage">
+                            <input type="checkbox" id="f-garage" name="garage"/>
+                            garage
+                        </label>
+                        <label class="pull-right" for="f-heat">
+                            <input type="checkbox" id="f-heat" name="heat"/>
+                            heat
+                        </label>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-md-6">
+                        <label for="f-kitchen">
+                            <input type="checkbox" id="f-kitchen" name="kitchen"/>
+                            kitchen
+                        </label>
+
+                        <label class="pull-right" for="f-lift">
+                            <input type="checkbox" id="f-lift" name="lift"/>
+                            lift
+                        </label>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-md-6">
+                        <label for="f-parkings">
+                            <input type="checkbox" id="f-parkings" name="parkings"/>
+                            parkings
+                        </label>
+
+                        <label class="pull-right" for="f-pets">
+                            <input type="checkbox" id="f-pets" name="pets"/>
+                            pets
+                        </label>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-6">
+                        <label for="f-smoking">
+                            <input type="checkbox" id="f-smoking" name="smoking"/>
+                            smoking
+                        </label>
+
+                        <label class="pull-right" for="f-tv">
+                            <input type="checkbox" id="f-tv" name="tv"/>
+                            tv
+                        </label>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-6">
+                        <label for="f-wifi">
+                            <input type="checkbox" id="f-wifi" name="wifi"/>
+                            wifi
+                        </label>
+                    </div>
+                </div>
+                <input class="btn btn-block btn-primary" id="new-place-btn" type="submit" value="Create New Place"/>
+                <input id="f-lat" name="lat" class="hidden" required="required"/>
+                <input id="f-lon" name="lon" class="hidden" required="required"/>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<!--modal for choosing location-->
+<div id="choose-location" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!--Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title text-center">Choose Location On Map</h3>
+            </div>
+            <div class="modal-body">
+                <div id="locationField">
+                    <input id="autocomplete" placeholder="Enter your address or choose on map"
+                           type="text"/>
+                </div>
+                <button class="btn-block btn-info" id="clear-points">Clear</button>
+            </div>
+            <div class="location-map" id="map"></div>
+            <div class="modal-footer">
+                <button type="button" id="btn-close-location" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('#choose-location').on('shown.bs.modal', function(){
+        google.maps.event.trigger(map, 'resize');
+    });
+</script>
+<script>
+    var placeSearch, autocomplete;
+    var apartmentPosition = null;
+    var apartmentMarker = null;
+    var map = null;
+    function initMap() {
+        var uluru = {lat: 37.9833333, lng: 23.7333333};
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+            {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 7,
+            center: uluru
+        });
+        map.addListener('click', function(e) {
+            placeMarkerAndPanTo(e.latLng, map);
+        });
+        $("#clear-points").click(function (e) {
+//                    it's trying to submit the form
+            e.preventDefault();
+            clearPoints();
+        });
+
+    }
+
+    function locationPicked(pos) {
+        apartmentPosition=pos;
+        apartmentMarker = new google.maps.Marker({
+            position: apartmentPosition,
+            map: map
+        });
+        $("#autocomplete").prop('disabled', true);
+        alert(pos);
+        $("#f-lat").val(pos.lat);
+        $("#f-lon").val(pos.lng);
+        map.panTo(pos);
+    }
+    function clearPoints() {
+        if(apartmentPosition!=null){
+            apartmentMarker.setMap(null);
+            apartmentPosition = null;
+            $("#autocomplete").prop('disabled', false);
+            $("#f-lat").val("");
+            $("#f-lon").val("");
+        }
+    }
+    function placeMarkerAndPanTo(latLng, map) {
+        if(apartmentPosition==null){
+            locationPicked(latLng);
+        }else{
+            return;
+        }
+    }
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+        locationPicked(place.geometry.location);
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+    }
+</script>
+<script async="async" defer="defer"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPDlSnR5Vfez6gsdfC_JZDc2KXRCjgf6c&amp;libraries=places&amp;callback=initMap">
+</script>
+</body>
+
+</html>
