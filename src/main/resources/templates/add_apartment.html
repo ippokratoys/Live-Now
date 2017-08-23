@@ -264,12 +264,13 @@
                                 <h3 class="modal-title text-center">Choose Location On Map</h3>
                             </div>
                             <div class="modal-body">
-                                <div class="location-map" id="map"></div>
                                 <div id="locationField">
                                     <input id="autocomplete" placeholder="Enter your address"
-                                           type="text"></input>
+                                           type="text">
                                 </div>
-                                <button class="btn-block btn-primary" onclick="clearPoints()">Clear</button>
+                                <button class="btn-block btn-info" id="clear-points">Clear</button>
+                                <div class="location-map" id="map"></div>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" id="btn-close-location" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -280,6 +281,11 @@
                 <input id="f-lat" name="lat" class="hidden" required="required"/>
                 <input id="f-lon" name="lon" class="hidden" required="required"/>
             </form>
+            <script>
+                $('#choose-location').on('shown.bs.modal', function(){
+                    google.maps.event.trigger(map, 'resize');
+                });
+            </script>
             <script>
                 var placeSearch, autocomplete;
                 var apartmentPosition = null;
@@ -296,12 +302,18 @@
                     autocomplete.addListener('place_changed', fillInAddress);
 
                     map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 4,
+                        zoom: 7,
                         center: uluru
                     });
                     map.addListener('click', function(e) {
                         placeMarkerAndPanTo(e.latLng, map);
                     });
+                    $("#clear-points").click(function (e) {
+//                    it's trying to submit the form
+                        e.preventDefault();
+                        clearPoints();
+                    });
+
                 }
                 
                 function locationPicked(pos) {
@@ -340,7 +352,7 @@
                     // and fill the corresponding field on the form.
                 }
             </script>
-            <script async defer
+            <script async="async" defer="defer"
                     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPDlSnR5Vfez6gsdfC_JZDc2KXRCjgf6c&libraries=places&callback=initMap">
             </script>
 
