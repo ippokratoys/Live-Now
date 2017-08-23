@@ -19,13 +19,15 @@ public class HostReview implements Serializable {
 	@Column(name="review_id")
 	private int reviewId;
 
+	private String content;
+
 	//bi-directional many-to-one association to BookInfo
+
 	@OneToMany(mappedBy="hostReview")
 	private List<BookInfo> bookInfos;
-
-	//bi-directional many-to-one association to HostInfo
 	@ManyToOne
-	private HostInfo hostInfo;
+	@JoinColumn(name="login_username")
+	private Login login;
 
 	public HostReview() {
 	}
@@ -60,12 +62,20 @@ public class HostReview implements Serializable {
 		return bookInfo;
 	}
 
-	public HostInfo getHostInfo() {
-		return this.hostInfo;
+	public Login getLogin() {
+		return login;
 	}
 
-	public void setHostInfo(HostInfo hostInfo) {
-		this.hostInfo = hostInfo;
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 }

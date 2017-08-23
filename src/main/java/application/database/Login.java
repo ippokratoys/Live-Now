@@ -36,21 +36,29 @@ public class Login implements Serializable {
 	@Column(name="photo_path")
 	private String photoPath;
 
+	private String password;
+
 	private String surname;
 
 	private short valid;
 
-	//bi-directional one-to-one association to CustomerInfo
-	@OneToOne(mappedBy="login")
-	private CustomerInfo customerInfo;
-
-	//bi-directional one-to-one association to HostInfo
-	@OneToOne(mappedBy="login")
-	private HostInfo hostInfo;
-
 	//bi-directional many-to-one association to UserRole
+
 	@OneToMany(mappedBy="login")
 	private List<UserRole> userRoles;
+	//bi-directional many-to-one association to Apartment
+
+	@OneToMany(mappedBy="login")
+	private List<Apartment> apartments;
+
+	@OneToMany(mappedBy="login")
+	private List<HostReview> hostReviews;
+
+	@OneToMany(mappedBy="login")
+	private List<Chat> chats;
+
+	@OneToMany(mappedBy="login")
+	private List<BookInfo> bookInfos;
 
 	public Login() {
 	}
@@ -135,28 +143,20 @@ public class Login implements Serializable {
 		this.valid = valid;
 	}
 
-	public CustomerInfo getCustomerInfo() {
-		return this.customerInfo;
-	}
-
-	public void setCustomerInfo(CustomerInfo customerInfo) {
-		this.customerInfo = customerInfo;
-	}
-
-	public HostInfo getHostInfo() {
-		return this.hostInfo;
-	}
-
-	public void setHostInfo(HostInfo hostInfo) {
-		this.hostInfo = hostInfo;
-	}
-
 	public List<UserRole> getUserRoles() {
 		return this.userRoles;
 	}
 
 	public void setUserRoles(List<UserRole> userRoles) {
 		this.userRoles = userRoles;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public UserRole addUserRole(UserRole userRole) {
@@ -171,6 +171,94 @@ public class Login implements Serializable {
 		userRole.setLogin(null);
 
 		return userRole;
+	}
+
+	public List<Apartment> getApartments() {
+		return this.apartments;
+	}
+
+	public void setApartments(List<Apartment> apartments) {
+		this.apartments= apartments;
+	}
+
+	public Apartment addApartment(Apartment apartment) {
+		getApartments().add(apartment);
+		apartment.setLogin(this);
+
+		return apartment;
+	}
+
+	public Apartment removeApartment(Apartment apartment) {
+		getApartments().remove(apartment);
+		apartment.setLogin(null);
+
+		return apartment;
+	}
+
+	public List<HostReview> getHostReviews() {
+		return this.hostReviews;
+	}
+
+	public void setHostReviews(List<HostReview> hostReviews) {
+		this.hostReviews= hostReviews;
+	}
+
+	public HostReview addHostReview(HostReview hostReview) {
+		getHostReviews().add(hostReview);
+		hostReview.setLogin(this);
+
+		return hostReview;
+	}
+
+	public HostReview removeHostReview(HostReview hostReview) {
+		getHostReviews().remove(hostReview);
+		hostReview.setLogin(null);
+
+		return hostReview;
+	}
+
+	public List<Chat> getChats() {
+		return this.chats;
+	}
+
+	public void setChats(List<Chat> chats) {
+		this.chats= chats;
+	}
+
+	public Chat addChat(Chat chat) {
+		getChats().add(chat);
+		chat.setLogin(this);
+
+		return chat;
+	}
+
+	public Chat removeChat(Chat chat) {
+		getChats().remove(chat);
+		chat.setLogin(null);
+
+		return chat;
+	}
+
+	public List<BookInfo> getBookInfos() {
+		return this.bookInfos;
+	}
+
+	public void setBookInfos(List<BookInfo> bookInfos) {
+		this.bookInfos=bookInfos ;
+	}
+
+	public BookInfo addBookInfo(BookInfo bookInfo) {
+		getBookInfos().add(bookInfo);
+		bookInfo.setLogin(this);
+
+		return bookInfo;
+	}
+
+	public BookInfo removeBookInfo(BookInfo bookInfo) {
+		getBookInfos().remove(bookInfo);
+		bookInfo.setLogin(null);
+
+		return bookInfo;
 	}
 
 }

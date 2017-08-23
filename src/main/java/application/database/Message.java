@@ -30,9 +30,6 @@ public class Message implements Serializable {
 
 	private Date dateTime;
 
-	@Column(name="from_to")
-	private byte fromTo;
-
 	private String content;
 
 	//bi-directional many-to-one association to Chat
@@ -48,14 +45,6 @@ public class Message implements Serializable {
 
 	public void setMessageId(int messageId) {
 		this.messageId = messageId;
-	}
-
-	public byte getFromTo() {
-		return this.fromTo;
-	}
-
-	public void setFromTo(byte fromTo) {
-		this.fromTo = fromTo;
 	}
 
 	public String getContent() {

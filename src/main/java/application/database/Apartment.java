@@ -17,7 +17,7 @@ public class Apartment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="apartment_id")
+	@Column(name = "apartment_id")
 	private int apartmentId;
 
 	private boolean aircondition;
@@ -28,7 +28,7 @@ public class Apartment implements Serializable {
 
 	private short bed;
 
-	@Column(name="clean_price")
+	@Column(name = "clean_price")
 	private BigDecimal cleanPrice;
 
 	private boolean events;
@@ -37,14 +37,14 @@ public class Apartment implements Serializable {
 
 	private boolean heat;
 
-	@Column(name="house_description")
+	@Column(name = "house_description")
 	private String houseDescription;
 
 	private boolean kitchen;
 
 	private BigDecimal lat;
 
-	@Column(name="leaving_room")
+	@Column(name = "leaving_room")
 	private boolean leavingRoom;
 
 	private boolean lift;
@@ -53,10 +53,10 @@ public class Apartment implements Serializable {
 
 	private BigDecimal lon;
 
-	@Column(name="max_people")
+	@Column(name = "max_people")
 	private short maxPeople;
 
-	@Column(name="min_people")
+	@Column(name = "min_people")
 	private short minPeople;
 
 	private String name;
@@ -65,10 +65,10 @@ public class Apartment implements Serializable {
 
 	private boolean pets;
 
-	@Column(name="plus_price")
+	@Column(name = "plus_price")
 	private short plusPrice;
 
-	private short price ;
+	private short price;
 
 	private short rooms;
 
@@ -76,35 +76,38 @@ public class Apartment implements Serializable {
 
 	private boolean smoking;
 
-	@Column(name="standard_people")
+	@Column(name = "standard_people")
 	private short standardPeople;
 
-	@Column(name="trasnportation_description")
+	@Column(name = "trasnportation_description")
 	private String trasnportationDescription;
 
 	private boolean tv;
 
 	private String type;
 
-	@Column(name="`wi-fi`")
+	@Column(name = "`wi-fi`")
 	private boolean wi_fi;
 
-	//bi-directional many-to-one association to HostInfo
-	@ManyToOne
-	@JoinColumn(name="host_info_login_username")
-	private HostInfo hostInfo;
-
 	//bi-directional many-to-one association to BookInfo
-	@OneToMany(mappedBy="apartmentBean")
+	@OneToMany(mappedBy = "apartmentBean")
 	private List<BookInfo> bookInfos;
 
 	//bi-directional many-to-one association to BookReview
-	@OneToMany(mappedBy="apartment")
+	@OneToMany(mappedBy = "apartment")
 	private List<BookReview> bookReviews;
 
 	//bi-directional many-to-one association to Chat
-	@OneToMany(mappedBy="apartment")
+	@OneToMany(mappedBy = "apartment")
 	private List<Chat> chats;
+
+	//bi-directional many-to-one association to Image
+	@OneToMany(mappedBy = "apartment")
+	private List<Image> images;
+
+	@ManyToOne
+	@JoinColumn(name = "login_username")
+	private Login login;
 
 	public Apartment() {
 	}
@@ -357,13 +360,6 @@ public class Apartment implements Serializable {
 		this.wi_fi = wi_fi;
 	}
 
-	public HostInfo getHostInfo() {
-		return this.hostInfo;
-	}
-
-	public void setHostInfo(HostInfo hostInfo) {
-		this.hostInfo = hostInfo;
-	}
 
 	public List<BookInfo> getBookInfos() {
 		return this.bookInfos;
@@ -431,6 +427,36 @@ public class Apartment implements Serializable {
 		return chat;
 	}
 
+	public List<Image> getImages() {
+		return this.images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+
+	public Image addImage(Image image) {
+		getImages().add(image);
+		image.setApartment(this);
+
+		return image;
+	}
+
+	public Image removeImage(Image image) {
+		getImages().remove(image);
+		image.setApartment(null);
+
+		return image;
+	}
+
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
 	@Override
 	public String toString() {
 		return "Apartment{" +
@@ -465,10 +491,11 @@ public class Apartment implements Serializable {
 				", tv=" + tv +
 				", type='" + type + '\'' +
 				", wi_fi=" + wi_fi +
-				", hostInfo=" + hostInfo +
 				", bookInfos=" + bookInfos +
 				", bookReviews=" + bookReviews +
 				", chats=" + chats +
+				", images=" + images +
+				", login=" + login +
 				'}';
 	}
 }
