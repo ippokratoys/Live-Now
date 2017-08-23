@@ -20,7 +20,7 @@ public class Apartment implements Serializable {
 	@Column(name="apartment_id")
 	private int apartmentId;
 
-	private byte aircondition;
+	private boolean aircondition;
 
 	private BigDecimal area;
 
@@ -31,23 +31,23 @@ public class Apartment implements Serializable {
 	@Column(name="clean_price")
 	private BigDecimal cleanPrice;
 
-	private byte events;
+	private boolean events;
 
-	private byte garage;
+	private boolean garage;
 
-	private byte heat;
+	private boolean heat;
 
 	@Column(name="house_description")
 	private String houseDescription;
 
-	private byte kitchen;
+	private boolean kitchen;
 
 	private BigDecimal lat;
 
 	@Column(name="leaving_room")
-	private byte leavingRoom;
+	private boolean leavingRoom;
 
-	private byte lift;
+	private boolean lift;
 
 	private String location;
 
@@ -61,36 +61,33 @@ public class Apartment implements Serializable {
 
 	private String name;
 
-	private byte parking;
+	private boolean parking;
 
-	private byte pets;
+	private boolean pets;
 
 	@Column(name="plus_price")
 	private short plusPrice;
 
-	@Column(name="reviews_amount")
-	private int reviewsAmount;
+	private short price ;
 
 	private short rooms;
 
 	private String rules;
 
-	private byte smoking;
+	private boolean smoking;
 
 	@Column(name="standard_people")
 	private short standardPeople;
 
-	private BigDecimal stars;
-
 	@Column(name="trasnportation_description")
 	private String trasnportationDescription;
 
-	private byte tv;
+	private boolean tv;
 
 	private String type;
 
 	@Column(name="`wi-fi`")
-	private byte wi_fi;
+	private boolean wi_fi;
 
 	//bi-directional many-to-one association to HostInfo
 	@ManyToOne
@@ -120,11 +117,11 @@ public class Apartment implements Serializable {
 		this.apartmentId = apartmentId;
 	}
 
-	public byte getAircondition() {
+	public boolean getAircondition() {
 		return this.aircondition;
 	}
 
-	public void setAircondition(byte aircondition) {
+	public void setAircondition(boolean aircondition) {
 		this.aircondition = aircondition;
 	}
 
@@ -160,27 +157,27 @@ public class Apartment implements Serializable {
 		this.cleanPrice = cleanPrice;
 	}
 
-	public byte getEvents() {
+	public boolean getEvents() {
 		return this.events;
 	}
 
-	public void setEvents(byte events) {
+	public void setEvents(boolean events) {
 		this.events = events;
 	}
 
-	public byte getGarage() {
+	public boolean getGarage() {
 		return this.garage;
 	}
 
-	public void setGarage(byte garage) {
+	public void setGarage(boolean garage) {
 		this.garage = garage;
 	}
 
-	public byte getHeat() {
+	public boolean getHeat() {
 		return this.heat;
 	}
 
-	public void setHeat(byte heat) {
+	public void setHeat(boolean heat) {
 		this.heat = heat;
 	}
 
@@ -192,11 +189,11 @@ public class Apartment implements Serializable {
 		this.houseDescription = houseDescription;
 	}
 
-	public byte getKitchen() {
+	public boolean getKitchen() {
 		return this.kitchen;
 	}
 
-	public void setKitchen(byte kitchen) {
+	public void setKitchen(boolean kitchen) {
 		this.kitchen = kitchen;
 	}
 
@@ -208,19 +205,19 @@ public class Apartment implements Serializable {
 		this.lat = lat;
 	}
 
-	public byte getLeavingRoom() {
+	public boolean getLeavingRoom() {
 		return this.leavingRoom;
 	}
 
-	public void setLeavingRoom(byte leavingRoom) {
+	public void setLeavingRoom(boolean leavingRoom) {
 		this.leavingRoom = leavingRoom;
 	}
 
-	public byte getLift() {
+	public boolean getLift() {
 		return this.lift;
 	}
 
-	public void setLift(byte lift) {
+	public void setLift(boolean lift) {
 		this.lift = lift;
 	}
 
@@ -264,19 +261,19 @@ public class Apartment implements Serializable {
 		this.name = name;
 	}
 
-	public byte getParking() {
+	public boolean getParking() {
 		return this.parking;
 	}
 
-	public void setParking(byte parking) {
+	public void setParking(boolean parking) {
 		this.parking = parking;
 	}
 
-	public byte getPets() {
+	public boolean getPets() {
 		return this.pets;
 	}
 
-	public void setPets(byte pets) {
+	public void setPets(boolean pets) {
 		this.pets = pets;
 	}
 
@@ -288,12 +285,12 @@ public class Apartment implements Serializable {
 		this.plusPrice = plusPrice;
 	}
 
-	public int getReviewsAmount() {
-		return this.reviewsAmount;
+	public short getPrice() {
+		return this.price;
 	}
 
-	public void setReviewsAmount(int reviewsAmount) {
-		this.reviewsAmount = reviewsAmount;
+	public void setPrice(short price) {
+		this.price = price;
 	}
 
 	public short getRooms() {
@@ -312,11 +309,11 @@ public class Apartment implements Serializable {
 		this.rules = rules;
 	}
 
-	public byte getSmoking() {
+	public boolean getSmoking() {
 		return this.smoking;
 	}
 
-	public void setSmoking(byte smoking) {
+	public void setSmoking(boolean smoking) {
 		this.smoking = smoking;
 	}
 
@@ -328,14 +325,6 @@ public class Apartment implements Serializable {
 		this.standardPeople = standardPeople;
 	}
 
-	public BigDecimal getStars() {
-		return this.stars;
-	}
-
-	public void setStars(BigDecimal stars) {
-		this.stars = stars;
-	}
-
 	public String getTrasnportationDescription() {
 		return this.trasnportationDescription;
 	}
@@ -344,11 +333,11 @@ public class Apartment implements Serializable {
 		this.trasnportationDescription = trasnportationDescription;
 	}
 
-	public byte getTv() {
+	public boolean getTv() {
 		return this.tv;
 	}
 
-	public void setTv(byte tv) {
+	public void setTv(boolean tv) {
 		this.tv = tv;
 	}
 
@@ -360,11 +349,11 @@ public class Apartment implements Serializable {
 		this.type = type;
 	}
 
-	public byte getWi_fi() {
+	public boolean getWi_fi() {
 		return this.wi_fi;
 	}
 
-	public void setWi_fi(byte wi_fi) {
+	public void setWi_fi(boolean wi_fi) {
 		this.wi_fi = wi_fi;
 	}
 
