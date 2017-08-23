@@ -40,6 +40,7 @@ public class Application extends WebMvcConfigurerAdapter{
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/profile").setViewName("profile");
         registry.addViewController("/apartments").setViewName("apartments");
+        registry.addViewController("/add_apartment").setViewName("add_apartment");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }

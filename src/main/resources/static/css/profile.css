@@ -178,3 +178,22 @@ body {
     width: 100%;
     height: 400px;
 }
+
+#autocomplete{
+    /*margin: 10px;*/
+    width: 100%;
+}
+
+.pac-container {
+    background-color: #FFF;
+    z-index: 20;
+    position: fixed;
+    display: inline-block;
+    float: left;
+}
+.modal{
+    z-index: 20;
+}
+.modal-backdrop{
+    z-index: 10;
+}​
