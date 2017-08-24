@@ -35,6 +35,20 @@ public class RegisterService{
         newLogin.setSurname(allParams.get("surname"));
         newLogin.setPassword(allParams.get("password"));
         newLogin.setPhoneNum(allParams.get("telephone"));
+        if(allParams.get("user-role")=="0"){
+            newLogin.setIsHost(true);
+            newLogin.setIsCustomer(false);
+            newLogin.setEnabled(false);
+        }else if (allParams.get("user-role")=="1"){
+            newLogin.setIsHost(false);
+            newLogin.setIsCustomer(true);
+            newLogin.setEnabled(false);
+        }else{
+            newLogin.setIsHost(true);
+            newLogin.setIsCustomer(true);
+            newLogin.setEnabled(false);
+        }
+        loginRepository.save(newLogin);
         return true;
     }
 }

@@ -20,13 +20,13 @@ public class Login implements Serializable {
 
 	private String email;
 
-	private byte enabled;
+	private boolean enabled;
 
 	@Column(name="is_customer")
-	private byte isCustomer;
+	private boolean isCustomer;
 
 	@Column(name="is_host")
-	private byte isHost;
+	private boolean isHost;
 
 	private String name;
 
@@ -79,27 +79,27 @@ public class Login implements Serializable {
 		this.email = email;
 	}
 
-	public byte getEnabled() {
+	public boolean getEnabled() {
 		return this.enabled;
 	}
 
-	public void setEnabled(byte enabled) {
+	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
-	public byte getIsCustomer() {
+	public boolean getIsCustomer() {
 		return this.isCustomer;
 	}
 
-	public void setIsCustomer(byte isCustomer) {
+	public void setIsCustomer(boolean isCustomer) {
 		this.isCustomer = isCustomer;
 	}
 
-	public byte getIsHost() {
+	public boolean getIsHost() {
 		return this.isHost;
 	}
 
-	public void setIsHost(byte isHost) {
+	public void setIsHost(boolean isHost) {
 		this.isHost = isHost;
 	}
 
