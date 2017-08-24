@@ -16,6 +16,7 @@ public class HostReview implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="review_id")
 	private int reviewId;
 
