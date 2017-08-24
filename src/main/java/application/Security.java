@@ -35,7 +35,7 @@ public class Security extends WebSecurityConfigurerAdapter{
         httpSecurity.authorizeRequests()
                     .antMatchers("**").permitAll()
                 .and()
-                    .formLogin().loginPage("/login").permitAll().failureForwardUrl("/login?error=login-failed").successForwardUrl("/")
+                    .formLogin().loginPage("/login").permitAll().successForwardUrl("/")
                 .and()
                     .logout().logoutSuccessUrl("/login?logout").permitAll();
 
