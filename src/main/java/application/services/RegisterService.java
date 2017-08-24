@@ -25,7 +25,7 @@ public class RegisterService{
         if(newLogin!=null){
             throw new Exception("User Exists");
         }
-        if(allParams.get("password")!=allParams.get("confirm")){
+        if(!allParams.get("password").equals(allParams.get("confirm"))){
             throw new Exception("Passwords do not match");
         }
         newLogin=new Login();

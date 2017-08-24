@@ -1,6 +1,7 @@
 package application.basicControllers;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import application.services.RegisterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ import java.util.Map;
 @Controller
 public class GeneralUserControlers {
 
+    @Autowired
+    RegisterService registerService;
+
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     String getLogin(@RequestParam Map<String,String> allParams,
                     @AuthenticationPrincipal final UserDetails userDetails,
@@ -30,13 +34,49 @@ public class GeneralUserControlers {
             System.out.println(userDetails);
             return "redirect:/";
         }
+        model.addAttribute("urlParams",allParams);
         System.out.println("ook come login");
         return "login";
     }
 
-    @RequestMapping("/register")
-    String getRegister(Model model){
 
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    String postRegister(Model model,
+                       @RequestParam Map<String,String> allParams,
+                       @AuthenticationPrincipal final UserDetails userDetails
+    ){
+        if(userDetails!=null){
+            return "redirect:/";
+        }
+        try {
+            registerService.createLogin(allParams);
+        }catch (Exception e){
+            if(e.getMessage()=="User Exists"){
+                model.addAttribute("error","user-exists");
+                model.addAttribute("oldVal",allParams);
+                return "register";
+            }else if(e.getMessage()=="Passwords do not match"){
+                model.addAttribute("oldVal",allParams);
+                model.addAttribute("error","password-match");
+                return "register";
+            }else{
+                model.addAttribute("error","other");
+                model.addAttribute("oldVal",allParams);
+                return "register";
+            }
+        }
+        System.out.println("Done");
+        return  "redirect:login?login=successful";
+    }
+
+    @RequestMapping("/register")
+    String getRegister(Model model,
+                       @RequestParam Map<String,String> allParams,
+                       @AuthenticationPrincipal final UserDetails userDetails
+                       ){
+        if(userDetails!=null){
+            return "redirect:/";
+        }
         return "register";
     }
 

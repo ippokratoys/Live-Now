@@ -32,19 +32,22 @@
         </div>
         <div class="main-login main-center">
 
-            <h5 th:if="${param.error}" class="alert alert-danger">username already in use</h5>
-            <h5 th:if="${param.error}" class="alert alert-danger">password not good</h5>
-            <h5 th:if="${param.error}" class="alert alert-danger">you need to fill all the fields</h5>
+            <h5 th:if="${error=='user-exists'}" class="alert alert-danger">username already in use</h5>
+            <h5 th:if="${error=='password-match'}" class="alert alert-danger">Password don't match</h5>
+            <h5 th:if="${error=='password-strong'}" class="alert alert-danger">Password not good</h5>
+            <h5 th:if="${error=='other'}" class="alert alert-danger">Make sure you filled everything correctly and try again</h5>
+
+            <h5 th:if="${error!=null}" class="alert alert-danger">Make sure that all the fields are correct</h5>
 
             <h2 class="text-center login-label">REGISTER</h2>
-            <form th:action="@{/login}" action="/register" class="form-horizontal" method="post" enctype="multipart/form-data">
+            <form th:action="@{/register}" action="/register" class="form-horizontal" method="post" enctype="multipart/form-data">
 
                 <div class="form-group">
                     <label for="username" class="cols-sm-2 control-label">Username</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username"/>
+                            <input th:value="${oldVal?.get('username')}" required="required" type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username"/>
                         </div>
                     </div>
                 </div>
@@ -54,7 +57,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                            <input th:value="${oldVal?.get('password')}" required="required" type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
                         </div>
                     </div>
                 </div>
@@ -64,7 +67,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+                            <input th:value="${oldVal?.get('confirm')}" required="required" type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
                         </div>
                     </div>
                 </div>
@@ -75,7 +78,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
+                            <input th:value="${oldVal?.get('name')}" required="required" type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
                         </div>
                     </div>
                 </div>
@@ -85,7 +88,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="surname" id="surname"  placeholder="Enter your Surname"/>
+                            <input th:value="${oldVal?.get('surname')}" required="required" type="text" class="form-control" name="surname" id="surname"  placeholder="Enter your Surname"/>
                         </div>
                     </div>
                 </div>
@@ -95,7 +98,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+                            <input th:value="${oldVal?.get('email')}" required="required" type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
                         </div>
                     </div>
                 </div>
@@ -105,7 +108,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="telephone" id="telephone"  placeholder="Enter your number"/>
+                            <input th:value="${oldVal?.get('telephone')}" required="required" type="text" class="form-control" name="telephone" id="telephone"  placeholder="Enter your number"/>
                         </div>
                     </div>
                 </div>
@@ -129,13 +132,13 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="file" name="photo" id="photo"/>
+                            <input required="required" type="file" name="photo" id="photo"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group ">
-                    <button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+                    <input type="submit" class="btn btn-primary btn-lg btn-block login-button">Register</input>
                 </div>
                 <!--<div class="login-register">-->
                 <a href="/login">Already a user, Login</a>
