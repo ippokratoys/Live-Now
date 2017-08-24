@@ -22,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @EnableJpaRepositories(basePackages="application.database.*")
 @ComponentScan("application.*")
+@ComponentScan("webapp.*")
 @SpringBootApplication
 @EnableWebSecurity
 //@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})

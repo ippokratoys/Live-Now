@@ -26,10 +26,7 @@ public class HomePage {
     SearchService searchService;
 
     @RequestMapping("/")
-    String homeController(Model model,
-                          @RequestParam("date-range") String dateRange,
-                          @RequestParam("place-name") String city,
-                          @RequestParam("people") Integer persons
+        String homeController(Model model
     ){
         return "index";
     }
