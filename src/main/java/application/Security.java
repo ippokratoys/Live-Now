@@ -38,7 +38,6 @@ public class Security extends WebSecurityConfigurerAdapter{
                     .formLogin().loginPage("/login").permitAll().successForwardUrl("/")
                 .and()
                     .logout().logoutSuccessUrl("/login?logout").permitAll();
-
     }
 
 }
