@@ -22,7 +22,7 @@ public class RegisterService{
     public Boolean createLogin(Map<String,String> allParams) throws Exception{
         for (Map.Entry<String, String> entry : allParams.entrySet()) {
             System.out.println(entry.getKey() + "/" + entry.getValue());
-            if (entry.getValue() == null || entry.getValue() == "") {
+            if (entry.getValue() == null || entry.getValue().equals("")) {
                 throw new Exception("Empty Field");
             }
         }
@@ -42,21 +42,25 @@ public class RegisterService{
         newLogin.setPhoneNum(allParams.get("telephone"));
         UserRole newUserRole=new UserRole();
 
-        if(allParams.get("user-role")=="host"){
+        if(allParams.get("user-role").equals("host")){
             newLogin.setIsHost(true);
             newLogin.setIsCustomer(false);
-            newLogin.setEnabled(false);
+            newLogin.setEnabled(true);
             newUserRole.setRole("host");
-        }else if (allParams.get("user-role")=="customer"){
+        }else if (allParams.get("user-role").equals("customer")){
             newLogin.setIsHost(false);
             newLogin.setIsCustomer(true);
-            newLogin.setEnabled(false);
+            newLogin.setEnabled(true);
             newUserRole.setRole("customer");
         }else{
             newLogin.setIsHost(true);
             newLogin.setIsCustomer(true);
-            newLogin.setEnabled(false);
-            newUserRole.setRole("host_customer");
+            newLogin.setEnabled(true);
+            newUserRole.setRole("host");
+            UserRole newUserRole2=new UserRole();
+            newUserRole2.setRole("customer");
+            newUserRole2.setLogin(newLogin);
+            userRoleRepository.save(newUserRole2);
         }
         newUserRole.setLogin(newLogin);
         loginRepository.save(newLogin);
