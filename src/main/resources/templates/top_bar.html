@@ -19,14 +19,28 @@
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="/register"><span class="glyphicon glyphicon-user"></span> Register</a>
-                </li>
-                <li>
-                    <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-                </li>
-            </ul>
+            <th:block th:if="${#httpServletRequest.remoteUser}">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit" th:value="Logout" class="btn-info"/>
+                        </form>
+                    </li>
+                    <li>
+                        <a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile</a>
+                    </li>
+                </ul>
+            </th:block>
+            <th:block th:unless="${#httpServletRequest.remoteUser}">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/register"><span class="glyphicon glyphicon-user"></span> Register</a>
+                    </li>
+                    <li>
+                        <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    </li>
+                </ul>
+            </th:block>
 
             <ul class="nav navbar-nav">
                 <li>

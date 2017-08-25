@@ -51,17 +51,18 @@ public class GeneralUserControlers {
         try {
             registerService.createLogin(allParams);
         }catch (Exception e){
-            if(e.getMessage()=="User Exists"){
+            if(e.getMessage().equals("User Exists")){
                 model.addAttribute("error","user-exists");
                 model.addAttribute("oldVal",allParams);
                 return "register";
-            }else if(e.getMessage()=="Passwords do not match"){
+            }else if(e.getMessage().equals("Passwords do not match")){
                 model.addAttribute("oldVal",allParams);
                 model.addAttribute("error","password-match");
                 return "register";
             }else{
                 model.addAttribute("error","other");
                 model.addAttribute("oldVal",allParams);
+                e.printStackTrace();
                 return "register";
             }
         }
