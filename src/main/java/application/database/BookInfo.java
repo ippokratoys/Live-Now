@@ -17,6 +17,7 @@ public class BookInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="book_id")
 	private int bookId;
 

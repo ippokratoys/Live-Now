@@ -1,9 +1,11 @@
 package application.services;
 
 import application.database.Login;
+import application.database.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import application.database.repositories.LoginRepository;
+import application.database.repositories.UserRoleRepository;
 
 import java.util.Map;
 
@@ -13,6 +15,9 @@ public class RegisterService{
 
     @Autowired
     LoginRepository loginRepository;
+
+    @Autowired
+    UserRoleRepository userRoleRepository;
 
     public Boolean createLogin(Map<String,String> allParams) throws Exception{
         for (Map.Entry<String, String> entry : allParams.entrySet()) {
@@ -35,6 +40,27 @@ public class RegisterService{
         newLogin.setSurname(allParams.get("surname"));
         newLogin.setPassword(allParams.get("password"));
         newLogin.setPhoneNum(allParams.get("telephone"));
+        UserRole newUserRole=new UserRole();
+
+        if(allParams.get("user-role")=="host"){
+            newLogin.setIsHost(true);
+            newLogin.setIsCustomer(false);
+            newLogin.setEnabled(false);
+            newUserRole.setRole("host");
+        }else if (allParams.get("user-role")=="customer"){
+            newLogin.setIsHost(false);
+            newLogin.setIsCustomer(true);
+            newLogin.setEnabled(false);
+            newUserRole.setRole("customer");
+        }else{
+            newLogin.setIsHost(true);
+            newLogin.setIsCustomer(true);
+            newLogin.setEnabled(false);
+            newUserRole.setRole("host_customer");
+        }
+        newUserRole.setLogin(newLogin);
+        loginRepository.save(newLogin);
+        userRoleRepository.save(newUserRole);
         return true;
     }
 }
