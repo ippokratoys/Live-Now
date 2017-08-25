@@ -1,5 +1,7 @@
 package application.search;
 
+import application.database.Apartment;
+
 import java.util.Date;
 
 /**
@@ -159,7 +161,7 @@ public class Search {
     private Integer maxCost=0;
 
     private String needsAnd(String curQuery){
-        if(curQuery!=""){
+        if(!curQuery.equals("")){
             return "and ";
         }else{
             return "";
@@ -167,33 +169,35 @@ public class Search {
     }
     public String buildQuery(){
         String query="";
+        query+="SELECT apartment.apartment_id FROM apartment WHERE apartment.location=?1,apartment.max_people>=?2 , ";
+
         if (hasWifi==true) {
             String and = needsAnd(query);
-            query+= and + "hasWifi ";
+            query+= and + "wi-fi=true ";
         }
         if (hasFrige==true) {
             String and = needsAnd(query);
-            query+= and + "hasFrige ";
+            query+= and + "fridge=true ";
         }
         if (hasKitchen==true) {
             String and = needsAnd(query);
-            query+= and + "hasKitchen ";
+            query+= and + "kitchen=true ";
         }
         if (hasTV==true){
             String and = needsAnd(query);
-            query+= and + "hasTV ";
+            query+= and + "tv=true ";
         }
         if (hasParking==true) {
             String and = needsAnd(query);
-            query+= and + "hasParking ";
+            query+= and + "parking=true ";
         }
         if (hasElevator==true) {
             String and = needsAnd(query);
-            query+= and + "hasElevator ";
+            query+= and + "lift=true ";
         }
         if (hasAircondition==true) {
             String and = needsAnd(query);
-            query += and + "hasAircondition ";
+            query += and + "aircondition=true ";
         }
         if(roomType==null || roomType=="" ){
             String and = needsAnd(query);
