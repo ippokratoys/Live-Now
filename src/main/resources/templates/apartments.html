@@ -27,7 +27,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3">
-            <div class="nav-side-menu">
+            <div class="nav-side-menu" th:replace="profile_menu :: nav-bar-profile">
                 <div class="brand"><a style="color: inherit" href="/" th:href="@{/}">Hotel</a></div>
                 <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
 
@@ -125,43 +125,43 @@
                             <h3 class="modal-title text-center">Edit Apartment Info</h3>
                         </div>
                         <div class="modal-body">
-                            <form method="get" action="apartments">
-                                <label for="f-aircondition">aircondition</label>
-                                <input type="checkbox" id="f-aircondition" name="aircondition"><br/>
+                            <!--<form method="get" action="apartments">-->
+                                <!--<label for="f-aircondition">aircondition</label>-->
+                                <!--<input type="checkbox" id="f-aircondition" name="aircondition"><br/>-->
 
-                                <label for="f-events">events</label>
-                                <input type="checkbox" id="f-events" name="events"><br/>
+                                <!--<label for="f-events">events</label>-->
+                                <!--<input type="checkbox" id="f-events" name="events"><br/>-->
 
-                                <label for="f-garage">garage</label>
-                                <input type="checkbox" id="f-garage" name="garage"><br/>
+                                <!--<label for="f-garage">garage</label>-->
+                                <!--<input type="checkbox" id="f-garage" name="garage"><br/>-->
 
-                                <label for="f-heat">heat</label>
-                                <input type="checkbox" id="f-heat" name="heat"><br/>
+                                <!--<label for="f-heat">heat</label>-->
+                                <!--<input type="checkbox" id="f-heat" name="heat"><br/>-->
 
-                                <label for="f-kitchen">kitchen</label>
-                                <input type="checkbox" id="f-kitchen" name="kitchen"><br/>
+                                <!--<label for="f-kitchen">kitchen</label>-->
+                                <!--<input type="checkbox" id="f-kitchen" name="kitchen"><br/>-->
 
-                                <label for="f-lift">lift</label>
-                                <input type="checkbox" id="f-lift" name="lift"><br/>
+                                <!--<label for="f-lift">lift</label>-->
+                                <!--<input type="checkbox" id="f-lift" name="lift"><br/>-->
 
-                                <label for="f-parkings">parkings</label>
-                                <input type="checkbox" id="f-parkings" name="parkings"><br/>
+                                <!--<label for="f-parkings">parkings</label>-->
+                                <!--<input type="checkbox" id="f-parkings" name="parkings"><br/>-->
 
-                                <label for="f-pets">pets</label>
-                                <input type="checkbox" id="f-pets" name="pets"><br/>
+                                <!--<label for="f-pets">pets</label>-->
+                                <!--<input type="checkbox" id="f-pets" name="pets"><br/>-->
 
-                                <label for="f-smoking">smoking</label>
-                                <input type="checkbox" id="f-smoking" name="smoking"><br/>
+                                <!--<label for="f-smoking">smoking</label>-->
+                                <!--<input type="checkbox" id="f-smoking" name="smoking"><br/>-->
 
-                                <label for="f-tv">tv</label>
-                                <input type="checkbox" id="f-tv" name="tv"><br/>
+                                <!--<label for="f-tv">tv</label>-->
+                                <!--<input type="checkbox" id="f-tv" name="tv"><br/>-->
 
-                                <label for="f-wifi">wifi</label>
-                                <input type="checkbox" id="f-wifi" name="wifi"><br/>
+                                <!--<label for="f-wifi">wifi</label>-->
+                                <!--<input type="checkbox" id="f-wifi" name="wifi"><br/>-->
 
-                                <label for="f-wifi">wifi</label>
-                                <input type="checkbox" id="f-wifi" name="wifi"><br/>
-                            </form>
+                                <!--<label for="f-wifi">wifi</label>-->
+                                <!--<input type="checkbox" id="f-wifi" name="wifi"><br/>-->
+                            <!--</form>-->
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

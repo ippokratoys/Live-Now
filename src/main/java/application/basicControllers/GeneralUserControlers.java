@@ -81,4 +81,14 @@ public class GeneralUserControlers {
         return "register";
     }
 
+    @RequestMapping("/profile")
+    String getProfile(Model model,
+                      @AuthenticationPrincipal final UserDetails userDetails
+    ){
+        if(userDetails==null){
+            return "redirect:/login";
+        }
+        return "profile";
+    }
+
 }
