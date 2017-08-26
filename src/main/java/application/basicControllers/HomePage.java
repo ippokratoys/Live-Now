@@ -43,7 +43,8 @@ public class HomePage {
                             @RequestParam(value = "tv",required = false, defaultValue = "false") Boolean tv,
                             @RequestParam(value = "parking",required = false, defaultValue = "false") Boolean parking,
                             @RequestParam(value = "elevator",required = false, defaultValue = "false") Boolean elevator,
-                            @RequestParam(value = "air-condition",required = false, defaultValue = "false") Boolean airCondition
+                            @RequestParam(value = "air-condition",required = false, defaultValue = "false") Boolean airCondition,
+                            @RequestParam(value = "page",required = false, defaultValue = "1") Integer pageNum
     ){
         Date fromDate=null;
         Date toDate=null;
@@ -64,12 +65,20 @@ public class HomePage {
             e.printStackTrace();
             return "index";
         }
-        System.out.println("model = [" + model + "], dateRange = [" + dateRange + "], city = [" + city + "], people = [" + people + "], maxCost = [" + maxCost + "], wifi = [" + wifi + "], fridge = [" + fridge + "], kitchen = [" + kitchen + "], tv = [" + tv + "], parking = [" + parking + "], elevator = [" + elevator + "], airCondition = [" + airCondition + "]");
-//        Iterable pageResults = searchService.getResultList();
-//        Search filters = new Search(fromDate,toDate,city,people);
-        Search filters = new Search(fromDate,toDate,city,people,wifi,fridge,kitchen,tv,parking,elevator,airCondition,"all",maxCost);
-//        Search filters = new Search(fromDate,toDate,city,people,wifi,fridge,kitchen,tv,parking,elevator,airCondition,"good",maxCost);
-//        model.addAttribute("results",pageResults);
+//        System.out.println("model = [" + model + "], dateRange = [" + dateRange + "], city = [" + city + "], people = [" + people + "], maxCost = [" + maxCost + "], wifi = [" + wifi + "], fridge = [" + fridge + "], kitchen = [" + kitchen + "], tv = [" + tv + "], parking = [" + parking + "], elevator = [" + elevator + "], airCondition = [" + airCondition + "]");
+
+        int totalNumOfResults = 0;
+        Search filters = new Search(fromDate,toDate,city,people,wifi,fridge,kitchen,tv,parking,elevator,airCondition,"",maxCost);
+        Iterable searchResults = searchService.getResultList(filters,pageNum,totalNumOfResults);
+        model.addAttribute("results",searchResults);
+        model.addAttribute("curPage",pageNum);
+        model.addAttribute("totalNumOfResults",totalNumOfResults);
+        if(totalNumOfResults%12==0){
+            model.addAttribute("totalPages",totalNumOfResults/12);
+        }else{
+            model.addAttribute("totalPages",totalNumOfResults/12+1);
+        }
+
         model.addAttribute("oldDateStr",dateRange);
         model.addAttribute("oldValues",filters);
         return "result_page";

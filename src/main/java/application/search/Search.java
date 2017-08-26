@@ -1,5 +1,8 @@
 package application.search;
 
+import application.database.Apartment;
+
+import javax.persistence.Query;
 import java.util.Date;
 
 /**
@@ -159,45 +162,63 @@ public class Search {
     private Integer maxCost=0;
 
     private String needsAnd(String curQuery){
-        if(curQuery!=""){
+        if(!curQuery.equals("")){
             return "and ";
         }else{
             return "";
         }
     }
+
+    public void passParameter(String queryStr, Query query){
+        query.setParameter("loc",this.city);
+        query.setParameter("people",this.numberOfPerson);
+        if(maxCost>0){
+            query.setParameter("price",this.maxCost);
+        }
+        if(roomType!=""){
+            query.setParameter("type",this.roomType);
+        }
+        System.out.println(queryStr);
+    }
+
     public String buildQuery(){
         String query="";
+        query+="SELECT * FROM apartment WHERE apartment.location=:loc and apartment.max_people>=:people ";
         if (hasWifi==true) {
             String and = needsAnd(query);
-            query+= and + "hasWifi ";
+            query+= and + "wi-fi=true ";
         }
         if (hasFrige==true) {
             String and = needsAnd(query);
-            query+= and + "hasFrige ";
+            query+= and + "fridge=true ";
         }
         if (hasKitchen==true) {
             String and = needsAnd(query);
-            query+= and + "hasKitchen ";
+            query+= and + "kitchen=true ";
         }
         if (hasTV==true){
             String and = needsAnd(query);
-            query+= and + "hasTV ";
+            query+= and + "tv=true ";
         }
         if (hasParking==true) {
             String and = needsAnd(query);
-            query+= and + "hasParking ";
+            query+= and + "parking=true ";
         }
         if (hasElevator==true) {
             String and = needsAnd(query);
-            query+= and + "hasElevator ";
+            query+= and + "lift=true ";
         }
         if (hasAircondition==true) {
             String and = needsAnd(query);
-            query += and + "hasAircondition ";
+            query += and + "aircondition=true ";
         }
-        if(roomType==null || roomType=="" ){
+        if(roomType!=null && !roomType.equals("")){
             String and = needsAnd(query);
-            query += and + "roomType ";
+            query += and + "type=:type ";
+        }
+        if(maxCost>0){
+            String and =needsAnd(query);
+            query+=and+"price<=:price";
         }
         query+=";";
         System.out.println(query);

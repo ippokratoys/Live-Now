@@ -27,6 +27,8 @@ public class Apartment implements Serializable {
 
 	private short baths;
 
+	private boolean fridge;
+
 	private short bed;
 
 	@Column(name = "clean_price")
@@ -91,21 +93,21 @@ public class Apartment implements Serializable {
 	private boolean wi_fi;
 
 	//bi-directional many-to-one association to BookInfo
+
 	@OneToMany(mappedBy = "apartmentBean")
 	private List<BookInfo> bookInfos;
-
 	//bi-directional many-to-one association to BookReview
+
 	@OneToMany(mappedBy = "apartment")
 	private List<BookReview> bookReviews;
-
 	//bi-directional many-to-one association to Chat
+
 	@OneToMany(mappedBy = "apartment")
 	private List<Chat> chats;
-
 	//bi-directional many-to-one association to Image
+
 	@OneToMany(mappedBy = "apartment")
 	private List<Image> images;
-
 	@ManyToOne
 	@JoinColumn(name = "login_username")
 	private Login login;
@@ -456,6 +458,14 @@ public class Apartment implements Serializable {
 
 	public void setLogin(Login login) {
 		this.login = login;
+	}
+
+	public boolean isFridge() {
+		return fridge;
+	}
+
+	public void setFridge(boolean fridge) {
+		this.fridge = fridge;
 	}
 
 	@Override
