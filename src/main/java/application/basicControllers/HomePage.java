@@ -65,11 +65,10 @@ public class HomePage {
             return "index";
         }
         System.out.println("model = [" + model + "], dateRange = [" + dateRange + "], city = [" + city + "], people = [" + people + "], maxCost = [" + maxCost + "], wifi = [" + wifi + "], fridge = [" + fridge + "], kitchen = [" + kitchen + "], tv = [" + tv + "], parking = [" + parking + "], elevator = [" + elevator + "], airCondition = [" + airCondition + "]");
-//        Iterable pageResults = searchService.getResultList();
 //        Search filters = new Search(fromDate,toDate,city,people);
-        Search filters = new Search(fromDate,toDate,city,people,wifi,fridge,kitchen,tv,parking,elevator,airCondition,"all",maxCost);
-//        Search filters = new Search(fromDate,toDate,city,people,wifi,fridge,kitchen,tv,parking,elevator,airCondition,"good",maxCost);
+        Search filters = new Search(fromDate,toDate,city,people,wifi,fridge,kitchen,tv,parking,elevator,airCondition,"",maxCost);
 //        model.addAttribute("results",pageResults);
+        Iterable pageResults = searchService.getResultList(filters);
         model.addAttribute("oldDateStr",dateRange);
         model.addAttribute("oldValues",filters);
         return "result_page";

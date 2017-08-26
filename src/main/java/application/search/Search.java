@@ -2,6 +2,7 @@ package application.search;
 
 import application.database.Apartment;
 
+import javax.persistence.Query;
 import java.util.Date;
 
 /**
@@ -167,10 +168,22 @@ public class Search {
             return "";
         }
     }
+
+    public void passParameter(String queryStr, Query query){
+        query.setParameter("loc",this.city);
+        query.setParameter("people",this.numberOfPerson);
+        if(maxCost>0){
+            query.setParameter("price",this.maxCost);
+        }
+        if(roomType!=""){
+            query.setParameter("type",this.roomType);
+        }
+        System.out.println(queryStr);
+    }
+
     public String buildQuery(){
         String query="";
-        query+="SELECT apartment.apartment_id FROM apartment WHERE apartment.location=?1,apartment.max_people>=?2 , ";
-
+        query+="SELECT * FROM apartment WHERE apartment.location=:loc and apartment.max_people>=:people ";
         if (hasWifi==true) {
             String and = needsAnd(query);
             query+= and + "wi-fi=true ";
@@ -199,9 +212,13 @@ public class Search {
             String and = needsAnd(query);
             query += and + "aircondition=true ";
         }
-        if(roomType==null || roomType=="" ){
+        if(roomType!=null && !roomType.equals("")){
             String and = needsAnd(query);
-            query += and + "roomType ";
+            query += and + "type=:type ";
+        }
+        if(maxCost>0){
+            String and =needsAnd(query);
+            query+=and+"price<=:price";
         }
         query+=";";
         System.out.println(query);
