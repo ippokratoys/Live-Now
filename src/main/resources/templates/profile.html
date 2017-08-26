@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8"/>
     <!--bootstrap and jquery-->
@@ -38,21 +38,22 @@
                     <span class="a-value"><img class="img-responsive" src="http://www.andyworthington.co.uk/wp-content/uploads/shaker-aamer-nov-2012-1.jpg"/></span>
                     <input id="f-image" class="a-input hidden" type="file" name="image" value=""/>
                 </div>
+
                 <div class="a-field">
                     <label for="f-name" class="a-label">Name : </label>
-                    <span class="a-value"> Tns</span>
+                    <span class="a-value" th:text="${user.name}"> Tns</span>
                     <input id="f-name" class="a-input hidden" type="text" name="name" value=""/>
                 </div>
 
                 <div class="a-field">
                     <label for="f-surname" class="a-label">Surname : </label>
-                    <span class="a-value">Pol</span>
+                    <span class="a-value" th:text="${user.surname}">Pol</span>
                     <input id="f-surname" class="a-input hidden" type="text" name="surname" value=""/>
                 </div>
 
                 <div class="a-field">
                     <label for="f-telephone" class="a-label">Telephone : </label>
-                    <span class="a-value">210-1111</span>
+                    <span class="a-value" th:text="${user.phoneNum}">210-1111</span>
                     <input id="f-telephone" class="a-input hidden" type="text" name="telephone" value=""/>
                 </div>
 

@@ -1,5 +1,6 @@
 package application.basicControllers;
 
+import application.database.repositories.LoginRepository;
 import application.services.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +23,8 @@ public class GeneralUserControlers {
     @Autowired
     RegisterService registerService;
 
+    @Autowired
+    LoginRepository loginRepository;
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     String getLogin(@RequestParam Map<String,String> allParams,
                     @AuthenticationPrincipal final UserDetails userDetails,
@@ -88,6 +91,7 @@ public class GeneralUserControlers {
         if(userDetails==null){
             return "redirect:/login";
         }
+        model.addAttribute("user",loginRepository.findOne(userDetails.getUsername()));
         return "profile";
     }
 

@@ -47,4 +47,5 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
 	compile ("org.springframework.boot:spring-boot-starter-thymeleaf")
     // end::actuator[]
+    compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
 }
