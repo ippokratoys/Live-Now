@@ -1,5 +1,6 @@
 package application.basicControllers;
 
+import application.search.Result;
 import application.search.Search;
 import application.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,17 +68,9 @@ public class HomePage {
         }
 //        System.out.println("model = [" + model + "], dateRange = [" + dateRange + "], city = [" + city + "], people = [" + people + "], maxCost = [" + maxCost + "], wifi = [" + wifi + "], fridge = [" + fridge + "], kitchen = [" + kitchen + "], tv = [" + tv + "], parking = [" + parking + "], elevator = [" + elevator + "], airCondition = [" + airCondition + "]");
 
-        int totalNumOfResults = 0;
         Search filters = new Search(fromDate,toDate,city,people,wifi,fridge,kitchen,tv,parking,elevator,airCondition,"",maxCost);
-        Iterable searchResults = searchService.getResultList(filters,pageNum,totalNumOfResults);
+        Result searchResults = searchService.getResultList(filters,pageNum);
         model.addAttribute("results",searchResults);
-        model.addAttribute("curPage",pageNum);
-        model.addAttribute("totalNumOfResults",totalNumOfResults);
-        if(totalNumOfResults%12==0){
-            model.addAttribute("totalPages",totalNumOfResults/12);
-        }else{
-            model.addAttribute("totalPages",totalNumOfResults/12+1);
-        }
 
         model.addAttribute("oldDateStr",dateRange);
         model.addAttribute("oldValues",filters);

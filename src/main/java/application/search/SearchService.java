@@ -2,6 +2,7 @@ package application.search;
 
 import application.database.Apartment;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +19,9 @@ public class SearchService {
 
     @Autowired
     EntityManager entityManager;
+
 // page : current page from the result list (STARTS FROM 1)
-// total number of results (not just the current page)
-//    WE SUPOSE THAT EACH PAGE HAS 12 RESULTS
-    public Iterable<Apartment> getResultList(Search search,int page,int totalNumOfResults){
+    public Result getResultList(Search search,int page){
         String queryStr = search.buildQuery();
         Query query=entityManager.createNativeQuery(queryStr,Apartment.class);
         search.passParameter(queryStr,query);
@@ -33,6 +33,9 @@ public class SearchService {
             System.out.println(oneApartment.toString());
         }
         System.out.println("\nend of results\n");
-        return apartmentsResult;
+
+        Result searchResults = new Result(apartmentsResult);
+        return searchResults;
+
     }
 }
