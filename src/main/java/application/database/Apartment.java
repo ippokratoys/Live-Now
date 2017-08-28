@@ -94,7 +94,7 @@ public class Apartment implements Serializable {
 
 	//bi-directional many-to-one association to BookInfo
 
-	@OneToMany(mappedBy = "apartmentBean")
+	@OneToMany(mappedBy = "apartment")
 	private List<BookInfo> bookInfos;
 	//bi-directional many-to-one association to BookReview
 
@@ -108,9 +108,15 @@ public class Apartment implements Serializable {
 
 	@OneToMany(mappedBy = "apartment")
 	private List<Image> images;
+
 	@ManyToOne
 	@JoinColumn(name = "login_username")
 	private Login login;
+
+	//bi-directional many-to-one association to Availability
+
+	@OneToMany(mappedBy = "apartment")
+	private List<Availability> availabilities;
 
 	public Apartment() {
 	}
@@ -374,14 +380,14 @@ public class Apartment implements Serializable {
 
 	public BookInfo addBookInfo(BookInfo bookInfo) {
 		getBookInfos().add(bookInfo);
-		bookInfo.setApartmentBean(this);
+		bookInfo.setApartment(this);
 
 		return bookInfo;
 	}
 
 	public BookInfo removeBookInfo(BookInfo bookInfo) {
 		getBookInfos().remove(bookInfo);
-		bookInfo.setApartmentBean(null);
+		bookInfo.setApartment(null);
 
 		return bookInfo;
 	}
@@ -450,6 +456,28 @@ public class Apartment implements Serializable {
 		image.setApartment(null);
 
 		return image;
+	}
+
+	public List<Availability> getAvailabilities() {
+		return this.availabilities;
+	}
+
+	public void setAvailabilities(List<Availability> availabilities) {
+		this.availabilities = availabilities;
+	}
+
+	public Availability addAvailability(Availability availability) {
+		getAvailabilities().add(availability);
+		availability.setApartment(this);
+
+		return availability;
+	}
+
+	public Availability removeAvailability(Availability availability) {
+		getAvailabilities().remove(availability);
+		availability.setApartment(null);
+
+		return availability;
 	}
 
 	public Login getLogin() {

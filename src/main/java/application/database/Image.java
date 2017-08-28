@@ -28,6 +28,7 @@ public class Image implements Serializable {
     @ManyToOne
     @JoinColumn(name="apartment_apartment_id")
     private Apartment apartment;
+
     public Image() {
     }
 

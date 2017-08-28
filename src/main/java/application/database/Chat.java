@@ -26,6 +26,7 @@ public class Chat implements Serializable {
 	//bi-directional many-to-one association to Apartment
 
 	@ManyToOne
+	@JoinColumn(name="apartment_apartment_id")
 	private Apartment apartment;
 
 	//bi-directional many-to-one association to Login

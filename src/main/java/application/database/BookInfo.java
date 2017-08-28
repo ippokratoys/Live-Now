@@ -32,7 +32,7 @@ public class BookInfo implements Serializable {
 	//bi-directional many-to-one association to Apartment
 	@ManyToOne
 	@JoinColumn(name="apartment")
-	private Apartment apartmentBean;
+	private Apartment apartment;
 
 	//bi-directional many-to-one association to Login
 
@@ -74,12 +74,12 @@ public class BookInfo implements Serializable {
 		this.bookOut = bookOut;
 	}
 
-	public Apartment getApartmentBean() {
-		return this.apartmentBean;
+	public Apartment getApartment() {
+		return this.apartment;
 	}
 
-	public void setApartmentBean(Apartment apartmentBean) {
-		this.apartmentBean = apartmentBean;
+	public void setApartment(Apartment apartment) {
+		this.apartment= apartment;
 	}
 
 	public HostReview getHostReview() {
