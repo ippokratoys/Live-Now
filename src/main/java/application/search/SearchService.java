@@ -1,13 +1,9 @@
 package application.search;
 
 import application.database.Apartment;
-
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityManager;
-import java.util.Iterator;
 import java.util.List;
 import javax.persistence.Query;
 
