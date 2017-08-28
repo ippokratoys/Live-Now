@@ -170,7 +170,7 @@ public class Search {
     }
 
     public void passParameter(String queryStr, Query query){
-        query.setParameter("loc",this.city);
+        query.setParameter("loc", this.city );
         query.setParameter("people",this.numberOfPerson);
         if(maxCost>0){
             query.setParameter("price",this.maxCost);
@@ -178,7 +178,6 @@ public class Search {
         if(roomType!=""){
             query.setParameter("type",this.roomType);
         }
-        System.out.println(queryStr);
     }
 
     public String buildQuery(){

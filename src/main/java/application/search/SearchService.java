@@ -33,8 +33,7 @@ public class SearchService {
             System.out.println(oneApartment.toString());
         }
         System.out.println("\nend of results\n");
-
-        Result searchResults = new Result(apartmentsResult);
+        Result searchResults = new Result(apartmentsResult,page);
         return searchResults;
 
     }

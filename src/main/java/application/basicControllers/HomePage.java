@@ -1,5 +1,6 @@
 package application.basicControllers;
 
+import application.database.Apartment;
 import application.search.Result;
 import application.search.Search;
 import application.search.SearchService;

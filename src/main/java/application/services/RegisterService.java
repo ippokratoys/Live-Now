@@ -33,6 +33,7 @@ public class RegisterService{
         if(!allParams.get("password").equals(allParams.get("confirm"))){
             throw new Exception("Passwords do not match");
         }
+        int flag_both=0;
         newLogin=new Login();
         newLogin.setUsername(allParams.get("username"));
         newLogin.setEmail(allParams.get("email"));
@@ -41,6 +42,7 @@ public class RegisterService{
         newLogin.setPassword(allParams.get("password"));
         newLogin.setPhoneNum(allParams.get("telephone"));
         UserRole newUserRole=new UserRole();
+        UserRole newUserRole2=new UserRole();
 
         if(allParams.get("user-role").equals("host")){
             newLogin.setIsHost(true);
@@ -53,18 +55,20 @@ public class RegisterService{
             newLogin.setEnabled(true);
             newUserRole.setRole("customer");
         }else{
+            flag_both=1;
             newLogin.setIsHost(true);
             newLogin.setIsCustomer(true);
             newLogin.setEnabled(true);
             newUserRole.setRole("host");
-            UserRole newUserRole2=new UserRole();
             newUserRole2.setRole("customer");
             newUserRole2.setLogin(newLogin);
-            userRoleRepository.save(newUserRole2);
         }
         newUserRole.setLogin(newLogin);
         loginRepository.save(newLogin);
         userRoleRepository.save(newUserRole);
+        if(flag_both==1){
+            userRoleRepository.save(newUserRole2);
+        }
         return true;
     }
 }
