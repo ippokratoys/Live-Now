@@ -1,8 +1,7 @@
 package application.search;
 
 import application.database.Apartment;
-import application.database.Availability;
-import application.database.BookInfo;
+import application.services.AvailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
@@ -18,6 +17,9 @@ public class SearchService {
     @Autowired
     EntityManager entityManager;
 
+    @Autowired
+    AvailabilityService availabilityService;
+
 
 // page : current page from the result list (STARTS FROM 1)
     public Result getResultList(Search search,int page){
@@ -27,33 +29,11 @@ public class SearchService {
         List<Apartment> apartmentsResult = query.getResultList();
         System.out.println(apartmentsResult.size());
 
-        //////chech the availability
-        String queryStrAvailability="Select * from availability where availability.apartment_apartment_id=:aparId and (:startDate between availability.from_av and availability.to_av) and (:endDate between availability.from_av and availability.to_av)";
-        Query queryAvailability=entityManager.createNativeQuery(queryStrAvailability,Availability.class);
-
-        String queryStrBook="Select * from book_info where book_info.apartment=:aparId and (:startDate between book_info.book_in and book_info.book_out) and (:endDate between book_info.book_in and book_info.book_out)";
-        Query queryBook=entityManager.createNativeQuery(queryStrBook, BookInfo.class);
-
         List<Apartment> apartmentsResultsFinal=new ArrayList<Apartment>();
+
         for (Apartment oneApartment :
                 apartmentsResult) {
-            queryAvailability.setParameter("aparId",oneApartment.getApartmentId());
-            queryAvailability.setParameter("startDate",search.getFromDate());
-            queryAvailability.setParameter("endDate",search.getToDate());
-            queryBook.setParameter("aparId",oneApartment.getApartmentId());
-            queryBook.setParameter("startDate",search.getFromDate());
-            queryBook.setParameter("endDate",search.getToDate());
-
-
-            List<Availability> availabilityResult = queryAvailability.getResultList();
-            List<BookInfo> bookResult = queryBook.getResultList();
-
-            if(availabilityResult.size()<1 || bookResult.size()>0){
-                System.out.println("not available");
-                System.out.println(oneApartment.toString());
-            }else{
-                System.out.println("Available");
-                System.out.println(oneApartment.toString());
+            if(availabilityService.checkAvailability(oneApartment,search.getFromDate(),search.getToDate())){
                 apartmentsResultsFinal.add(oneApartment);
             }
         }
