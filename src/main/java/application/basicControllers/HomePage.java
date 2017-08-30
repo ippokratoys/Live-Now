@@ -24,15 +24,16 @@ public class HomePage {
     @Autowired
     private ApartmentRepository apartmentRepository;
 
-    SimpleDateFormat dateFormat=new SimpleDateFormat("MM/dd/yyy");
+    @Autowired
     private AvailabilityService availabilityService;
-
-    {
-        dateFormat=new SimpleDateFormat("MM/dd/yyy");
-    }
 
     @Autowired
     SearchService searchService;
+
+    SimpleDateFormat dateFormat=new SimpleDateFormat("MM/dd/yyy");
+    {
+        dateFormat=new SimpleDateFormat("MM/dd/yyy");
+    }
 
     @RequestMapping("/")
         String homeController(Model model

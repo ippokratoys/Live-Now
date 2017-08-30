@@ -36,13 +36,15 @@
                 <table class="table table-hover">
                     <tr>
                         <th class="text-center">Apartment Name</th>
+                        <th class="text-center">Add Dates</th>
                         <th class="text-center">Edit Apartment</th>
                         <th class="text-center">View Messages</th>
                     </tr>
-                    <tr>
-                        <td class="text-center">Hooola</td>
+                    <tr th:each="apartment : ${apartments}">
+                        <td class="text-center" th:text="${apartment.name}">Hooola</td>
                         <!--onclick="editApartment(1);"-->
-                        <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit_apartment" onclick="editApartment(1);">Edit Info</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit_apartment" onclick="editApartment(1);" th:onclick="'edit_apartment('+${apartment.apartmentId}+')'">Add Dates</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit_apartment" onclick="editApartment(1);" th:onclick="'edit_apartment('+${apartment.apartmentId}+')'">Edit Info</button></td>
                         <td class="text-center"><button onclick="viewApartmentMsg(1);" type="button" class="btn btn-primary btn-block">Messages</button></td>
                     </tr>
                 </table>

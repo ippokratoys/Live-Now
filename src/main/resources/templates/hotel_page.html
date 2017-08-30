@@ -166,9 +166,9 @@
             <h4><strong>The space</strong></h4>
             <div class="w3-row w3-large">
                 <div class="w3-col s6">
-                    <p><i class="fa fa-fw fa-male"></i> Max people: [[${apartment.maxPeople}]]</p>
-                    <p><i class="fa fa-fw fa-bath"></i> Bathrooms: [[${apartment.baths}]]</p>
-                    <p><i class="fa fa-fw fa-bed"></i> Bedrooms: [[${apartment.rooms}]]</p>
+                    <p th:inline="text"><i class="fa fa-fw fa-male"></i> Max people: [[${apartment.maxPeople}]]</p>
+                    <p th:inline="text"><i class="fa fa-fw fa-bath"></i> Bathrooms: [[${apartment.baths}]]</p>
+                    <p th:inline="text"><i class="fa fa-fw fa-bed"></i> Bedrooms: [[${apartment.rooms}]]</p>
                 </div>
                 <div class="w3-col s6">
                     <p><i class="fa fa-fw fa-clock-o"></i> Check In: After 3PM</p>
@@ -181,11 +181,11 @@
             <div class="w3-row w3-large">
                 <div class="w3-col s6">
                     <!--<p><i class="fa fa-fw fa-shower"></i> Shower</p>-->
-                    <p th:if="${apartemnt.wi_fi}"><i class="fa fa-fw fa-wifi"></i> WiFi</p>
-                    <p th:if="${apartemnt.tv}"><i class="fa fa-fw fa-tv"></i> TV</p>
+                    <p th:if="${apartment.wi_fi}"><i class="fa fa-fw fa-wifi"></i> WiFi</p>
+                    <p th:if="${apartment.tv}"><i class="fa fa-fw fa-tv"></i> TV</p>
                 </div>
                 <div class="w3-col s6">
-                    <p th:if="${apartemnt.kitchen}"><i class="fa fa-fw fa-cutlery"></i> Kitchen</p>
+                    <p th:if="${apartment.kitchen}"><i class="fa fa-fw fa-cutlery"></i> Kitchen</p>
                     <p th:if="${apartment.heat}"><i class="fa fa-fw fa-thermometer"></i> Heating</p>
                     <!--<p><i class="fa fa-fw fa-wheelchair"></i> Accessible</p>-->
                 </div>
@@ -204,7 +204,7 @@
 
             <h4><strong>Transportation</strong></h4>
             <div id="map" class="place-map"></div>
-            <p><i class="fa fa-map-marker" style="width:30px" th:text="${apartment.location}"></i> Gerakara</p>
+            <p><i class="fa fa-map-marker" style="width:30px" th:text="${apartment.location}"></i></p>
             <p th:text="${apartment.trasnportationDescription}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             <!--<p>Subscribe to receive updates on available dates and special offers.</p>-->
             <!--<p><button class="w3-button w3-green w3-third" onclick="document.getElementById('subscribe').style.display='block'">Subscribe</button></p>-->
