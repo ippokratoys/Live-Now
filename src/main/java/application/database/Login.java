@@ -40,7 +40,7 @@ public class Login implements Serializable {
 
 	private String surname;
 
-	private short valid;
+	private boolean valid;
 
 	//bi-directional many-to-one association to UserRole
 
@@ -135,11 +135,11 @@ public class Login implements Serializable {
 		this.surname = surname;
 	}
 
-	public short getValid() {
+	public boolean getValid() {
 		return this.valid;
 	}
 
-	public void setValid(short valid) {
+	public void setValid(boolean valid) {
 		this.valid = valid;
 	}
 

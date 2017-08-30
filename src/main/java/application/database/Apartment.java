@@ -32,7 +32,7 @@ public class Apartment implements Serializable {
 	private short bed;
 
 	@Column(name = "clean_price")
-	private BigDecimal cleanPrice;
+	private short cleanPrice;
 
 	private boolean events;
 
@@ -161,11 +161,11 @@ public class Apartment implements Serializable {
 		this.bed = bed;
 	}
 
-	public BigDecimal getCleanPrice() {
+	public short getCleanPrice() {
 		return this.cleanPrice;
 	}
 
-	public void setCleanPrice(BigDecimal cleanPrice) {
+	public void setCleanPrice(short cleanPrice) {
 		this.cleanPrice = cleanPrice;
 	}
 
