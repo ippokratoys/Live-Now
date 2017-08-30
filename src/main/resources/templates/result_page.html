@@ -31,271 +31,201 @@
 
 <body>
 <div id="wrapper">
-<!-- Navigation -->
-<nav th:replace=" top_bar :: 'nav-bar-only-login'" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">LIVE NOW</a>
+    <!-- Navigation -->
+    <nav th:replace=" top_bar :: 'nav-bar-only-login'" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">LIVE NOW</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/sign-up"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+                    </li>
+                    <li>
+                        <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
+        <!-- /.container -->
+    </nav>
+
+    <!-- Sidebar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+        <form action="result" method="get">
+            <ul class="nav sidebar-nav">
+                <li class="sidebar-brand">
+                    FILTERS
+                </li>
+
                 <li>
-                    <a href="/sign-up"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+                    <input class="date-range" type="text" placeholder="Select Date" required="required" name="date-range" id="date-range" />
+                </li>
+
+                <li>
+                    <input class="place-name" type="text" placeholder="Select City-Neighbor" required="required" name="city" id="city" />
+                </li>
+
+                <li>
+                    <input class="people" type="number" placeholder="4 Persons" required="required" name="people" id="people" />
+                </li>
+
+
+                <li>
+                    <!--<label for="f-room-type">Room type</label>-->
+                    <select id="f-room-type" name="room-type">
+                        <option value="">Apartment or Room</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="room">Room</option>
+                    </select>
                 </li>
                 <li>
-                    <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    <label for="f-elevator">Max Cost</label>
+                    <input type="number" name="max-cost" id="f-max-cost"/>
+                </li>
+
+                <li>
+                    <label for="f-wifi">wi-fi</label>
+                    <input type="checkbox" name="wifi" id="f-wifi"/>
+                </li>
+                <li>
+                    <label for="f-fridge">Fridge</label>
+                    <input type="checkbox" name="fridge" id="f-fridge"/>
+                </li>
+                <li>
+                    <label for="f-kitchen">Kitchen</label>
+                    <input type="checkbox" name="kitchen" id="f-kitchen"/>
+                </li>
+                <li>
+                    <label for="f-tv">TV</label>
+                    <input type="checkbox" name="tv" id="f-tv"/>
+                </li>
+                <li>
+                    <label for="f-parking">parking</label>
+                    <input type="checkbox" name="parking" id="f-parking"/>
+                </li>
+                <li>
+                    <label for="f-elevator">Elevator</label>
+                    <input type="checkbox" name="elevator" id="f-elevator"/>
+                </li>
+                <li>
+                    <label for="f-air-condition">Air Condition</label>
+                    <input type="checkbox" name="air-condition" id="f-air-condition"/>
+                </li>
+                <li>
+                    <button onclick="clearFilters()">Clear</button>
+                </li>
+                <li>
+                    <!--<label for="f-air-condition">Air Condition</label>-->
+                    <input type="submit" name="submit" value="Submit Filters" id="f-submit"/>
                 </li>
             </ul>
+        </form>
+    </nav>
+    <!-- /#sidebar-wrapper -->
 
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="#">Home</a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-            </ul>
+
+    <!-- Page Content -->
+    <button type="button" class="hamburger is-closed" data-toggle="offcanvas" id="filter-btn">
+        <div class="filters-btn-text">
+            filter
         </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container -->
-</nav>
-
-<!-- Sidebar -->
-<nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-    <form action="result" method="get">
-        <ul class="nav sidebar-nav">
-            <li class="sidebar-brand">
-                FILTERS
-            </li>
-
-            <li>
-                <input class="date-range" type="text" placeholder="Select Date" required="required" name="date-range" id="date-range" />
-            </li>
-
-            <li>
-                <input class="place-name" type="text" placeholder="Select City-Neighbor" required="required" name="city" id="city" />
-            </li>
-
-            <li>
-                <input class="people" type="number" placeholder="4 Persons" required="required" name="people" id="people" />
-            </li>
-
-
-            <li>
-                <!--<label for="f-room-type">Room type</label>-->
-                <select id="f-room-type" name="room-type">
-                    <option value="">Apartment or Room</option>
-                    <option value="apartment">Apartment</option>
-                    <option value="room">Room</option>
-                </select>
-            </li>
-            <li>
-                <label for="f-elevator">Max Cost</label>
-                <input type="number" name="max-cost" id="f-max-cost"/>
-            </li>
-
-            <li>
-                <label for="f-wifi">wi-fi</label>
-                <input type="checkbox" name="wifi" id="f-wifi"/>
-            </li>
-            <li>
-                <label for="f-fridge">Fridge</label>
-                <input type="checkbox" name="fridge" id="f-fridge"/>
-            </li>
-            <li>
-                <label for="f-kitchen">Kitchen</label>
-                <input type="checkbox" name="kitchen" id="f-kitchen"/>
-            </li>
-            <li>
-                <label for="f-tv">TV</label>
-                <input type="checkbox" name="tv" id="f-tv"/>
-            </li>
-            <li>
-                <label for="f-parking">parking</label>
-                <input type="checkbox" name="parking" id="f-parking"/>
-            </li>
-            <li>
-                <label for="f-elevator">Elevator</label>
-                <input type="checkbox" name="elevator" id="f-elevator"/>
-            </li>
-            <li>
-                <label for="f-air-condition">Air Condition</label>
-                <input type="checkbox" name="air-condition" id="f-air-condition"/>
-            </li>
-            <li>
-                <button onclick="clearFilters()">Clear</button>
-            </li>
-            <li>
-                <!--<label for="f-air-condition">Air Condition</label>-->
-                <input type="submit" name="submit" value="Submit Filters" id="f-submit"/>
-            </li>
-        </ul>
-    </form>
-</nav>
-<!-- /#sidebar-wrapper -->
-
-
-<!-- Page Content -->
-<button type="button" class="hamburger is-closed" data-toggle="offcanvas" id="filter-btn">
-    <div class="filters-btn-text">
-        filter
-    </div>
-    <!--<span class="hamb-top"></span>-->
-    <!--<span class="hamb-middle"></span>-->
-    <!--<span class="hamb-bottom"></span>-->
-</button>
+        <!--<span class="hamb-top"></span>-->
+        <!--<span class="hamb-middle"></span>-->
+        <!--<span class="hamb-bottom"></span>-->
+    </button>
 
     <div id="page-content-wrapper">
-    <!-- Page Heading -->
-    <div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Results
-                <small>54</small>
-            </h1>
-        </div>
-    </div>
-    <!-- /.row -->
+        <!-- Page Heading -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" th:unless="${results== null || results.searchResult==null || results.searchResult?.size() == 0}">Results
+                        <small th:text="@{results.totalNumberOfResults}"></small>
+                    </h1>
 
-    <!-- Projects Row -->
-
-    <div class="row">
-        <div class="col-md-3 portfolio-item">
-            <a class="hotel-link" href="/hotel?hotel-id=1" th:href="@{/hotel(hotel-id=1,date-range=${oldDateStr})}">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
-                <div class="caption">
-                    <p class="hotel-cost">10€</p>
-                    <p class="number-of-beds">4 beds</p>
-                    <p class="ratings">4.2/5(50)</p>
+                    <h1 class="page-header">
+                        No results found matching your criteria
+                    </h1>
                 </div>
-                <div class="caption-top">
-                    <p class="hotel-type">all the apartment</p>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3 portfolio-item">
-            <a class="hotel-link" href="#">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
-                <div class="caption">
-                    <p class="hotel-cost">15€</p>
-                    <!--<p class="hotel-type">all the apartment</p>-->
-                    <p class="number-of-beds">4 beds</p>
-                    <p class="ratings">5/5(50)</p>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
-            </a>
-        </div>
-        <div class="col-md-3 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
-            </a>
-        </div>
-
-        <div class="col-md-3 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
-            </a>
-        </div>
-        <div class="col-md-3 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
-            </a>
-        </div>
-        <div class="col-md-3 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
-            </a>
-        </div>
-        <div class="col-md-3 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
-            </a>
-        </div>
-
-        <div class="col-md-3 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
-            </a>
-        </div>
-        <div class="col-md-3 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
-            </a>
-        </div>
-        <div class="col-md-3 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
-            </a>
-        </div>
-        <div class="col-md-3 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
-            </a>
-        </div>
-    </div>
-    <!-- /.row -->
-
-    <hr/>
-
-    <!-- Pagination -->
-    <div class="row text-center">
-        <div class="col-lg-12">
-            <ul class="pagination">
-                <!--<li>-->
-                    <!--<a href="#">&laquo;</a>-->
-                <!--</li>-->
-                <li class="active">
-                    <a href="#">1</a>
-                </li>
-                <li>
-                    <a href="#">2</a>
-                </li>
-                <li>
-                    <a href="#">3</a>
-                </li>
-                <li>
-                    <a href="#">4</a>
-                </li>
-                <li>
-                    <a href="#">5</a>
-                </li>
-                <!--<li>-->
-                    <!--<a href="#">&raquo;</a>-->
-                <!--</li>-->
-            </ul>
-        </div>
-    </div>
-    <!-- /.row -->
-
-    <hr/>
-
-    <!-- Footer -->
-    <footer>
-        <div class="row">
-            <div class="col-lg-12">
-                <p>Copyright &copy; Ted 2017 ;)</p>
             </div>
+            <!-- /.row -->
+
+            <!-- Projects Row -->
+
+            <div th:unless="${results== null || results.searchResult==null || results.searchResult.size() == 0}" class="row">
+                <div th:each="oneApartment : ${results.searchResult}" class="col-md-3 portfolio-item">
+                    <a class="hotel-link" href="/hotel?hotel-id=1" th:href="@{/hotel(hotel-id=${oneApartment.apartmentId},date-range=${oldDateStr})}">
+                        <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
+                        <div class="caption">
+                            <p class="hotel-cost" th:text="${oneApartment.price}+'€'">10€</p>
+                            <p class="number-of-beds" th:text="${oneApartment.bed}+' beds'">4 beds</p>
+                            <p class="ratings">4.2/5(50)</p>
+                        </div>
+                        <div class="caption-top">
+                            <p th:if="${oneApartment.type.equals('apartment')}" class="hotel-type">all the apartment</p>
+                            <p th:if="${oneApartment.type.equals('room')}" class="hotel-type">private room</p>
+                            <!--<p th:if="${oneApartment.type.equals('apartment')}" class="hotel-type"></p>-->
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <hr/>
+
+                <!-- Pagination -->
+            <div class="row text-center" th:unless="${results== null || results.searchResult==null || results.searchResult==null || results.searchResult.size() == 0}">
+                <div class="col-lg-12">
+                    <ul class="pagination" th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
+                        <!--<li>-->
+                            <!--<a href="#">&laquo;</a>-->
+                        <!--</li>-->
+                        <li th:each="i : ${#numbers.sequence( 1, results.totalNumberOfPages,1)}" th:classappend="${i==results.curPage ? 'active':''}">
+                            <a href="#" th:href="${urlBuilder.replaceQueryParam('page', i).build().toString()}" th:text="${i}">1</a>
+                        </li>
+                        <!--<li>-->
+                            <!--<a href="#">&raquo;</a>-->
+                        <!--</li>-->
+                    </ul>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <hr/>
+
+            <!-- Footer -->
+            <footer>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>Copyright &copy; Ted 2017 ;)</p>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </footer>
+
         </div>
-        <!-- /.row -->
-    </footer>
-
-</div>
-<!-- /.container -->
-
-</div>
+        <!-- /.container -->
+    </div>
 </div>
 <!-- jQuery -->
 <script src="js/jquery.js"></script>

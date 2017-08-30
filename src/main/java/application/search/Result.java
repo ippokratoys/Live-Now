@@ -71,4 +71,14 @@ public class Result {
     public void setTotalNumberOfPages(int totalNumberOfPages) {
         this.totalNumberOfPages = totalNumberOfPages;
     }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "searchResult=" + searchResult.toString() +
+                ", curPage=" + curPage +
+                ", totalNumberOfResults=" + totalNumberOfResults +
+                ", totalNumberOfPages=" + totalNumberOfPages +
+                '}';
+    }
 }
