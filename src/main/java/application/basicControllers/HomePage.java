@@ -1,9 +1,11 @@
 package application.basicControllers;
 
 import application.database.Apartment;
+import application.database.repositories.ApartmentRepository;
 import application.search.Result;
 import application.search.Search;
 import application.search.SearchService;
+import application.services.AvailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +21,12 @@ import java.util.Date;
  */
 @Controller
 public class HomePage {
+    @Autowired
+    private ApartmentRepository apartmentRepository;
+
     SimpleDateFormat dateFormat=new SimpleDateFormat("MM/dd/yyy");
+    private AvailabilityService availabilityService;
+
     {
         dateFormat=new SimpleDateFormat("MM/dd/yyy");
     }
@@ -78,7 +85,7 @@ public class HomePage {
         return "result_page";
     }
 
-    @RequestMapping("/hotel")
+    @RequestMapping("/apartment")
     String hotePageController(Model model,
                               @RequestParam(name = "hotel-id") int hotelId,
                               @RequestParam(name = "date-range",required = false,defaultValue = "") String dateRange,
@@ -88,6 +95,15 @@ public class HomePage {
         Date to = null;
         System.out.println("model = [" + model + "], hotelId = [" + hotelId + "], dateRange = [" + dateRange + "]");
         System.out.println(dateRange);
+//        get the apertment
+        Apartment apartment = apartmentRepository.findOne(hotelId);
+        if(apartment==null){
+            System.out.println("No apartment with id "+hotelId);
+            return "redirect:/";
+        }
+        model.addAttribute("apartment",apartment);
+
+//        check if the apartment is available on this date
         if(dateRange!=null && !dateRange.trim().equals("")){
             String buff[] = dateRange.split("-") ;
             try {
@@ -98,8 +114,8 @@ public class HomePage {
                 return "redirect:/";
             }
             model.addAttribute("dateRange",dateRange);
-//            if(isHotelAvailable(from,to)==true){
-            if(true){
+
+            if(availabilityService.checkAvailability(apartment,from,to)){
                 model.addAttribute("hotelIsBusy",false);
             }else{
                 model.addAttribute("hotelIsBusy",true);

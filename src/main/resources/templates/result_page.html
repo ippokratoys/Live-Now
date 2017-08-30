@@ -174,7 +174,7 @@
 
             <div th:unless="${results== null || results.searchResult==null || results.searchResult.size() == 0}" class="row">
                 <div th:each="oneApartment : ${results.searchResult}" class="col-md-3 portfolio-item">
-                    <a class="hotel-link" href="/hotel?hotel-id=1" th:href="@{/hotel(hotel-id=${oneApartment.apartmentId},date-range=${oldDateStr})}">
+                    <a class="hotel-link" href="/hotel?hotel-id=1" th:href="@{/apartment(hotel-id=${oneApartment.apartmentId},date-range=${oldDateStr})}">
                         <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
                         <div class="caption">
                             <p class="hotel-cost" th:text="${oneApartment.price}+'€'">10€</p>

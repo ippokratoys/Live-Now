@@ -166,9 +166,9 @@
             <h4><strong>The space</strong></h4>
             <div class="w3-row w3-large">
                 <div class="w3-col s6">
-                    <p><i class="fa fa-fw fa-male"></i> Max people: 4</p>
-                    <p><i class="fa fa-fw fa-bath"></i> Bathrooms: 2</p>
-                    <p><i class="fa fa-fw fa-bed"></i> Bedrooms: 1</p>
+                    <p><i class="fa fa-fw fa-male"></i> Max people: [[${apartment.maxPeople}]]</p>
+                    <p><i class="fa fa-fw fa-bath"></i> Bathrooms: [[${apartment.baths}]]</p>
+                    <p><i class="fa fa-fw fa-bed"></i> Bedrooms: [[${apartment.rooms}]]</p>
                 </div>
                 <div class="w3-col s6">
                     <p><i class="fa fa-fw fa-clock-o"></i> Check In: After 3PM</p>
@@ -180,35 +180,40 @@
             <h4><strong>Amenities</strong></h4>
             <div class="w3-row w3-large">
                 <div class="w3-col s6">
-                    <p><i class="fa fa-fw fa-shower"></i> Shower</p>
-                    <p><i class="fa fa-fw fa-wifi"></i> WiFi</p>
-                    <p><i class="fa fa-fw fa-tv"></i> TV</p>
+                    <!--<p><i class="fa fa-fw fa-shower"></i> Shower</p>-->
+                    <p th:if="${apartemnt.wi_fi}"><i class="fa fa-fw fa-wifi"></i> WiFi</p>
+                    <p th:if="${apartemnt.tv}"><i class="fa fa-fw fa-tv"></i> TV</p>
                 </div>
                 <div class="w3-col s6">
-                    <p><i class="fa fa-fw fa-cutlery"></i> Kitchen</p>
-                    <p><i class="fa fa-fw fa-thermometer"></i> Heating</p>
-                    <p><i class="fa fa-fw fa-wheelchair"></i> Accessible</p>
+                    <p th:if="${apartemnt.kitchen}"><i class="fa fa-fw fa-cutlery"></i> Kitchen</p>
+                    <p th:if="${apartment.heat}"><i class="fa fa-fw fa-thermometer"></i> Heating</p>
+                    <!--<p><i class="fa fa-fw fa-wheelchair"></i> Accessible</p>-->
                 </div>
             </div>
             <hr/>
 
-            <h4><strong>Extra Info</strong></h4>
-            <p>Our apartment is really clean and we like to keep it that way. Enjoy the lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>We accept: <i class="fa fa-credit-card w3-large"></i> <i class="fa fa-cc-mastercard w3-large"></i> <i class="fa fa-cc-amex w3-large"></i> <i class="fa fa-cc-cc-visa w3-large"></i><i class="fa fa-cc-paypal w3-large"></i></p>
+            <h4><strong>Description</strong></h4>
+            <p th:text="${apartment.houseDescription}">Our apartment is really clean and we like to keep it that way. Enjoy the lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <!--<p>We accept: <i class="fa fa-credit-card w3-large"></i> <i class="fa fa-cc-mastercard w3-large"></i> <i class="fa fa-cc-amex w3-large"></i> <i class="fa fa-cc-cc-visa w3-large"></i><i class="fa fa-cc-paypal w3-large"></i></p>-->
             <hr/>
 
             <h4><strong>Rules</strong></h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Subscribe to receive updates on available dates and special offers.</p>
-            <p><button class="w3-button w3-green w3-third" onclick="document.getElementById('subscribe').style.display='block'">Subscribe</button></p>
+            <p th:text="${apartment.rules}">Our apartment is really clean and we like to keep it that way. Enjoy the lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <!--<p>We accept: <i class="fa fa-credit-card w3-large"></i> <i class="fa fa-cc-mastercard w3-large"></i> <i class="fa fa-cc-amex w3-large"></i> <i class="fa fa-cc-cc-visa w3-large"></i><i class="fa fa-cc-paypal w3-large"></i></p>-->
+            <hr/>
+
+            <h4><strong>Transportation</strong></h4>
+            <div id="map" class="place-map"></div>
+            <p><i class="fa fa-map-marker" style="width:30px" th:text="${apartment.location}"></i> Gerakara</p>
+            <p th:text="${apartment.trasnportationDescription}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <!--<p>Subscribe to receive updates on available dates and special offers.</p>-->
+            <!--<p><button class="w3-button w3-green w3-third" onclick="document.getElementById('subscribe').style.display='block'">Subscribe</button></p>-->
         </div>
         <hr/>
 
         <!-- Contact -->
         <div class="w3-container" id="contact">
             <h2>Contact</h2>
-            <div id="map" class="place-map"></div>
-            <i class="fa fa-map-marker" style="width:30px"></i> Chicago, US<br/>
             <i class="fa fa-phone" style="width:30px"></i> Phone: +00 151515<br/>
             <i class="fa fa-envelope" style="width:30px"> </i> Email: mail@mail.com<br/>
             <p>Questions? Go ahead, ask them:</p>
