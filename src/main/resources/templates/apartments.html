@@ -30,7 +30,7 @@
             <div class="nav-side-menu" th:replace="profile_menu :: nav-bar-profile"></div><!--end of side bar-->
         </div><!--end of col-3 for the bar -->
         <!--main content of profile-->
-        <div id="my_info" class="col-sm-">
+        <div id="my_info" class="col-sm-9">
             <h1>My Apartments</h1>
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -43,8 +43,8 @@
                     <tr th:each="apartment : ${apartments}">
                         <td class="text-center" th:text="${apartment.name}">Hooola</td>
                         <!--onclick="editApartment(1);"-->
-                        <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit_apartment" onclick="editApartment(1);" th:onclick="'edit_apartment('+${apartment.apartmentId}+')'">Add Dates</button></td>
-                        <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit_apartment" onclick="editApartment(1);" th:onclick="'edit_apartment('+${apartment.apartmentId}+')'">Edit Info</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#add_dates" onclick="addDates(1);" th:onclick="'addDates('+${apartment.apartmentId}+')'">Add Dates</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit_apartment" onclick="editApartment(1);" th:onclick="'editApartment('+${apartment.apartmentId}+')'">Edit Info</button></td>
                         <td class="text-center"><button onclick="viewApartmentMsg(1);" type="button" class="btn btn-primary btn-block">Messages</button></td>
                     </tr>
                 </table>
@@ -59,44 +59,8 @@
                             <h3 class="modal-title text-center">Edit Apartment Info</h3>
                         </div>
                         <div class="modal-body">
-                            <!--<form method="get" action="apartments">-->
-                                <!--<label for="f-aircondition">aircondition</label>-->
-                                <!--<input type="checkbox" id="f-aircondition" name="aircondition"><br/>-->
-
-                                <!--<label for="f-events">events</label>-->
-                                <!--<input type="checkbox" id="f-events" name="events"><br/>-->
-
-                                <!--<label for="f-garage">garage</label>-->
-                                <!--<input type="checkbox" id="f-garage" name="garage"><br/>-->
-
-                                <!--<label for="f-heat">heat</label>-->
-                                <!--<input type="checkbox" id="f-heat" name="heat"><br/>-->
-
-                                <!--<label for="f-kitchen">kitchen</label>-->
-                                <!--<input type="checkbox" id="f-kitchen" name="kitchen"><br/>-->
-
-                                <!--<label for="f-lift">lift</label>-->
-                                <!--<input type="checkbox" id="f-lift" name="lift"><br/>-->
-
-                                <!--<label for="f-parkings">parkings</label>-->
-                                <!--<input type="checkbox" id="f-parkings" name="parkings"><br/>-->
-
-                                <!--<label for="f-pets">pets</label>-->
-                                <!--<input type="checkbox" id="f-pets" name="pets"><br/>-->
-
-                                <!--<label for="f-smoking">smoking</label>-->
-                                <!--<input type="checkbox" id="f-smoking" name="smoking"><br/>-->
-
-                                <!--<label for="f-tv">tv</label>-->
-                                <!--<input type="checkbox" id="f-tv" name="tv"><br/>-->
-
-                                <!--<label for="f-wifi">wifi</label>-->
-                                <!--<input type="checkbox" id="f-wifi" name="wifi"><br/>-->
-
-                                <!--<label for="f-wifi">wifi</label>-->
-                                <!--<input type="checkbox" id="f-wifi" name="wifi"><br/>-->
-                            <!--</form>-->
                         </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
@@ -110,39 +74,73 @@
 
                 </div>
             </div>
-            <!--<form method="post" action="/profile">-->
-                <!--<div class="a-field">-->
-                    <!--<label for="f-image" class="a-label hidden">Photo : </label>-->
-                    <!--<span class="a-value"><img class="img-responsive" src="http://www.andyworthington.co.uk/wp-content/uploads/shaker-aamer-nov-2012-1.jpg"/></span>-->
-                    <!--<input id="f-image" class="a-input hidden" type="file" name="image" value=""/>-->
-                <!--</div>-->
-                <!--<div class="a-field">-->
-                    <!--<label for="f-name" class="a-label">Name : </label>-->
-                    <!--<span class="a-value"> Tns</span>-->
-                    <!--<input id="f-name" class="a-input hidden" type="text" name="name" value=""/>-->
-                <!--</div>-->
 
-                <!--<div class="a-field">-->
-                    <!--<label for="f-surname" class="a-label">Surname : </label>-->
-                    <!--<span class="a-value">Pol</span>-->
-                    <!--<input id="f-surname" class="a-input hidden" type="text" name="surname" value=""/>-->
-                <!--</div>-->
+            <div id="add_dates" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
 
-                <!--<div class="a-field">-->
-                    <!--<label for="f-telephone" class="a-label">Telephone : </label>-->
-                    <!--<span class="a-value">210-1111</span>-->
-                    <!--<input id="f-telephone" class="a-input hidden" type="text" name="telephone" value=""/>-->
-                <!--</div>-->
+                    <!--Modal content-->
+                    <div id="add_actual" class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title text-center">Add Dates </h3>
+                        </div>
+                        <div class="modal-body">
+                            <table id="dates_table" class="table table-hover">
+                                <tr>
+                                    <th class="text-center">From</th>
+                                    <th class="text-center">To</th>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">1/1/1</td>
+                                    <td class="text-center">2/1/2</td>
+                                </tr>
+                            </table>
+                            <form id="add_date_form" th:action="@{/profile/host/apartments}" action="/profile/host/apartments" method="post">
+                                <input class="daterangepicker_input" type="text" name="date_range" value=" " required="required"/>
+                                <input type="submit" value="Add Date"/>
+                            </form>
+                            <p>Comming Soon</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
 
-                <!--<input class="hidden" type="submit" value="Submit edits"/>-->
-            <!--</form>-->
+                    <div id="add_loading" class="modal-content">
+                        <div class="modal-header text-center">
+                            <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
 
         </div>
     </div>
-    <div class="row col-sm-offset-3">
-        <button class="bottom-right" id="edit-info" onclick="editInfo()">Edit My Info</button>
-    </div>
 </div>
+<script>
+    var cur_apartment_id;
+    $(function() {
+        cur_apartment_id=-1;
+        $('input[name="date_range"]').daterangepicker({
+            autoApply: true
+        });
+        $( "form" ).on( "submit", function( event ) {
+            event.preventDefault();
+            $.post(
+                '/profile/host/apartment/dates/'+cur_apartment_id,
+                $('#add_date_form').serialize()
+            ).success(function (data) {
+                if(data === true ){
+                    addDates(cur_apartment_id);
+                }else {
+                    alert("Something is wrong with the dates.Make sure that it's not already in use");
+                }
+            })
+        });
+
+    });
+    </script>
 </body>
 
 </html>
