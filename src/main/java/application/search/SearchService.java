@@ -38,7 +38,7 @@ public class SearchService {
             }
         }
         System.out.println("\nend of results\n");
-        Result searchResults = new Result(apartmentsResult,page);
+        Result searchResults = new Result(apartmentsResultsFinal,page);
         return searchResults;
 
     }

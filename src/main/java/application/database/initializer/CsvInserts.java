@@ -143,7 +143,7 @@ public class CsvInserts{
                 UserRole userRole=new UserRole();
                 userRole.setRoleId(Integer.parseInt(arr_in[0]));
                 userRole.setRole(arr_in[2]);
-                userRole.setLogin(loginRepository.findOne(arr_in[3]));
+                userRole.setLogin(loginRepository.findOne(arr_in[1]));
                 userRoleRepository.save(userRole);
             }
         }catch (FileNotFoundException e) {
