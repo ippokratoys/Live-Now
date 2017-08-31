@@ -22,21 +22,18 @@ public class Result {
     }
 
     public Result(List<Apartment> searchResult,int curPage) {
-        if(searchResult.size()==0 || searchResult.size()<(curPage-1)*12+1){
-            System.out.println("None");
-            return;
-        }
-        int until,begin;
-        begin=(curPage-1)*12;
-        if(searchResult.size()%12==0){
-            until=begin+12;
-        }else {
-            until=begin+(searchResult.size()%12);
-        }
-        this.searchResult=searchResult.subList(begin,until);
-        this.curPage=curPage;
-        this.totalNumberOfResults=searchResult.size();
         this.totalNumberOfPages=searchResult.size()/12 + 1;
+        this.curPage=curPage;
+        if(curPage==this.totalNumberOfPages){
+            if(searchResult.size()%12==0){
+                System.out.println("None for this page");
+                return;
+            }
+            this.searchResult=searchResult.subList((curPage-1)*12,(curPage-1)*12+searchResult.size()%12);
+        }else{
+            this.searchResult=searchResult.subList((curPage-1)*12,(curPage-1)*12+12);
+        }
+        this.totalNumberOfResults=searchResult.size();
 //        antoistixa pernontas ta megethi klp dwse times kai sta alla!(12 ana selida)
     }
 
