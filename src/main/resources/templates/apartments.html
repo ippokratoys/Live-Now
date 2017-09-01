@@ -4,8 +4,6 @@
     <meta charset="UTF-8"/>
     <!--bootstrap and jquery-->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-    <script th:src="@{/js/jquery.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
 
     <!--fonts and icons-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"/>
@@ -13,13 +11,10 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
 
     <!--for date range picker-->
-    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/daterangepicker.js}" src="js/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}" href="css/daterangepicker.css"/>
 
     <!--custom css/js-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}" href="css/profile.css"/>
-    <script type="text/javascript" th:src="@{/js/profile.js}" src="js/profile.js"></script>
 
     <title>My Apartments</title>
 </head>
@@ -45,7 +40,7 @@
                         <!--onclick="editApartment(1);"-->
                         <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#add_dates" onclick="addDates(1);" th:onclick="'addDates('+${apartment.apartmentId}+')'">Add Dates</button></td>
                         <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit_apartment" onclick="editApartment(1);" th:onclick="'editApartment('+${apartment.apartmentId}+')'">Edit Info</button></td>
-                        <td class="text-center"><button onclick="viewApartmentMsg(1);" type="button" class="btn btn-primary btn-block">Messages</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#view_chats" onclick="viewApartmentChats(1);" th:onclick="'viewApartmentChats('+${apartment.apartmentId}+')'">Messages</button></td>
                     </tr>
                 </table>
             </div>
@@ -59,6 +54,164 @@
                             <h3 class="modal-title text-center">Edit Apartment Info</h3>
                         </div>
                         <div class="modal-body">
+                            <form class="add-place-form" th:object="${apartment}" method="post" th:action="@{/profile/host/apartment/1}" id="edit-apartment-form">
+                                <input type="hidden" th:field="*{apartmentId}"/>
+                                <div class="form-row">
+                                    <div class="form-group col-xs-12 col-md-6">
+                                        <label class="col-form-label" for="f-price">Basic Price</label>
+                                        <input th:field="*{price}" class="form-control" type="number" min="1" max="40000" name="price" id="f-price" required="required"/>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-md-6">
+                                        <label class="col-form-label" for="f-apartment-type">Apartment Type</label>
+                                        <select th:field="*{type}" class="form-control" name="apartment-type" id="f-apartment-type">
+                                            <option value="whole_apartment">Whole Apartment</option>
+                                            <option value="private_room">Private Room</option>
+                                            <option value="shared_room">Shared Room</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-xs-12 col-md-4">
+                                        <label class="col-form-label" for="f-name">Name</label>
+                                        <input th:field="*{name}" type="text" class="form-control" id="f-name" required="required"/>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-md-4">
+                                        <label class="col-form-label" for="f-location-name">Location</label>
+                                        <input th:field="*{location}" class="form-control" name="location-name" id="f-location-name" required="required"/>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-md-4">
+                                        <label class="col-form-label">Select on map where is this place</label>
+                                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#choose-location">Select</button>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-xs-12 col-md-3">
+                                        <label class="col-form-label" for="f-area">Area (square metre)</label>
+                                        <input th:field="*{area}" class="form-control" type="number" min="1" max="40000" name="area" id="f-area" required="required"/>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-md-3">
+                                        <label class="col-form-label" for="f-baths">Baths</label>
+                                        <input th:field="*{baths}" class="form-control" type="number" min="1" max="100" name="baths" id="f-baths" required="required"/>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-md-3">
+                                        <label class="col-form-label" for="f-bed">Bed</label>
+                                        <input th:field="*{bed}" class="form-control" type="number" min="1" max="100" name="bed" id="f-bed" required="required"/>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-md-3">
+                                        <label class="col-form-label" for="f-rooms">Rooms</label>
+                                        <input th:field="*{rooms}" class="form-control" type="number" min="1" max="100" name="rooms" id="f-rooms" required="required"/>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-xs-12 col-md-12">
+                                        <label class="col-form-label" for="f-clean-price">Cleaning Price (euro)</label>
+                                        <input th:field="*{cleanPrice}" class="form-control" type="number" min="0" max="10000" name="clean-price" id="f-clean-price" required="required"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-xs-12 col-md-3">
+                                        <label class="col-form-label" for="f-min-people">Minimum people</label>
+                                        <input th:field="*{minPeople}" class="form-control" type="number" min="1" max="1000" name="min-people" id="f-min-people" required="required"/>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-md-3">
+                                        <label class="col-form-label" for="f-max-people">Maximum people</label>
+                                        <input th:field="*{maxPeople}" class="form-control" type="number" min="1" max="1000" name="max-people" id="f-max-people" required="required"/>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-md-3">
+                                        <label class="col-form-label" for="f-plus-price">Extra Cost per people(euro)</label>
+                                        <input th:field="*{plusPrice}" class="form-control" type="number" min="1" max="1000" name="plus-price" id="f-plus-price" required="required"/>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-md-3">
+                                        <label class="col-form-label" for="f-standard-people">Standard People</label>
+                                        <input th:field="*{standardPeople}" class="form-control" type="number" min="1" max="1000" name="standard-people" id="f-standard-people" required="required"/>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-xs-12">
+                                        <label class="col-form-label" for="f-description">Description (max 255)</label>
+                                        <textarea th:field="*{houseDescription}" class="form-control" name="description" id="f-description" form="edit-apartment-form" required="required" maxlength="255"> </textarea>
+                                    </div>
+                                    <div class="form-group col-xs-12">
+                                        <label class="col-form-label" for="f-rules">Rules (max 255)</label>
+                                        <textarea th:field="*{rules}" class="form-control" name="rules" id="f-rules" form="edit-apartment-form" required="required" maxlength="255"> </textarea>
+                                    </div>
+                                    <div class="form-group col-xs-12">
+                                        <label class="col-form-label" for="f-transportation">Transportation (max 255)</label>
+                                        <textarea th:field="*{trasnportationDescription}" class="form-control" name="trasportation" id="f-transportation" form="edit-apartment-form" required="required" maxlength="255"> </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-xs-12 col-md-6">
+                                        <label for="f-aircondition">
+                                            <input th:field="*{aircondition}" type="checkbox" id="f-aircondition" name="aircondition"/>
+                                            aircondition
+                                        </label>
+
+                                        <label class="pull-right" for="f-events">
+                                            <input th:field="*{events}" type="checkbox" id="f-events" name="events"/>
+                                            events
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-md-6">
+                                        <label for="f-garage">
+                                            <input th:field="*{garage}" type="checkbox" id="f-garage" name="garage"/>
+                                            garage
+                                        </label>
+                                        <label class="pull-right" for="f-heat">
+                                            <input th:field="*{heat}" type="checkbox" id="f-heat" name="heat"/>
+                                            heat
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-md-6">
+                                        <label for="f-kitchen">
+                                            <input th:field="*{kitchen}" type="checkbox" id="f-kitchen" name="kitchen"/>
+                                            kitchen
+                                        </label>
+
+                                        <label class="pull-right" for="f-lift">
+                                            <input th:field="*{lift}" type="checkbox" id="f-lift" name="lift"/>
+                                            lift
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-md-6">
+                                        <label for="f-parkings">
+                                            <input th:field="*{parking}" type="checkbox" id="f-parkings" name="parkings"/>
+                                            parkings
+                                        </label>
+
+                                        <label class="pull-right" for="f-pets">
+                                            <input th:field="*{pets}" type="checkbox" id="f-pets" name="pets"/>
+                                            pets
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-md-6">
+                                        <label for="f-smoking">
+                                            <input th:field="*{smoking}" type="checkbox" id="f-smoking" name="smoking"/>
+                                            smoking
+                                        </label>
+
+                                        <label class="pull-right" for="f-tv">
+                                            <input th:field="*{tv}" type="checkbox" id="f-tv" name="tv"/>
+                                            tv
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-md-6">
+                                        <label for="f-wifi">
+                                            <input th:field="*{wi_fi}" type="checkbox" id="f-wifi" name="wifi"/>
+                                            wifi
+                                        </label>
+                                    </div>
+                                </div>
+                                <input class="btn btn-block btn-primary" id="edit-place-btn" type="submit" value="Edit Place Info"/>
+                                <input th:field="*{lat}" id="f-lat" name="lat" class="hidden" required="required"/>
+                                <input th:field="*{lon}" id="f-lon" name="lon" class="hidden" required="required"/>
+                            </form>
                         </div>
 
                         <div class="modal-footer">
@@ -114,18 +267,58 @@
 
                 </div>
             </div>
+            <div id="view_chats" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+
+                    <!--Modal content-->
+                    <div id="chats_actual" class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title text-center">View Chats Of Apartment</h3>
+                        </div>
+                        <div class="modal-body">
+                            <table id="chats_table" class="table table-hover">
+                                <tr>
+                                    <th class="text-center">From</th>
+                                    <th class="text-center">To</th>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">1/1/1</td>
+                                    <td class="text-center">2/1/2</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                    <div id="chats_loading" class="modal-content">
+                        <div class="modal-header text-center">
+                            <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
 
         </div>
     </div>
 </div>
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" th:src="@{/js/daterangepicker.js}" src="js/daterangepicker.js"></script>
+<script type="text/javascript" th:src="@{/js/profile.js}" src="js/profile.js"></script>
 <script>
     var cur_apartment_id;
+
     $(function() {
         cur_apartment_id=-1;
         $('input[name="date_range"]').daterangepicker({
             autoApply: true
         });
-        $( "form" ).on( "submit", function( event ) {
+        $( "#add_date_form" ).on( "submit", function( event ) {
             event.preventDefault();
             $.post(
                 '/profile/host/apartment/dates/'+cur_apartment_id,
@@ -139,6 +332,20 @@
             })
         });
 
+        $( "#edit-apartment-form" ).on( "submit", function( event ) {
+            event.preventDefault();
+            $.post(
+                '/profile/host/apartment/'+cur_apartment_id,
+                $('#edit-apartment-form').serialize()
+            ).success(function (data) {
+                if(data === true ){
+                    editApartment(cur_apartment_id);
+                    alert("Done");
+                }else {
+                    alert("Something is wrong with the apartment info or your authentication");
+                }
+            })
+        })
     });
     </script>
 </body>

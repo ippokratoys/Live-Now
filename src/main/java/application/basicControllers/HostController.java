@@ -4,9 +4,9 @@ import application.database.Apartment;
 import application.database.Availability;
 import application.database.repositories.ApartmentRepository;
 import application.database.repositories.LoginRepository;
+import application.services.ApartmentService;
 import application.services.AvailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +33,8 @@ public class HostController {
     @Autowired
     LoginRepository loginRepository;
     @Autowired
+    ApartmentService apartmentService;
+    @Autowired
     private ApartmentRepository apartmentRepository;
 
     @RequestMapping(value = "/profile/host/add_apartment",method = RequestMethod.POST)
@@ -42,8 +44,14 @@ public class HostController {
 
     ){
         System.out.println( formApartment.toString() );
-        System.out.println(formApartment.getName());
-        return "redirect:/";
+        System.out.println("Creating Hotel " +formApartment.getName());
+        try {
+            apartmentService.createApartment(loginRepository.findOne(userDetails.getUsername()),formApartment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/";
+        }
+        return "redirect:/profile";
     }
 
     @RequestMapping(value = "/profile/host/add_apartment",method = RequestMethod.GET)
@@ -63,6 +71,11 @@ public class HostController {
             return "redirect:/login";
         }
         List<Apartment> apartments = loginRepository.findOne(userDetails.getUsername()).getApartments();
+
+//        we add this just to use the form for update(just in case)
+        Apartment apartment = new Apartment();
+        model.addAttribute("apartment",apartment);
+
         model.addAttribute("apartments",apartments);
         return "apartments";
     }
@@ -123,6 +136,40 @@ public class HostController {
             e.printStackTrace();
             return false;
         }
+        return true;
+    }
+
+    @RequestMapping(value = "/profile/host/apartment/{apartment_id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    Apartment getApartmentInfo(@AuthenticationPrincipal final UserDetails userDetails,
+                                @PathVariable(value = "apartment_id") int apartmentId
+
+    ){
+        Apartment apartment = apartmentRepository.findOne(apartmentId);
+        if(apartment==null){
+            System.out.println("No apartment with id "+apartmentId);
+            return null;
+        }
+        return apartment;
+    }
+
+    @RequestMapping(value = "/profile/host/apartment/{apartment_id}",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    Boolean editApartmentInfo(@AuthenticationPrincipal final UserDetails userDetails,
+                              @PathVariable(value = "apartment_id") int apartmentId,
+                              @ModelAttribute Apartment formApartment
+    ){
+        System.out.println("-----------------------");
+        System.out.println(formApartment.toString());
+        try{
+            if(apartmentService.editApartment(formApartment.getApartmentId(),formApartment)==false){
+                return false;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        System.out.println("-----------------------");
         return true;
     }
 }

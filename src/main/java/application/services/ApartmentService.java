@@ -31,5 +31,8 @@ public class ApartmentService{
         apartmentRepository.save(apartment);
         return true;
     }
+    public Boolean editApartment(int apartmentId,Apartment newApartment) throws Exception{
+        return true;
+    }
 
 }
