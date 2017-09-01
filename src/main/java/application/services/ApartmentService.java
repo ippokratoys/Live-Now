@@ -1,8 +1,9 @@
 package application.services;
 
-import application.database.Apartment;
-import application.database.Login;
-import application.database.UserRole;
+import application.database.*;
+import application.database.repositories.ChatRepository;
+import application.database.repositories.LoginRepository;
+import application.database.repositories.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,15 @@ public class ApartmentService{
 
     @Autowired
     ApartmentRepository apartmentRepository;
+
+    @Autowired
+    LoginRepository loginRepository;
+
+    @Autowired
+    ChatRepository chatRepository;
+
+    @Autowired
+    MessageRepository messageRepository;
 
     public Boolean createApartment(Login login, Apartment apartment) throws Exception{
         List<UserRole> listUserRole=  login.getUserRoles();
@@ -106,11 +116,43 @@ public class ApartmentService{
     }
 
     public Boolean newMessageFormHost(String message,int chatId){
-        System.out.println("must create this :( !!!");
+        Chat chat=chatRepository.findOne(chatId);
+        Message newMessage= new Message();
+        newMessage.setChat(chat);
+        newMessage.setContent(message);
+//            newMessage.setDateTime();
+        messageRepository.save(newMessage);
         return true;
     }
 
     public Boolean newMessageFromUser(String message, String username, int apartmentId){
+        int notCreateNew=0;
+        Chat createdChat=null;
+        Message newMessage=new Message();
+        Apartment apartment=apartmentRepository.findOne(apartmentId);
+        List<Chat> chatlist=chatRepository.findAllByApartment(apartment);
+        for(Chat chat : chatlist){
+            if(chat.getLogin().getUsername().equals(username)){
+               notCreateNew=1;
+               createdChat=chat;
+               break;
+            }
+        }
+        if(notCreateNew==1){
+            newMessage.setChat(createdChat);
+            newMessage.setContent(message);
+//            newMessage.setDateTime();
+            messageRepository.save(newMessage);
+        }else{
+            Chat newChat=new Chat();
+            newChat.setApartment(apartment);
+            newChat.setLogin(loginRepository.findOne(username));
+            createdChat=chatRepository.save(newChat);
+            newMessage.setChat(createdChat);
+            newMessage.setContent(message);
+//            newMessage.setDateTime();
+            messageRepository.save(newMessage);
+        }
         return true;
     }
 }

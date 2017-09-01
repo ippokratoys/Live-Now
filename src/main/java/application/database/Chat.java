@@ -22,8 +22,6 @@ public class Chat implements Serializable {
 	@Column(name="chat_id")
 	private int chatId;
 
-	@Column(name="contact_with")
-	private int contactWith;
 
 	//bi-directional many-to-one association to Apartment
 
@@ -86,14 +84,6 @@ public class Chat implements Serializable {
 
 	public void setLogin(Login login) {
 		this.login = login;
-	}
-
-	public int getContactWith() {
-		return contactWith;
-	}
-
-	public void setContactWith(int contactWith) {
-		this.contactWith = contactWith;
 	}
 
 }
