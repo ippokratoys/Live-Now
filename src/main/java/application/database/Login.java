@@ -1,5 +1,7 @@
 package application.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
@@ -45,19 +47,24 @@ public class Login implements Serializable {
 	//bi-directional many-to-one association to UserRole
 
 	@OneToMany(mappedBy="login")
+	@JsonIgnore
 	private List<UserRole> userRoles;
 	//bi-directional many-to-one association to Apartment
 
 	@OneToMany(mappedBy="login")
+	@JsonIgnore
 	private List<Apartment> apartments;
 
 	@OneToMany(mappedBy="login")
+	@JsonIgnore
 	private List<HostReview> hostReviews;
 
 	@OneToMany(mappedBy="login")
+	@JsonIgnore
 	private List<Chat> chats;
 
 	@OneToMany(mappedBy="login")
+	@JsonIgnore
 	private List<BookInfo> bookInfos;
 
 	public Login() {
