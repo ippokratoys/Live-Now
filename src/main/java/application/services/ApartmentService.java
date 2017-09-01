@@ -69,6 +69,39 @@ public class ApartmentService{
 
 
     public Boolean editApartment(int apartmentId,Apartment newApartment) throws Exception{
+        Apartment apartment=apartmentRepository.findOne(apartmentId);
+        apartment.setAircondition(newApartment.getAircondition());
+        apartment.setArea(newApartment.getArea());
+        apartment.setBaths(newApartment.getBaths());
+        apartment.setBed(newApartment.getBed());
+        apartment.setCleanPrice(newApartment.getCleanPrice());
+        apartment.setEvents(newApartment.getEvents());
+        apartment.setFridge(newApartment.isFridge());
+        apartment.setGarage(newApartment.getGarage());
+        apartment.setHeat(newApartment.getHeat());
+        apartment.setHouseDescription(newApartment.getHouseDescription());
+        apartment.setKitchen(newApartment.getKitchen());
+        apartment.setLat(newApartment.getLat());
+        apartment.setLeavingRoom(newApartment.getLeavingRoom());
+        apartment.setLift(newApartment.getLift());
+        apartment.setLocation(newApartment.getLocation());
+        apartment.setLon(newApartment.getLon());
+        apartment.setMaxPeople(newApartment.getMaxPeople());
+        apartment.setMinPeople(newApartment.getMinPeople());
+        apartment.setName(newApartment.getName());
+        apartment.setParking(newApartment.getParking());
+        apartment.setPets(newApartment.getPets());
+        apartment.setPlusPrice(newApartment.getPlusPrice());
+        apartment.setPrice(newApartment.getPrice());
+        apartment.setRooms(newApartment.getRooms());
+        apartment.setRules(newApartment.getRules());
+        apartment.setSmoking(newApartment.getSmoking());
+        apartment.setStandardPeople(newApartment.getStandardPeople());
+        apartment.setTrasnportationDescription(newApartment.getTrasnportationDescription());
+        apartment.setTv(newApartment.getTv());
+        apartment.setType(newApartment.getType());
+        apartment.setWi_fi(newApartment.getWi_fi());
+        apartmentRepository.save(apartment);
         return true;
     }
 
