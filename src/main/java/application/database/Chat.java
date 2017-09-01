@@ -1,5 +1,7 @@
 package application.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
@@ -27,6 +29,7 @@ public class Chat implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name="apartment_apartment_id")
+	@JsonIgnore
 	private Apartment apartment;
 
 	//bi-directional many-to-one association to Login

@@ -76,3 +76,7 @@ function viewApartmentChats(apartmentId){
     // $("#chats_loading").addClass("hidden");
 
 }
+
+function userShowChat(chat_id) {
+
+}

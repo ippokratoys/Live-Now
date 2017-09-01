@@ -2,7 +2,10 @@ package application.basicControllers;
 
 import application.database.Apartment;
 import application.database.Availability;
+import application.database.Chat;
+import application.database.Message;
 import application.database.repositories.ApartmentRepository;
+import application.database.repositories.ChatRepository;
 import application.database.repositories.LoginRepository;
 import application.services.ApartmentService;
 import application.services.AvailabilityService;
@@ -24,6 +27,8 @@ import java.util.List;
 @Controller
 public class HostController {
     SimpleDateFormat dateFormat=new SimpleDateFormat("MM/dd/yyy");
+    private ChatRepository chatRepository;
+
     {
         dateFormat=new SimpleDateFormat("MM/dd/yyy");
     }
@@ -172,4 +177,61 @@ public class HostController {
         System.out.println("-----------------------");
         return true;
     }
+
+    @RequestMapping(value = "/profile/host/apartment/chats/{apartment_id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    List<Chat> getApartmentChat(@AuthenticationPrincipal final UserDetails userDetails,
+                                @PathVariable(value = "apartment_id") int apartmentId
+    ){
+        if(apartmentService.authentication(userDetails,apartmentId)==false){
+            System.out.println("not your apartment "+userDetails.toString()+"|||"+apartmentId);
+            return null;
+        }
+        Apartment apartment = apartmentRepository.findOne(apartmentId);
+        if(apartment==null){
+            return null;
+        }
+        return apartment.getChats();
+    }
+
+    @RequestMapping(value = "/profile/host/chats/messages/{chat_id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    List<Message> getChatMessages(@AuthenticationPrincipal final UserDetails userDetails,
+                                   @PathVariable(value = "chat_id") int chatId
+    ){
+        Chat chat=chatRepository.findOne(chatId);
+        if(chat==null){
+            return null;
+        }
+        if(apartmentService.authentication(userDetails,chat.getApartment())==false){
+            System.out.println("not your chat "+userDetails.toString()+"|||"+chatId);
+            return null;
+        }
+        return chat.getMessages();
+    }
+
+    @RequestMapping(value = "/profile/host/chats/messages/{chat_id}",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    Boolean newChatMessage(@AuthenticationPrincipal final UserDetails userDetails,
+                           @PathVariable(value = "chat_id") int chatId,
+                           @RequestParam("message") String message
+    ){
+        Chat chat=chatRepository.findOne(chatId);
+        if(chat==null){
+            return false;
+        }
+        if(apartmentService.authentication(userDetails,chat.getApartment())==false){
+            System.out.println("not your chat "+userDetails.toString()+"|||"+chatId);
+            return false;
+        }
+
+        if(apartmentService.newMessageFormHost(message,chatId)==false){
+            System.out.println("the service not OK");
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
 }

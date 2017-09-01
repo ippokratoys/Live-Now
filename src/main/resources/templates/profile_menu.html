@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">>
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
 <div class="nav-side-menu" th:fragment="nav-bar-profile">
     <div class="brand"><a style="color: inherit" href="/" th:href="@{/}">Hotel</a></div>
@@ -19,7 +19,7 @@
                 <a href="#"><i class="fa fa-gift fa-lg"></i> User Menu <span class="arrow"></span></a>
             </li>
             <ul sec:authorize="hasAuthority('customer')" class="sub-menu collapse" id="user-menu">
-                <li><a href="#">CSS3 Animation</a></li>
+                <li th:classappend="${#httpServletRequest.getRequestURI().contains('/user/chats') ? 'active':''}"><a href="/profile/user/chats">Messages</a></li>
                 <li><a href="#">General</a></li>
                 <li><a href="#">Buttons</a></li>
                 <li><a href="#">Tabs Accordions</a></li>

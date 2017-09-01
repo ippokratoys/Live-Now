@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8"/>
+    <!--bootstrap and jquery-->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <!--fonts and icons-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!--for date range picker-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}" href="css/daterangepicker.css"/>
+
+    <!--custom css/js-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}" href="css/profile.css"/>
+
+    <title>My Apartments</title>
+</head>
+<body>
+<div class="row">
+    <div class="col-sm-3">
+        <div class="nav-side-menu" th:replace="profile_menu :: nav-bar-profile"></div><!--end of side bar-->
+    </div><!--end of col-3 for the bar -->
+    <div id="my_chats" class="col-sm-9">
+        <h1>My Chats With Hosts</h1>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <th class="text-center">Apartment Name</th>
+                    <th class="text-center">Number Of messages</th>
+                    <th class="text-center">View chat</th>
+                </tr>
+                <tr th:each="chat : ${chats}" data-toggle="modal" data-target="#chat-modal" onclick="userShowChat(1);" th:onclick="${'userShowChat('+chat.chatId+')'}">
+                    <td class="text-center" th:text="${chat.apartment.name}">House Deep</td>
+                    <td class="text-center" th:text="${chat.messages?.size()}">11</td>
+                    <td class="text-center">Click me ;(</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<div id="chat-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!--Modal content-->
+        <div id="chat-actual" class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title text-center">Chat</h3>
+            </div>
+            <div class="modal-body">
+                Nothing :(
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+        <div id="chat-loading" class="modal-content">
+            <div class="modal-header text-center">
+                <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" th:src="@{/js/daterangepicker.js}" src="js/daterangepicker.js"></script>
+<script type="text/javascript" th:src="@{/js/profile.js}" src="js/profile.js"></script>
+
+</body>
+</html>
