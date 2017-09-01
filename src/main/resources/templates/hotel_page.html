@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>Hotel Name</title>
     <meta charset="UTF-8"/>
@@ -204,7 +205,7 @@
 
             <h4><strong>Transportation</strong></h4>
             <div id="map" class="place-map"></div>
-            <p><i class="fa fa-map-marker" style="width:30px" th:text="${apartment.location}"></i></p>
+            <p th:inline="text"><i class="fa fa-map-marker" style="width:30px"></i>[[${apartment.location}]]</p>
             <p th:text="${apartment.trasnportationDescription}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             <!--<p>Subscribe to receive updates on available dates and special offers.</p>-->
             <!--<p><button class="w3-button w3-green w3-third" onclick="document.getElementById('subscribe').style.display='block'">Subscribe</button></p>-->
@@ -214,14 +215,15 @@
         <!-- Contact -->
         <div class="w3-container" id="contact">
             <h2>Contact</h2>
-            <i class="fa fa-phone" style="width:30px"></i> Phone: +00 151515<br/>
-            <i class="fa fa-envelope" style="width:30px"> </i> Email: mail@mail.com<br/>
             <p>Questions? Go ahead, ask them:</p>
-            <form action="/action_page.php" target="_blank">
-                <p><input class="w3-input w3-border" type="text" placeholder="Name" required="true" name="Name"/></p>
-                <p><input class="w3-input w3-border" type="text" placeholder="Email" required="true" name="Email"/></p>
-                <p><input class="w3-input w3-border" type="text" placeholder="Message" required="true" name="Message"/></p>
-                <button type="submit" class="w3-button w3-green w3-third">Send a Message</button>
+            <small>You need to be log in as a customer/user (it's free)</small>
+            <form sec:authorize="hasAuthority('customer')" th:action="@{/profile/user/new_message}" action="/action_page.php" method="post" id="communicate-form" target="_blank" name="communicate-form">
+                <label for="f-message"> Your Message</label>
+                <br/>
+                <textarea class="w3-block" form="communicate-form" name="message" id="f-message"></textarea>
+                <br/>
+                <!--<p><input class="w3-input w3-border" type="text" placeholder="Message" required="true" name="Message"/></p>-->
+                <button type="submit" class="w3-button w3-green w3-block">Send a Message</button>
             </form>
         </div>
 
@@ -250,9 +252,24 @@
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var uluru = {lat: [[${apartment.lat}]], lng: [[${apartment.lon}]]};
+    var apartmentId = [[${apartment.apartmentId}]];
     /*]]>*/
 </script>
-
+<script>
+    $("#communicate-form").on( "submit", function( event ) {
+        event.preventDefault();
+        $.post(
+            '/profile/user/new_message/' + apartmentId,
+            $('#communicate-form').serialize()
+        ).success(function (data) {
+            if (data === true) {
+                alert("Message sent. You can view the response from your profile")
+            } else {
+                alert("Something is wrong with the dates.Make sure that it's not already in use");
+            }
+        });
+    });
+</script>
 <script>
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {

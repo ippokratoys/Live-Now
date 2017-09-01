@@ -76,4 +76,8 @@ public class ApartmentService{
         System.out.println("must create this :( !!!");
         return true;
     }
+
+    public Boolean newMessageFromUser(String message, String username, int apartmentId){
+        return true;
+    }
 }
