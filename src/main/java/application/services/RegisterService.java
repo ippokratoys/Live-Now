@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import application.database.repositories.LoginRepository;
 import application.database.repositories.UserRoleRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -19,7 +20,10 @@ public class RegisterService{
     @Autowired
     UserRoleRepository userRoleRepository;
 
-    public Boolean createLogin(Map<String,String> allParams) throws Exception{
+    @Autowired
+    FileUploadService fileUploadService;
+
+    public Boolean createLogin(Map<String,String> allParams,MultipartFile image) throws Exception{
         for (Map.Entry<String, String> entry : allParams.entrySet()) {
             System.out.println(entry.getKey() + "/" + entry.getValue());
             if (entry.getValue() == null || entry.getValue().equals("")) {
@@ -41,6 +45,9 @@ public class RegisterService{
         newLogin.setSurname(allParams.get("surname"));
         newLogin.setPassword(allParams.get("password"));
         newLogin.setPhoneNum(allParams.get("telephone"));
+
+
+
         UserRole newUserRole=new UserRole();
         UserRole newUserRole2=new UserRole();
 
@@ -64,11 +71,19 @@ public class RegisterService{
             newUserRole2.setLogin(newLogin);
         }
         newUserRole.setLogin(newLogin);
-        loginRepository.save(newLogin);
+        Login dbLogin=loginRepository.save(newLogin);
         userRoleRepository.save(newUserRole);
         if(flag_both==1){
             userRoleRepository.save(newUserRole2);
         }
+        String fileName="";
+        fileName += allParams.get("username");
+        String[] buff=image.getName().split("\\.");
+        String fileNamePostFix=buff[buff.length-1];
+        fileName+="."+fileNamePostFix;
+
+        fileUploadService.store(image,fileName);
+        dbLogin.setPhotoPath("file/images/"+fileName);
         return true;
     }
 }
