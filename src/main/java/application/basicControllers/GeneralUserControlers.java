@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -46,13 +47,14 @@ public class GeneralUserControlers {
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     String postRegister(Model model,
                        @RequestParam Map<String,String> allParams,
+                       @RequestParam(name = "photo")MultipartFile photo,
                        @AuthenticationPrincipal final UserDetails userDetails
     ){
         if(userDetails!=null){
             return "redirect:/";
         }
         try {
-            registerService.createLogin(allParams);
+            registerService.createLogin(allParams,photo);
         }catch (Exception e){
             if(e.getMessage().equals("User Exists")){
                 model.addAttribute("error","user-exists");
