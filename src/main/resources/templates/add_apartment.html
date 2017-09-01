@@ -32,7 +32,7 @@
         <!--main content of profile-->
         <div id="my_info" class="col-sm-9">
             <h1>Add new Apartment</h1>
-            <form class="add-place-form" th:object="${apartment}" method="post" action="add_apartment" id="new-apartment">
+            <form class="add-place-form" th:object="${apartment}" method="post" th:action="@{/profile/host/add_apartment}" action="add_apartment" id="new-apartment">
                 <div class="form-row">
                     <div class="form-group col-xs-12 col-md-6">
                         <label class="col-form-label" for="f-price">Basic Price</label>
@@ -40,10 +40,10 @@
                     </div>
                     <div class="form-group col-xs-12 col-md-6">
                         <label class="col-form-label" for="f-apartment-type">Apartment Type</label>
-                        <select class="form-control" name="apartment-type" id="f-apartment-type">
-                            <option value="apartment">Whole Apartment</option>
-                            <option value="private-room">Private Room</option>
-                            <option value="shared-room">Shared Room</option>
+                        <select th:field="*{type}" class="form-control" name="apartment-type" id="f-apartment-type">
+                            <option value="whole_apartment">Whole Apartment</option>
+                            <option value="private_room">Private Room</option>
+                            <option value="shared_room">Shared Room</option>
                         </select>
                     </div>
                 </div>
@@ -108,15 +108,15 @@
                 <div class="form-row">
                     <div class="form-group col-xs-12">
                         <label class="col-form-label" for="f-description">Description (max 255)</label>
-                        <textarea class="form-control" name="description" id="f-description" form="new-apartment" required="required" maxlength="255"> </textarea>
+                        <textarea th:field="*{houseDescription}" class="form-control" name="description" id="f-description" form="new-apartment" required="required" maxlength="255"> </textarea>
                     </div>
                     <div class="form-group col-xs-12">
                         <label class="col-form-label" for="f-rules">Rules (max 255)</label>
-                        <textarea class="form-control" name="rules" id="f-rules" form="new-apartment" required="required" maxlength="255"> </textarea>
+                        <textarea th:field="*{rules}" class="form-control" name="rules" id="f-rules" form="new-apartment" required="required" maxlength="255"> </textarea>
                     </div>
                     <div class="form-group col-xs-12">
                         <label class="col-form-label" for="f-transportation">Transportation (max 255)</label>
-                        <textarea class="form-control" name="trasportation" id="f-transportation" form="new-apartment" required="required" maxlength="255"> </textarea>
+                        <textarea th:field="*{trasnportationDescription}" class="form-control" name="trasportation" id="f-transportation" form="new-apartment" required="required" maxlength="255"> </textarea>
                     </div>
                 </div>
 

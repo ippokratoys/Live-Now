@@ -1,5 +1,8 @@
 package application.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
@@ -30,9 +33,16 @@ public class Availability implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="apartment_apartment_id")
+    @JsonIgnore
     private Apartment apartment;
 
     public Availability() {
+    }
+
+    public Availability(Date fromAv, Date toAv, Apartment apartment) {
+        this.fromAv = fromAv;
+        this.toAv = toAv;
+        this.apartment = apartment;
     }
 
     public int getAvailabilityId() {

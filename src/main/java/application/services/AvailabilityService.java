@@ -30,7 +30,7 @@ public class AvailabilityService{
         Query query=entityManager.createNativeQuery(queryStr,Availability.class);
         query.setParameter("aparId",apartment.getApartmentId());
         query.setParameter("myDate1",availability.getFromAv());
-        query.setParameter("myDate1",availability.getToAv());
+        query.setParameter("myDate2",availability.getToAv());
         List<Availability> availabilityResult = query.getResultList();
         if(availabilityResult.size()>0){
             throw new Exception("One of the dates is included or both");

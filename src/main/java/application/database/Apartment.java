@@ -1,5 +1,7 @@
 package application.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -95,14 +97,17 @@ public class Apartment implements Serializable {
 	//bi-directional many-to-one association to BookInfo
 
 	@OneToMany(mappedBy = "apartment")
+	@JsonIgnore
 	private List<BookInfo> bookInfos;
 	//bi-directional many-to-one association to BookReview
 
 	@OneToMany(mappedBy = "apartment")
+	@JsonIgnore
 	private List<BookReview> bookReviews;
 	//bi-directional many-to-one association to Chat
 
 	@OneToMany(mappedBy = "apartment")
+	@JsonIgnore
 	private List<Chat> chats;
 	//bi-directional many-to-one association to Image
 
@@ -111,11 +116,13 @@ public class Apartment implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "login_username")
+	@JsonIgnore
 	private Login login;
 
 	//bi-directional many-to-one association to Availability
 
 	@OneToMany(mappedBy = "apartment")
+	@JsonIgnore
 	private List<Availability> availabilities;
 
 	public Apartment() {
