@@ -47,14 +47,15 @@ public class GeneralUserControlers {
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     String postRegister(Model model,
                        @RequestParam Map<String,String> allParams,
-                       @RequestParam(name = "photo")MultipartFile photo,
+//                       @RequestParam(name = "photo")MultipartFile photo,
                        @AuthenticationPrincipal final UserDetails userDetails
     ){
         if(userDetails!=null){
             return "redirect:/";
         }
         try {
-            registerService.createLogin(allParams,photo);
+//            registerService.createLogin(allParams,photo);
+            registerService.createLogin(allParams);
         }catch (Exception e){
             if(e.getMessage().equals("User Exists")){
                 model.addAttribute("error","user-exists");

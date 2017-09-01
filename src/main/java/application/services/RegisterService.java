@@ -23,7 +23,9 @@ public class RegisterService{
     @Autowired
     FileUploadService fileUploadService;
 
-    public Boolean createLogin(Map<String,String> allParams,MultipartFile image) throws Exception{
+//    public Boolean createLogin(Map<String,String> allParams,MultipartFile image) throws Exception{
+
+    public Boolean createLogin(Map<String,String> allParams) throws Exception{
         for (Map.Entry<String, String> entry : allParams.entrySet()) {
             System.out.println(entry.getKey() + "/" + entry.getValue());
             if (entry.getValue() == null || entry.getValue().equals("")) {
@@ -76,14 +78,14 @@ public class RegisterService{
         if(flag_both==1){
             userRoleRepository.save(newUserRole2);
         }
-        String fileName="";
-        fileName += allParams.get("username");
-        String[] buff=image.getName().split("\\.");
-        String fileNamePostFix=buff[buff.length-1];
-        fileName+="."+fileNamePostFix;
-
-        fileUploadService.store(image,fileName);
-        dbLogin.setPhotoPath("file/images/"+fileName);
+//        String fileName="";
+//        fileName += allParams.get("username");
+//        String[] buff=image.getName().split("\\.");
+//        String fileNamePostFix=buff[buff.length-1];
+//        fileName+="."+fileNamePostFix;
+//
+//        fileUploadService.store(image,fileName);
+//        dbLogin.setPhotoPath("file/images/"+fileName);
         return true;
     }
 }
