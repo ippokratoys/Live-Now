@@ -23,7 +23,7 @@ public class HostReview implements Serializable {
 	private String from_username;
 
 	@ManyToOne
-	@JoinColumn(name="book_info")
+	@JoinColumn(name="book_id")
 	private BookInfo bookInfo;
 
 	@ManyToOne
