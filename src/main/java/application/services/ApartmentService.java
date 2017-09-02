@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import application.database.repositories.ApartmentRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -120,7 +121,8 @@ public class ApartmentService{
         Message newMessage= new Message();
         newMessage.setChat(chat);
         newMessage.setContent(message);
-//            newMessage.setDateTime();
+        Date date = new Date();
+        newMessage.setDateTime(date);
         messageRepository.save(newMessage);
         return true;
     }
@@ -141,7 +143,8 @@ public class ApartmentService{
         if(notCreateNew==1){
             newMessage.setChat(createdChat);
             newMessage.setContent(message);
-//            newMessage.setDateTime();
+            Date date = new Date();
+            newMessage.setDateTime(date);
             messageRepository.save(newMessage);
         }else{
             Chat newChat=new Chat();
@@ -150,7 +153,8 @@ public class ApartmentService{
             createdChat=chatRepository.save(newChat);
             newMessage.setChat(createdChat);
             newMessage.setContent(message);
-//            newMessage.setDateTime();
+            Date date = new Date();
+            newMessage.setDateTime(date);
             messageRepository.save(newMessage);
         }
         return true;
