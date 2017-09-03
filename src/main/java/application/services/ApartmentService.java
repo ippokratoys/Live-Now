@@ -118,6 +118,10 @@ public class ApartmentService{
 
     public Boolean newMessageFormHost(String message,int chatId){
         Chat chat=chatRepository.findOne(chatId);
+        if(chat==null){
+            System.out.println("the chat does not exist");
+            return false;
+        }
         Message newMessage= new Message();
         newMessage.setChat(chat);
         newMessage.setContent(message);
@@ -134,6 +138,10 @@ public class ApartmentService{
         Message newMessage=new Message();
         Apartment apartment=apartmentRepository.findOne(apartmentId);
         List<Chat> chatlist=chatRepository.findAllByApartment(apartment);
+        if(username.equals(apartment.getLogin().getUsername())){
+            System.out.println("You sent to your self");
+            return false;
+        }
         for(Chat chat : chatlist){
             if(chat.getLogin().getUsername().equals(username)){
                notCreateNew=1;
@@ -146,6 +154,7 @@ public class ApartmentService{
             newMessage.setContent(message);
             Date date = new Date();
             newMessage.setDateTime(date);
+            newMessage.setFromCustomer(true);
             messageRepository.save(newMessage);
         }else{
             Chat newChat=new Chat();
