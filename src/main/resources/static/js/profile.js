@@ -92,7 +92,7 @@ function userShowChat(chatId) {
         curChatId=chatId;
         var i;
         for(i=0;i<data.length;i++){
-            if(i%2==0){
+            if(data.fromCustomer===true){
                 insertChat("me",data[i].content);
             }else{
                 insertChat("you",data[i].content);
