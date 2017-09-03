@@ -168,7 +168,12 @@ function hostShowChat(chatId) {
         $("#chat_div").removeClass("hidden");
     });
 }
+function hostCloseChat(){
+    $("#chats_table").removeClass("hidden");
 
+    $("#chat_div").addClass("hidden");
+
+}
 /////////////
 //chat code//
 /////////////
