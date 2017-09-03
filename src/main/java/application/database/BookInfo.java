@@ -40,9 +40,9 @@ public class BookInfo implements Serializable {
 	private Login login;
 	//bi-directional many-to-one association to HostReview
 
-	@ManyToOne
-	@JoinColumn(name="host_review_id")
-	private HostReview hostReview;
+	@OneToMany(mappedBy="bookInfo")
+	private List<HostReview> hostReviews;
+
 	//bi-directional many-to-one association to BookReview
 
 	@OneToMany(mappedBy="bookInfo")
@@ -82,12 +82,26 @@ public class BookInfo implements Serializable {
 		this.apartment= apartment;
 	}
 
-	public HostReview getHostReview() {
-		return this.hostReview;
+	public List<HostReview> getHostReviews() {
+		return this.hostReviews;
 	}
 
-	public void setHostReview(HostReview hostReview) {
-		this.hostReview = hostReview;
+	public void setHostReviews(List<HostReview> hostReviews) {
+		this.hostReviews = hostReviews;
+	}
+
+	public HostReview addHostReview(HostReview hostReview) {
+		getHostReviews().add(hostReview);
+		hostReview.setBookInfo(this);
+
+		return hostReview;
+	}
+
+	public HostReview removeHostReview(HostReview hostReview) {
+		getHostReviews().remove(hostReview);
+		hostReview.setBookInfo(null);
+
+		return hostReview;
 	}
 
 	public List<BookReview> getBookReviews() {

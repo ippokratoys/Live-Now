@@ -2,8 +2,6 @@ package application.database;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
-
 
 /**
  * The persistent class for the host_review database table.
@@ -22,17 +20,21 @@ public class HostReview implements Serializable {
 
 	private String content;
 
-	//bi-directional many-to-one association to BookInfo
+	private String from_username;
 
-	@OneToMany(mappedBy="hostReview")
-	private List<BookInfo> bookInfos;
 	@ManyToOne
-	@JoinColumn(name="login_username")
+	@JoinColumn(name="book_id")
+	private BookInfo bookInfo;
+
+	@ManyToOne
+	@JoinColumn(name="login")
 	private Login login;
+
+
+	//bi-directional many-to-one association to BookInfo
 
 	public HostReview() {
 	}
-
 	public int getReviewId() {
 		return this.reviewId;
 	}
@@ -41,35 +43,6 @@ public class HostReview implements Serializable {
 		this.reviewId = reviewId;
 	}
 
-	public List<BookInfo> getBookInfos() {
-		return this.bookInfos;
-	}
-
-	public void setBookInfos(List<BookInfo> bookInfos) {
-		this.bookInfos = bookInfos;
-	}
-
-	public BookInfo addBookInfo(BookInfo bookInfo) {
-		getBookInfos().add(bookInfo);
-		bookInfo.setHostReview(this);
-
-		return bookInfo;
-	}
-
-	public BookInfo removeBookInfo(BookInfo bookInfo) {
-		getBookInfos().remove(bookInfo);
-		bookInfo.setHostReview(null);
-
-		return bookInfo;
-	}
-
-	public Login getLogin() {
-		return login;
-	}
-
-	public void setLogin(Login login) {
-		this.login = login;
-	}
 
 
 	public String getContent() {
@@ -78,5 +51,29 @@ public class HostReview implements Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getFrom_username() {
+		return from_username;
+	}
+
+	public void setFrom_username(String from_username) {
+		this.from_username = from_username;
+	}
+
+	public BookInfo getBookInfo() {
+		return bookInfo;
+	}
+
+	public void setBookInfo(BookInfo bookInfo) {
+		this.bookInfo = bookInfo;
+	}
+
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 }

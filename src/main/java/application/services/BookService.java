@@ -6,6 +6,7 @@ import application.database.BookInfo;
 import application.database.Login;
 import application.database.UserRole;
 import application.database.repositories.ApartmentRepository;
+import application.database.repositories.AvailabilityRepository;
 import application.database.repositories.BookInfoRepository;
 import application.database.repositories.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,14 @@ public class BookService {
     ApartmentRepository apartmentRepository;
 
     @Autowired
+    AvailabilityService availabilityService;
+
+    @Autowired
     BookInfoRepository bookInfoRepository;
 
-    public boolean createBookInfo(Map<String,String> allParams)throws Exception{
-        Apartment apartment=apartmentRepository.findOne(Integer.parseInt(allParams.get("apartment_id")));
-        Login login=loginRepository.findOne(allParams.get("username"));
+    public boolean createBookInfo(int apartmentId,String username,String book_in,String book_out)throws Exception{
+        Apartment apartment=apartmentRepository.findOne(apartmentId);
+        Login login=loginRepository.findOne(username);
         if(apartment==null || login==null){
             throw new Exception("The apartment or the user does not exist");
         }
@@ -47,12 +51,15 @@ public class BookService {
         if(apartment.getLogin().getUsername().equals(login.getUsername())){
             throw new Exception("The apartment is his");
         }
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        if(availabilityService.checkAvailability(apartment,format.parse(book_in),format.parse(book_out))!=true) {
+            throw new Exception("The apartment is not available");
+        }
         BookInfo newBookInfo=new BookInfo();
         newBookInfo.setLogin(login);
         newBookInfo.setApartment(apartment);
-        DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-        newBookInfo.setBookIn(format.parse(allParams.get("book_in")));
-        newBookInfo.setBookOut(format.parse(allParams.get("book_out")));
+        newBookInfo.setBookIn(format.parse(book_in));
+        newBookInfo.setBookOut(format.parse(book_out));
         bookInfoRepository.save(newBookInfo);
         return true;
     }
