@@ -227,7 +227,7 @@
 
                 </div>
             </div>
-
+            <!--dates  table -->
             <div id="add_dates" class="modal fade" role="dialog">
                 <div class="modal-dialog modal-lg">
 
@@ -267,6 +267,7 @@
 
                 </div>
             </div>
+            <!--the list of the chats table-->
             <div id="view_chats" class="modal fade" role="dialog">
                 <div class="modal-dialog modal-lg">
 
@@ -277,16 +278,30 @@
                             <h3 class="modal-title text-center">View Chats Of Apartment</h3>
                         </div>
                         <div class="modal-body">
+                            <!--table with the chats-->
                             <table id="chats_table" class="table table-hover">
                                 <tr>
-                                    <th class="text-center">From</th>
-                                    <th class="text-center">To</th>
+                                    <th class="text-center">Message From</th>
+                                    <th class="text-center"> Number of Messages</th>
                                 </tr>
                                 <tr>
-                                    <td class="text-center">1/1/1</td>
-                                    <td class="text-center">2/1/2</td>
+                                    <td class="text-center">george</td>
+                                    <td class="text-center">1</td>
                                 </tr>
                             </table>
+                            <!--the messages of one chat-->
+                            <div id="chat_div" class="col-sm-12 frame hidden">
+                                <ul class="pre-scrollable" id="message-list"></ul>
+                                <div>
+                                    <div class="msj-rta macro" style="margin:auto">
+                                        <div class="text text-r" style="background:whitesmoke !important">
+                                            <form id="new_msg_form" method="post" th:action="@{/somthing}">
+                                                <input name="message" class="mytext" placeholder="Type a message"/>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -312,6 +327,20 @@
 <script type="text/javascript" th:src="@{/js/profile.js}" src="js/profile.js"></script>
 <script>
     var cur_apartment_id;
+    $( "#new_msg_form" ).on( "submit", function( event ) {
+        event.preventDefault();
+        $.post(
+            '/profile/host/chats/messages/' + curChatId,
+            $(this).serialize()
+        ).success(function (data) {
+            if (data === true) {
+                hostShowChat(curChatId);
+            } else {
+                alert("Something is wrong with the dates.Make sure that it's not already in use");
+            }
+        });
+        $("input[name='message']").val("");
+    });
 
     $(function() {
         cur_apartment_id=-1;

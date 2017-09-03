@@ -69,10 +69,38 @@ function editApartment(apartmentId) {
 }
 
 function viewApartmentChats(apartmentId){
-    $("#chats_actual").addClass("hidden");
+
+    $("#chat_div").addClass("hidden");
+    $("#chats_table").addClass("hidden");
+
     $("#chats_loading").removeClass("hidden");
-    // $("#chats_actual").removeClass("hidden");
-    // $("#chats_loading").addClass("hidden");
+    var chatsUrl="/profile/host/apartment/chats/"+apartmentId;
+    curChatId=-1;
+    $.getJSON(chatsUrl,function (data) {
+        $("#chats_table").html(
+            "<tr>"+
+            "<th class='text-center'>Message From</th>"+
+            "</tr>");
+
+        // alert(chatId);
+        if(data==="" || data===null || data[0]===null || data[0]===""){
+            alert("nothing");
+            ;
+        }else{
+            // alert("somthing");
+            var i;
+            for(i=0;i<data.length;i++){
+                $("#chats_table").append(
+                    '<tr onclick="hostShowChat('+data[i].chatId +');">' +
+                    '<td class="text-center">'+data[i].login.username+'</td>' +
+                    '</tr>'
+                );
+            }
+        }
+
+        $("#chats_loading").addClass("hidden");
+        $("#chats_table").removeClass("hidden");
+    })
 
 }
 
@@ -92,7 +120,7 @@ function userShowChat(chatId) {
         curChatId=chatId;
         var i;
         for(i=0;i<data.length;i++){
-            if(data.fromCustomer===true){
+            if(data[i].fromCustomer===true){
                 insertChat("me",data[i].content);
             }else{
                 insertChat("you",data[i].content);
@@ -104,6 +132,43 @@ function userShowChat(chatId) {
         $("#chat_loading").addClass("hidden");
     });
 }
+
+function hostShowChat(chatId) {
+    $("#chat_div").addClass("hidden");
+    $("#chats_table").addClass("hidden");
+
+    $("#chats_loading").removeClass("hidden");
+
+    $.getJSON("/profile/host/chats/messages/"+chatId,function (data) {
+        // alert(chatId);
+        resetChat();
+        me={};
+        you={};
+        me.avatar = "https://lh6.googleusercontent.com/-lr2nyjhhjXw/AAAAAAAAAAI/AAAAAAAARmE/MdtfUmC0M4s/photo.jpg?sz=48";
+        you.avatar = "https://a11.t26.net/taringa/avatares/9/1/2/F/7/8/Demon_King1/48x48_5C5.jpg";
+        curChatId=chatId;
+        if(data==="" || data===null){
+            ;
+        }else{
+            var i;
+            for(i=0;i<data.length;i++){
+                if(data[i].fromCustomer===true){
+                    insertChat("you",data[i].content);
+                }else{
+                    insertChat("me",data[i].content);
+                }
+            }
+            var d = $('#message-list');
+            d.scrollTop(d.prop("scrollHeight"));
+        }
+
+        $("#chats_table").addClass("hidden");
+
+        $("#chats_loading").addClass("hidden");
+        $("#chat_div").removeClass("hidden");
+    });
+}
+
 /////////////
 //chat code//
 /////////////

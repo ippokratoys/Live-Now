@@ -27,6 +27,8 @@ import java.util.List;
 @Controller
 public class HostController {
     SimpleDateFormat dateFormat=new SimpleDateFormat("MM/dd/yyy");
+
+    @Autowired
     private ChatRepository chatRepository;
 
     {
