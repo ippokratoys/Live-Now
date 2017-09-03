@@ -123,6 +123,7 @@ public class ApartmentService{
         newMessage.setContent(message);
         Date date = new Date();
         newMessage.setDateTime(date);
+        newMessage.setFromCustomer(false);
         messageRepository.save(newMessage);
         return true;
     }
@@ -153,6 +154,7 @@ public class ApartmentService{
             createdChat=chatRepository.save(newChat);
             newMessage.setChat(createdChat);
             newMessage.setContent(message);
+            newMessage.setFromCustomer(true);
             Date date = new Date();
             newMessage.setDateTime(date);
             messageRepository.save(newMessage);

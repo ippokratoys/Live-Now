@@ -35,11 +35,14 @@ public class Message implements Serializable {
 
 	private String content;
 
+	@Column(name="from_customer")
+	private boolean fromCustomer;
+
 	//bi-directional many-to-one association to Chat
+
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JsonIgnore
 	private Chat chat;
-
 	public Message() {
 	}
 
@@ -65,6 +68,14 @@ public class Message implements Serializable {
 
 	public void setChat(Chat chat) {
 		this.chat = chat;
+	}
+
+	public boolean isFromCustomer() {
+		return fromCustomer;
+	}
+
+	public void setFromCustomer(boolean fromCustomer) {
+		this.fromCustomer = fromCustomer;
 	}
 
 }
