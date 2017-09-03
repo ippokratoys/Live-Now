@@ -52,6 +52,22 @@
                     <input id="f-telephone" class="a-input hidden" type="text" name="telephone" value=""/>
                 </div>
 
+                <div class="a-field">
+                    <label for="f-email" class="a-label">Email: </label>
+                    <span class="a-value" th:text="${user.email}">apostolos@gmail.com</span>
+                    <input id="f-email" class="a-input hidden" type="text" name="email" value=""/>
+                </div>
+
+                <div class="a-field">
+                    <label for="f-password" class="a-input hidden">Password: </label>
+                    <input id="f-password" class="a-input hidden" type="password" name="password" value=""/>
+                </div>
+
+                <div class="a-field">
+                    <label for="f-confirm" class="a-input hidden">Confirm Password: </label>
+                    <input id="f-confirm" class="a-input hidden" type="password" name="confirm" value=""/>
+                </div>
+
                 <input class="hidden" type="submit" value="Submit edits"/>
             </form>
         </div>

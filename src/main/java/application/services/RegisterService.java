@@ -88,4 +88,22 @@ public class RegisterService{
 //        dbLogin.setPhotoPath("file/images/"+fileName);
         return true;
     }
+
+    public void editLogin(String username,String name,String surname,String phone,String email,String password,String confirm,MultipartFile image) throws Exception{
+        Login login=loginRepository.findOne(username);
+        if(login==null){
+            throw new Exception("the login does not exit");
+        }
+        login.setSurname(surname);
+        login.setPhoneNum(phone);
+        login.setName(name);
+        login.setEmail(email);
+        if(!password.equals("")){
+            if(!password.equals(confirm)){
+                throw new Exception("The password doesnot match with the confirm");
+            }
+            login.setPassword(password);
+        }
+        loginRepository.save(login);
+    }
 }
