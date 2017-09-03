@@ -36,6 +36,7 @@ public class Chat implements Serializable {
 
 	//bi-directional many-to-one association to Message
 	@OneToMany(mappedBy="chat")
+	@JsonIgnore
 	private List<Message> messages;
 
 	public Chat() {

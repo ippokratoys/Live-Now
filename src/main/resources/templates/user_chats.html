@@ -47,23 +47,35 @@
     <div class="modal-dialog modal-lg">
 
         <!--Modal content-->
-        <div id="chat-actual" class="modal-content">
+        <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h3 class="modal-title text-center">Chat</h3>
             </div>
-            <div class="modal-body">
-                Nothing :(
-            </div>
+<!--chat code-->
+            <div id="chat_actual" class="modal-body">
+                <div id="chat_loading" class="modal-content">
+                    <div class="modal-header text-center">
+                        <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                    </div>
+                </div>
 
+                <div class="col-sm-12 frame">
+                    <ul class="pre-scrollable" id="message-list"></ul>
+                    <div>
+                        <div class="msj-rta macro" style="margin:auto">
+                            <div class="text text-r" style="background:whitesmoke !important">
+                                <form id="new_msg_form" method="post" th:action="@{/somthing}">
+                                    <input name="message" class="mytext" placeholder="Type a message"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--end of chat code-->
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-
-        <div id="chat-loading" class="modal-content">
-            <div class="modal-header text-center">
-                <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
             </div>
         </div>
 
@@ -77,5 +89,60 @@
 <script type="text/javascript" th:src="@{/js/daterangepicker.js}" src="js/daterangepicker.js"></script>
 <script type="text/javascript" th:src="@{/js/profile.js}" src="js/profile.js"></script>
 
+<script>
+    var curChatId=-1;
+//    //-- Clear Chat
+//    resetChat();
+//
+//    //-- Print Messages
+//    insertChat("me", "Hello Tom...", 0);
+//    insertChat("you", "Hi, Pablo", 1500);
+//    insertChat("me", "What would you like to talk about today?", 3500);
+//    insertChat("you", "Tell me a joke",7000);
+//    insertChat("me", "Spaceman: Computer! Computer! Do we bring battery?!", 9500);
+//    insertChat("you", "LOL", 12000);
+
+</script>
+<script th:inline="javascript">
+    $( "#new_msg_form" ).on( "submit", function( event ) {
+        event.preventDefault();
+        $.post(
+            '/profile/user/new_message_to_chat/' + curChatId,
+            $(this).serialize()
+        ).success(function (data) {
+            if (data === true) {
+                userShowChat(curChatId);
+            } else {
+                alert("Something is wrong with the dates.Make sure that it's not already in use");
+            }
+        });
+        $("input[name='message']").val("");
+    });
+//    $(".mytext").on("keyup", function(e){
+//        if (e.which == 13){
+//            var text = $(this).val();
+//            if (text !== ""){
+//                /*<![CDATA[*/
+//                if(curChatId==-1){
+//                    alert("not a chat choosen");
+//                    return;
+//                }
+//                $.post(
+//                    '/profile/user/new_message_to_chat/'+curChatId,
+//                    { message : text}
+//                ).success(function (data) {
+//                /*]]>*/
+//                    if(data === true ){
+//                        userShowChat(curChatId);
+//                    }else{
+//                        alert("Something is wrong with the dates.Make sure that it's not already in use");
+//                    }
+//                })
+//                $(this).val('');
+//            }
+//        }
+//    });
+
+</script>
 </body>
 </html>

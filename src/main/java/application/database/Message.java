@@ -1,5 +1,7 @@
 package application.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
@@ -35,6 +37,7 @@ public class Message implements Serializable {
 
 	//bi-directional many-to-one association to Chat
 	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JsonIgnore
 	private Chat chat;
 
 	public Message() {
