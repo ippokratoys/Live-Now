@@ -27,11 +27,11 @@
         <!--main content of profile-->
         <div id="my_info" class="col-sm-6">
             <h1>My Profile</h1>
-            <form method="post" action="/profile">
+            <form method="post" action="/profile" th:action="@{/profile}">
                 <div class="a-field">
                     <label for="f-image" class="a-label hidden">Photo : </label>
                     <span class="a-value"><img class="img-responsive" src="http://www.andyworthington.co.uk/wp-content/uploads/shaker-aamer-nov-2012-1.jpg"/></span>
-                    <input id="f-image" class="a-input hidden" type="file" name="image" value=""/>
+                    <input id="f-image" class="a-input hidden" type="file" value=""/>
                 </div>
 
                 <div class="a-field">

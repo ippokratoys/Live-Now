@@ -87,7 +87,7 @@ public class GeneralUserControlers {
         return "register";
     }
 
-    @RequestMapping("/profile")
+    @RequestMapping(value = "/profile",method = RequestMethod.GET)
     String getProfile(Model model,
                       @AuthenticationPrincipal final UserDetails userDetails
     ){
@@ -95,6 +95,33 @@ public class GeneralUserControlers {
             return "redirect:/login";
         }
         model.addAttribute("user",loginRepository.findOne(userDetails.getUsername()));
+        return "profile";
+    }
+
+    @RequestMapping(value = "/profile",method = RequestMethod.POST)
+    String editProfile(Model model,
+                       @AuthenticationPrincipal final UserDetails userDetails,
+                       @RequestParam Map<String,String> allParams
+    ){
+        System.out.println("Yeeeezzz");
+        if(userDetails==null){
+            return "redirect:/login";
+        }
+        model.addAttribute("user",loginRepository.findOne(userDetails.getUsername()));
+        try {
+            registerService.editLogin(
+                    userDetails.getUsername(),
+                    allParams.get("name"),
+                    allParams.get("surname"),
+                    allParams.get("telephone"),
+                    allParams.get("email"),
+                    allParams.get("password"),
+                    allParams.get("confirm"),
+                    null
+                    );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "profile";
     }
 
