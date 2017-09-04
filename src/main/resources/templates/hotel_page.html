@@ -262,15 +262,16 @@
     var apartmentId = [[${apartment.apartmentId}]];
     /*]]>*/
 </script>
-<!--<script type="text/javascript" th:inline="javascript">-->
-    <!--/*<![CDATA[*/-->
-    <!--var availableDates = [[${apartment.availabilities}]];-->
-    <!--var bookedDates = [[${apartment.bookInfos}]];-->
-    <!--/*]]>*/-->
-    <!--console.log(availableDates);-->
-    <!--console.log("&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;");-->
-    <!--console.log(bookedDates);-->
-<!--</script>-->
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var bookedDatesStr    = [[ ${@apartmentService.getBookedDates({apartment.apartmentId})} ]];
+    var availableDatesStr = [[ ${@apartmentService.getAvailableDates({apartment.apartmentId})} ]];
+    /*]]>*/
+
+    console.log(availableDatesStr[0].from);
+    console.log("--------------");
+    console.log(bookedDates);
+</script>
 <script>
     $("#communicate-form").on( "submit", function( event ) {
         event.preventDefault();
@@ -322,11 +323,13 @@
 
 
     var funIsInvalid=function isInvalid(date) {
-        if (date.format('YYYY-MM-DD') == '2017-08-10') {
+        /*<![CDATA[*/
+        if( date.format('YYYY-MM-DD') < new moment().format('YYYY-MM-DD') ){
             return true;
         } else {
             return false;
         }
+        /*]]>*/
     }
     $(function() {
         /*<![CDATA[*/
