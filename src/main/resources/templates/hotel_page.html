@@ -75,7 +75,9 @@
         <div class="w3-container w3-display-container w3-padding-16">
             <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-transparent w3-display-topright"></i>
             <h3>Rental</h3>
-            <h3 th:text="${apartment.price}+' euro'">$99</h3>
+            <h3 th:text="${apartment.price}+'€'">$99</h3>
+            <h4 th:text="${apartment.plusPrice}+'€ extra for each person after '+${apartment.standardPeople}"></h4>
+            <h4 th:text="'+'+${apartment.cleanPrice}+'€ standar price.'"></h4>
             <h6>per night</h6>
             <hr/>
             <form action="/action_page.php" method="post" target="_blank">
@@ -119,7 +121,7 @@
 
         <!-- Slideshow Header -->
         <div class="w3-container" id="apartment">
-            <h2 class="w3-text-green">The Apartment</h2>
+            <h2 class="w3-text-green" th:text="${apartment.name}">The Apartment</h2>
             <div class="w3-display-container mySlides">
                 <img src="/w3images/livingroom.jpg" style="width:100%;margin-bottom:-6px"/>
                 <div class="close-photo-div" onclick="closeSlides()">
@@ -172,8 +174,8 @@
                     <p th:inline="text"><i class="fa fa-fw fa-bed"></i> Bedrooms: [[${apartment.rooms}]]</p>
                 </div>
                 <div class="w3-col s6">
-                    <p><i class="fa fa-fw fa-clock-o"></i> Check In: After 3PM</p>
-                    <p><i class="fa fa-fw fa-clock-o"></i> Check Out: 12PM</p>
+                    <p th:inline="text"><i class="fa fa-fw fa-square"></i>Area : [[${apartment.area}]] m2</p>
+
                 </div>
             </div>
             <hr/>
@@ -182,12 +184,17 @@
             <div class="w3-row w3-large">
                 <div class="w3-col s6">
                     <!--<p><i class="fa fa-fw fa-shower"></i> Shower</p>-->
+                    <p th:if="${apartment.kitchen}"><i class="fa fa-fw fa-cutlery"></i> Kitchen</p>
+                    <p th:if="${apartment.fridge}"><i class="fa fa-fw fa-snowflake-o"></i> Air-Condition</p>
                     <p th:if="${apartment.wi_fi}"><i class="fa fa-fw fa-wifi"></i> WiFi</p>
                     <p th:if="${apartment.tv}"><i class="fa fa-fw fa-tv"></i> TV</p>
+                    <p th:if="${apartment.heat}"><i class="fa fa-fw fa-thermometer"></i> Heating</p>
+                    <p th:if="${apartment.aircondition}"><i class="fa fa-fw fa-thermometer-quarter"></i> Aircondition</p>
                 </div>
                 <div class="w3-col s6">
-                    <p th:if="${apartment.kitchen}"><i class="fa fa-fw fa-cutlery"></i> Kitchen</p>
-                    <p th:if="${apartment.heat}"><i class="fa fa-fw fa-thermometer"></i> Heating</p>
+                    <p th:if="${apartment.pets}"><i class="fa fa-fw fa-paw"></i> Pets Allowed</p>
+                    <p th:if="${apartment.parking}"><i class="fa fa-fw fa-car"></i> Parking</p>
+                    <p th:if="${apartment.lift}"><i class="fa fa-fw fa-level-up"></i> Lift</p>
                     <!--<p><i class="fa fa-fw fa-wheelchair"></i> Accessible</p>-->
                 </div>
             </div>
@@ -216,7 +223,7 @@
         <div class="w3-container" id="contact">
             <h2>Contact</h2>
             <p>Questions? Go ahead, ask them:</p>
-            <small>You need to be log in as a customer/user (it's free)</small>
+            <small sec:authorize="!hasAuthority('customer')">You need to be log in as a customer/user (it's free)</small>
             <form sec:authorize="hasAuthority('customer')" th:action="@{/profile/user/new_message}" action="/action_page.php" method="post" id="communicate-form" target="_blank" name="communicate-form">
                 <label for="f-message"> Your Message</label>
                 <br/>
@@ -255,6 +262,15 @@
     var apartmentId = [[${apartment.apartmentId}]];
     /*]]>*/
 </script>
+<!--<script type="text/javascript" th:inline="javascript">-->
+    <!--/*<![CDATA[*/-->
+    <!--var availableDates = [[${apartment.availabilities}]];-->
+    <!--var bookedDates = [[${apartment.bookInfos}]];-->
+    <!--/*]]>*/-->
+    <!--console.log(availableDates);-->
+    <!--console.log("&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;");-->
+    <!--console.log(bookedDates);-->
+<!--</script>-->
 <script>
     $("#communicate-form").on( "submit", function( event ) {
         event.preventDefault();

@@ -80,7 +80,7 @@ public class GeneralUserControlers {
     String getRegister(Model model,
                        @RequestParam Map<String,String> allParams,
                        @AuthenticationPrincipal final UserDetails userDetails
-                       ){
+    ){
         if(userDetails!=null){
             return "redirect:/";
         }
@@ -120,6 +120,7 @@ public class GeneralUserControlers {
                     null
                     );
         } catch (Exception e) {
+            model.addAttribute("error","pass_confirm");
             e.printStackTrace();
         }
         return "profile";

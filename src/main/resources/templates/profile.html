@@ -82,7 +82,9 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" th:src="@{/js/daterangepicker.js}" src="js/daterangepicker.js"></script>
 <script type="text/javascript" th:src="@{/js/profile.js}" src="js/profile.js"></script>
-
+<script th:if='${error?.equals("pass_confirm")}'>
+    alert("No edit happened. Passwords doesn't match");
+</script>
 </body>
 
 </html>
