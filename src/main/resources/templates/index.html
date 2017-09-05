@@ -64,12 +64,12 @@
 </nav>
 
 <!-- Page Content -->
-<div class="my-center">
+<div class="my-center my-login">
     <form action="/result" method="get">
-        <input class="date-range" type="text" placeholder="Select Date" required="required" name="date-range" id="date-range" />
-        <input class="place-name" type="text" placeholder="Select City-Neighbor" required="required" name="city" id="city" />
-        <input class="people" type="number" placeholder="4 Persons" required="required" name="people" id="people" />
-        <input type="submit" value="Search"/>
+        <input class="date-range" type="text" placeholder="Select Date" required="required" name="date-range" 		id="date-range" />
+       	 <input class="place-name" type="text" placeholder="Select City-Neighbor" required="required" name="city" 		id="city" />
+        <input class="people" type="number" min="0" placeholder="4 Persons" required="required" name="people" id="people" />
+       	<input type="submit" value="Search"/>
     </form>
 </div>
 
@@ -95,9 +95,6 @@
         }/*]]>*/
     }
     //     attach daterangepicker plugin
-
-
-
     var funIsInvalid=function isInvalid(date) {
         /*<![CDATA[*/
         if (date.format('YYYY-MM-DD') < new moment().format('YYYY-MM-DD') ) {
@@ -106,7 +103,6 @@
             return false;
         }/*]]>*/
     }
-
     $(function() {
         $('input[name="date-range"]').daterangepicker({
             isInvalidDate:funIsInvalid,
@@ -118,7 +114,6 @@
             isValidRange(picker.startDate,picker.endDate);
         });
     });
-
 </script>
 
 </body>
