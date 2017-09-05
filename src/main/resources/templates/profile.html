@@ -85,6 +85,9 @@
 <script th:if='${error?.equals("pass_confirm")}'>
     alert("No edit happened. Passwords doesn't match");
 </script>
+<script th:if='${param?.book?.equals("done")}'>
+    alert("Book Done :D !");
+</script>
 </body>
 
 </html>

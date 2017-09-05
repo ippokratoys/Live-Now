@@ -9,6 +9,7 @@ import application.database.repositories.ChatRepository;
 import application.database.repositories.LoginRepository;
 import application.services.ApartmentService;
 import application.services.AvailabilityService;
+import application.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by thanasis on 23/8/2017.
@@ -43,7 +45,32 @@ public class HostController {
     ApartmentService apartmentService;
     @Autowired
     private ApartmentRepository apartmentRepository;
+    @Autowired
+    private BookService bookService;
 
+    @RequestMapping(value = "/apartment/book",method = RequestMethod.POST)
+    String bookApartment(Model model,
+                         @RequestParam Map<String,String> allParams,
+                         @AuthenticationPrincipal final UserDetails userDetails
+    ){
+        if(userDetails==null){
+            return "redirect:/login";
+        }
+        System.out.println(allParams.toString());
+        String buff[] = allParams.get("dates").split("-");
+        try {
+            bookService.createBookInfo(
+                    Integer.parseInt(allParams.get("apartment-id")),
+                    userDetails.getUsername(),
+                    buff[0],
+                    buff[1]);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/";
+        }
+        model.addAttribute("book","done");
+        return "redirect:/profile?book=done";
+    }
     @RequestMapping(value = "/profile/host/add_apartment",method = RequestMethod.POST)
     String postAddApartmentController(Model model,
                                   @ModelAttribute Apartment formApartment,

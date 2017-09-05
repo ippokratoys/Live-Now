@@ -51,7 +51,7 @@ public class BookService {
         if(apartment.getLogin().getUsername().equals(login.getUsername())){
             throw new Exception("The apartment is his");
         }
-        DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         if(availabilityService.checkAvailability(apartment,format.parse(book_in),format.parse(book_out))!=true) {
             throw new Exception("The apartment is not available");
         }
