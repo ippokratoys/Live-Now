@@ -185,8 +185,8 @@ public class ApartmentService{
                 apartment.getAvailabilities())
         {
             Map returnMap = new HashMap(2);
-            returnMap.put("from",simpleDateFormat.format(oneAvailability.getToAv()));
-            returnMap.put("to",simpleDateFormat.format(oneAvailability.getFromAv()));
+            returnMap.put("from",simpleDateFormat.format(oneAvailability.getFromAv()));
+            returnMap.put("to",simpleDateFormat.format(oneAvailability.getToAv()));
             resultList.add(returnMap);
         }
         return resultList;

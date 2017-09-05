@@ -264,13 +264,13 @@
 </script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var bookedDatesStr    = [[ ${@apartmentService.getBookedDates({apartment.apartmentId})} ]];
-    var availableDatesStr = [[ ${@apartmentService.getAvailableDates({apartment.apartmentId})} ]];
+    var bookedDates    = [[ ${@apartmentService.getBookedDates({apartment.apartmentId})} ]];
+    var availableDates = [[ ${@apartmentService.getAvailableDates({apartment.apartmentId})} ]];
     /*]]>*/
 
-    console.log(availableDatesStr[0].from);
-    console.log("--------------");
-    console.log(bookedDates);
+//    console.log(availableDates[0].from);
+//    console.log("--------------");
+//    console.log(bookedDates);
 </script>
 <script>
     $("#communicate-form").on( "submit", function( event ) {
@@ -323,12 +323,28 @@
 
 
     var funIsInvalid=function isInvalid(date) {
+//        returns false if the date is valid
+//        returns true if the date is invalid and should be deleted
         /*<![CDATA[*/
         if( date.format('YYYY-MM-DD') < new moment().format('YYYY-MM-DD') ){
+//            if it's a date in the past, erase it
             return true;
-        } else {
-            return false;
         }
+        var i = 0 ;
+        for (i=0;i<availableDates.length;i++){
+            if(date.format('YYYY-MM-DD')>=availableDates[i].from && date.format('YYYY-MM-DD')<=availableDates[i].to){
+//                if it's available check for booked
+                for(j=0;j<bookedDates.length;j++){
+                    if(date.format('YYYY-MM-DD')>=bookedDates[j].from && date.format('YYYY-MM-DD')<=bookedDates[j].to) {
+//                        if it's beetwen booked dates then should be deleted
+                        return true;
+                    }
+                }
+                //if the hotel is available in this date and no books founds
+                return false;
+            }
+        }
+        return true;//if not available found
         /*]]>*/
     }
     $(function() {
