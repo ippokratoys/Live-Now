@@ -5,8 +5,8 @@
  */
 
 body {
-    background: url('img/home_page.jpg') no-repeat center center fixed;
-    padding-top: 350px;
+    background: url('/img/home_page.jpg') no-repeat center center fixed;
+    padding-top: 10%;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
