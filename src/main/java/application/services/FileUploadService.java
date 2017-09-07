@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 public class FileUploadService {
@@ -16,7 +17,11 @@ public class FileUploadService {
         if (file.isEmpty()) {
                 throw new Exception("empty file ");
         }
-        Files.copy(file.getInputStream(), this.image.resolve(fileName));
+        byte[] bytes = file.getBytes();
+        Path path = Paths.get(fileName);
+        Files.write(path, bytes);
+
+//        Files.copy(file.getInputStream(), this.image.resolve(fileName));
     }
 
 }
