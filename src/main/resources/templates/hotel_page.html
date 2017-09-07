@@ -80,18 +80,17 @@
             <h4 th:text="'+'+${apartment.cleanPrice}+'€ standar price.'"></h4>
             <h6>per night</h6>
             <hr/>
-            <form action="/action_page.php" method="post" target="_blank">
-                <p><label><i class="fa fa-calendar-check-o"></i> Check In - Check Out</label></p>
-                <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckIn" required="true"/>
+            <p><label><i class="fa fa-calendar-check-o"></i> Check In - Check Out</label></p>
+            <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckIn" required="true" id="view-dates"/>
 
-                <!--<p><label><i class="fa fa-calendar-o"></i> Check Out</label></p>-->
-                <!--<input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckOut" required="true"/>-->
+            <!--<p><label><i class="fa fa-calendar-o"></i> Check Out</label></p>-->
+            <!--<input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckOut" required="true"/>-->
 
-                <p><label><i class="fa fa-male"></i> Adults</label></p>
-                <input class="w3-input w3-border" type="number" value="1" name="Adults" min="1" max="6"/>
+            <p><label><i class="fa fa-male"></i> Adults</label></p>
+            <input class="w3-input w3-border" type="number" value="1" name="Adults" min="1" th:max="${apartment.maxPeople}" id="view-num-of-ppl"/>
 
-                <p><button class="w3-button w3-block w3-green w3-left-align" type="submit"><i class="fa fa-search w3-margin-right"></i> Search availability</button></p>
-            </form>
+            <p><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#book-modal" onclick="updateBookModal();">Book Now
+            <i class="fa fa-search w3-margin-right"></i></button></p>
         </div>
         <div class="w3-bar-block">
             <a href="#apartment" class="w3-bar-item w3-button w3-padding-16"><i class="fa fa-building"></i> Apartment</a>
@@ -106,8 +105,45 @@
             <span class="w3-bar-item">Rental</span>
         </a>
     </div>
-    <div>
+    <div id="book-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
 
+            <!--Modal content-->
+            <div id="book-actual" class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title text-center">Book Apartment</h3>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/apartment/book}" method="post">
+                        <div class="row">
+                            <label for="f-dates">Dates</label>
+                            <input type="text" name="dates" readonly="readonly" id="f-dates"/>
+                        </div>
+
+                        <div class="row">
+                            <label for="f-num-of-ppl">Number Of People</label>
+                            <input type="number" name="num-of-ppl" min="0" th:max="${apartment.maxPeople}" readonly="readonly" id="f-num-of-ppl"/>
+                        </div>
+
+                        <div class="row">
+                            <label for="f-price">Total Price</label>
+                            <input type="number" readonly="readonly" name="display-price" id="f-price"/>
+                        </div>
+                        <div class="hidden">
+                            <label for="f-price">Apartment id just for me</label>
+                            <input type="hidden" name="apartment-id" id="f-apartment-id" th:value="${apartment.apartmentId}"/>
+                        </div>
+
+                        <input class="w3-block" type="submit" value="Book Now"/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <!-- Overlay effect when opening sidebar on small screens -->
@@ -260,17 +296,55 @@
     /*<![CDATA[*/
     var uluru = {lat: [[${apartment.lat}]], lng: [[${apartment.lon}]]};
     var apartmentId = [[${apartment.apartmentId}]];
+
+    var basicCost = [[${apartment.price}]];
+    var cleanCost = [[${apartment.cleanPrice}]];
+    var plusCost  = [[${apartment.plusPrice}]];
+    var standarPpl= [[${apartment.standardPeople}]];
     /*]]>*/
 </script>
-<!--<script type="text/javascript" th:inline="javascript">-->
-    <!--/*<![CDATA[*/-->
-    <!--var availableDates = [[${apartment.availabilities}]];-->
-    <!--var bookedDates = [[${apartment.bookInfos}]];-->
-    <!--/*]]>*/-->
-    <!--console.log(availableDates);-->
-    <!--console.log("&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;");-->
-    <!--console.log(bookedDates);-->
-<!--</script>-->
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var bookedDates    = [[ ${@apartmentService.getBookedDates({apartment.apartmentId})} ]];
+    var availableDates = [[ ${@apartmentService.getAvailableDates({apartment.apartmentId})} ]];
+    /*]]>*/
+
+//    console.log(availableDates[0].from);
+//    console.log("--------------");
+//    console.log(bookedDates);
+</script>
+<script>
+    function updateBookModal() {
+        var dateStr = $("#view-dates").val();
+        var numOfPpl= $("#view-num-of-ppl").val();
+        $("#f-dates").val(dateStr);
+        $("#f-num-of-ppl").val( numOfPpl );
+
+        var price = 0;
+        var numOfDays = calcDays(dateStr);
+        price = numOfDays*basicCost+cleanCost;
+        if(numOfPpl>standarPpl){
+            price= price + (numOfPpl-standarPpl)*plusCost*numOfDays;
+        }
+        $("#f-price").val(price);
+    }
+
+    function calcDays(dateStr) {
+        if(dateStr==""){
+            return 0;
+        }
+        var dateFrom = dateStr.split("-")[0].trim();
+        var dateTo = dateStr.split("-")[1].trim();
+
+        var objDateFrom = new Date(dateFrom.split("/")[2],dateFrom.split("/")[0],dateFrom.split("/")[1]);
+        var objDateTo = new Date(dateTo.split("/")[2],dateTo.split("/")[0],dateTo.split("/")[1]);
+
+        var days = Math.round((objDateTo-objDateFrom)/(1000*60*60*24));
+        console.log(days);
+        return days;
+    }
+</script>
+
 <script>
     $("#communicate-form").on( "submit", function( event ) {
         event.preventDefault();
@@ -322,12 +396,30 @@
 
 
     var funIsInvalid=function isInvalid(date) {
-        if (date.format('YYYY-MM-DD') == '2017-08-10') {
+//        returns false if the date is valid
+//        returns true if the date is invalid and should be deleted
+        /*<![CDATA[*/
+        if( date.format('YYYY-MM-DD') < new moment().format('YYYY-MM-DD') ){
+//            if it's a date in the past, erase it
             return true;
-        } else {
-            return false;
         }
-    }
+        var i = 0 ;
+        for (i=0;i<availableDates.length;i++){
+            if(date.format('YYYY-MM-DD')>=availableDates[i].from && date.format('YYYY-MM-DD')<=availableDates[i].to){
+//                if it's available check for booked
+                for(j=0;j<bookedDates.length;j++){
+                    if(date.format('YYYY-MM-DD')>=bookedDates[j].from && date.format('YYYY-MM-DD')<=bookedDates[j].to) {
+//                        if it's beetwen booked dates then should be deleted
+                        return true;
+                    }
+                }
+                //if the hotel is available in this date and no books founds
+                return false;
+            }
+        }
+        return true;//if not available found
+        /*]]>*/
+    };
     $(function() {
         /*<![CDATA[*/
         if([[${hotelIsBusy}]]==false){

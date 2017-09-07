@@ -4,17 +4,24 @@ import application.database.*;
 import application.database.repositories.ChatRepository;
 import application.database.repositories.LoginRepository;
 import application.database.repositories.MessageRepository;
+import javafx.beans.binding.MapBinding;
+import javafx.collections.ObservableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import application.database.repositories.ApartmentRepository;
 
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class ApartmentService{
+
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    {
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    }
 
     @Autowired
     ApartmentRepository apartmentRepository;
@@ -169,5 +176,34 @@ public class ApartmentService{
             messageRepository.save(newMessage);
         }
         return true;
+    }
+
+    public List<Map<String,String>> getAvailableDates(int apartmentId){
+        Apartment apartment= apartmentRepository.findOne(apartmentId);
+        List resultList = new ArrayList<Map<String,String>>();
+        for (Availability oneAvailability :
+                apartment.getAvailabilities())
+        {
+            Map returnMap = new HashMap(2);
+            returnMap.put("from",simpleDateFormat.format(oneAvailability.getFromAv()));
+            returnMap.put("to",simpleDateFormat.format(oneAvailability.getToAv()));
+            resultList.add(returnMap);
+        }
+        return resultList;
+    }
+
+    public List<Map<String,String>> getBookedDates(int apartmentId){
+        Apartment apartment= apartmentRepository.findOne(apartmentId);
+        List resultList = new ArrayList<Map<String,String>>();
+        for (BookInfo oneBookInfo :
+                apartment.getBookInfos())
+        {
+            Map returnMap = new HashMap(2);
+            returnMap.put("from",simpleDateFormat.format(oneBookInfo.getBookIn()));
+            returnMap.put("to",simpleDateFormat.format(oneBookInfo.getBookOut()));
+            resultList.add(returnMap);
+        }
+        return resultList;
+
     }
 }
