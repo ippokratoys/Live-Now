@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -73,14 +74,18 @@ public class HostController {
     }
     @RequestMapping(value = "/profile/host/add_apartment",method = RequestMethod.POST)
     String postAddApartmentController(Model model,
-                                  @ModelAttribute Apartment formApartment,
-                                  @AuthenticationPrincipal final UserDetails userDetails
+                                      @ModelAttribute Apartment formApartment,
+                                      @RequestParam(name = "image1")MultipartFile image1,
+                                      @RequestParam(name = "image2")MultipartFile image2,
+                                      @RequestParam(name = "image3")MultipartFile image3,
+                                      @RequestParam(name = "image4")MultipartFile image4,
+                                      @AuthenticationPrincipal final UserDetails userDetails
 
     ){
         System.out.println( formApartment.toString() );
         System.out.println("Creating Hotel " +formApartment.getName());
         try {
-            apartmentService.createApartment(loginRepository.findOne(userDetails.getUsername()),formApartment);
+            apartmentService.createApartment(loginRepository.findOne(userDetails.getUsername()),formApartment,image1,image2,image3,image4);
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/";

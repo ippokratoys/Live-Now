@@ -1,16 +1,14 @@
 package application.services;
 
 import application.database.*;
-import application.database.repositories.ChatRepository;
-import application.database.repositories.LoginRepository;
-import application.database.repositories.MessageRepository;
+import application.database.repositories.*;
 import javafx.beans.binding.MapBinding;
 import javafx.collections.ObservableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import application.database.repositories.ApartmentRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -35,7 +33,13 @@ public class ApartmentService{
     @Autowired
     MessageRepository messageRepository;
 
-    public Boolean createApartment(Login login, Apartment apartment) throws Exception{
+    @Autowired
+    ImageRepository imageRepository;
+
+    @Autowired
+    FileUploadService fileUploadService;
+
+    public Boolean createApartment(Login login, Apartment apartment, MultipartFile image1,MultipartFile image2,MultipartFile image3,MultipartFile image4) throws Exception{
         List<UserRole> listUserRole=  login.getUserRoles();
         int isHost=0;
         for(int i=0;i<listUserRole.size();i++){
@@ -48,7 +52,60 @@ public class ApartmentService{
             throw new Exception("User is not a Host");
         }
         apartment.setLogin(login);
-        apartmentRepository.save(apartment);
+        Apartment apartment1=apartmentRepository.save(apartment);
+        if (image1!=null){
+            Image newImage=new Image();
+            newImage.setApartment(apartment1);
+            Image image=imageRepository.save(newImage);
+            String fileName="ApartmentPhotos/";
+            fileName+=image.getImageId();
+            String[] buff=image1.getOriginalFilename().split("\\.");
+            String fileNamePostFix=buff[buff.length-1];
+            fileName+="."+fileNamePostFix;
+            fileUploadService.store(image1,fileName);
+            image.setPicturePath(fileName);
+            imageRepository.save(image);
+        }
+        if (image2!=null){
+            Image newImage=new Image();
+            newImage.setApartment(apartment1);
+            Image image=imageRepository.save(newImage);
+            String fileName="ApartmentPhotos/";
+            fileName+=image.getImageId();
+            String[] buff=image2.getOriginalFilename().split("\\.");
+            String fileNamePostFix=buff[buff.length-1];
+            fileName+="."+fileNamePostFix;
+            fileUploadService.store(image2,fileName);
+            image.setPicturePath(fileName);
+            imageRepository.save(image);
+        }
+        if (image3!=null){
+            Image newImage=new Image();
+            newImage.setApartment(apartment1);
+            Image image=imageRepository.save(newImage);
+            String fileName="ApartmentPhotos/";
+            fileName+=image.getImageId();
+            String[] buff=image3.getOriginalFilename().split("\\.");
+            String fileNamePostFix=buff[buff.length-1];
+            fileName+="."+fileNamePostFix;
+            fileUploadService.store(image3,fileName);
+            image.setPicturePath(fileName);
+            imageRepository.save(image);
+        }
+        if (image4!=null){
+            Image newImage=new Image();
+            newImage.setApartment(apartment1);
+            Image image=imageRepository.save(newImage);
+            String fileName="ApartmentPhotos/";
+            fileName+=image.getImageId();
+            String[] buff=image4.getOriginalFilename().split("\\.");
+            String fileNamePostFix=buff[buff.length-1];
+            fileName+="."+fileNamePostFix;
+            fileUploadService.store(image4,fileName);
+            image.setPicturePath(fileName);
+            imageRepository.save(image);
+        }
+
         return true;
     }
     public Boolean authentication(UserDetails userDetails, int apartmentId){

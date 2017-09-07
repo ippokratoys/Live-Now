@@ -81,9 +81,13 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-xs-12 col-md-12">
+                    <div class="form-group col-xs-12 col-md-6">
                         <label class="col-form-label" for="f-clean-price">Cleaning Price (euro)</label>
                         <input th:field="*{cleanPrice}" class="form-control" type="number" min="0" max="10000" name="clean-price" id="f-clean-price" required="required"/>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-6">
+                        <label class="col-form-label">Upload Images</label>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#choose-image">Select</button>
                     </div>
                 </div>
 
@@ -218,6 +222,99 @@
     </div>
 </div>
 
+<!--modal for choosing images-->
+<div id="choose-image" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!--Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title text-center">Upload Files(Until 4)</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="image1" class="cols-sm-2 control-label">Image 1</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input required="required" type="file" name="image1" id="image1"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group image2 hidden">
+                    <label for="image2" class="cols-sm-2 control-label">Image 2</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input required="required" type="file" name="image2" id="image2"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group image3 hidden">
+                    <label for="image3" class="cols-sm-2 control-label">Image 3</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input required="required" type="file" name="image3" id="image3"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group image4 hidden">
+                    <label for="image4" class="cols-sm-2 control-label">Image 4</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input required="required" type="file" name="image4" id="image4"/>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="form-group image5 hidden">-->
+                    <!--<label for="image5" class="cols-sm-2 control-label">Image 5</label>-->
+                    <!--<div class="cols-sm-10">-->
+                        <!--<div class="input-group">-->
+                            <!--<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>-->
+                            <!--<input required="required" type="file" name="image5" id="image5"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group image6 hidden">-->
+                    <!--<label for="image6" class="cols-sm-2 control-label">Image 6</label>-->
+                    <!--<div class="cols-sm-10">-->
+                        <!--<div class="input-group">-->
+                            <!--<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>-->
+                            <!--<input required="required" type="file" name="image6" id="image6"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group image7 hidden">-->
+                    <!--<label for="image7" class="cols-sm-2 control-label">Image 7</label>-->
+                    <!--<div class="cols-sm-10">-->
+                        <!--<div class="input-group">-->
+                            <!--<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>-->
+                            <!--<input required="required" type="file" name="image7" id="image7"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group image8 hidden">-->
+                    <!--<label for="image8" class="cols-sm-2 control-label">Image 8</label>-->
+                    <!--<div class="cols-sm-10">-->
+                        <!--<div class="input-group">-->
+                            <!--<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>-->
+                            <!--<input required="required" type="file" name="image8" id="image8"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="allPhotos hidden">
+                    <h3>For more images you can go to the edit page after the insertation of the apartment</h3>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-close-image" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
     $('#choose-location').on('shown.bs.modal', function(){
@@ -290,6 +387,40 @@
         // Get each component of the address from the place details
         // and fill the corresponding field on the form.
     }
+
+    $('#image1').change(function() {
+        $(".image2").removeClass("hidden");
+    });
+
+    $('#image2').change(function() {
+        $(".image3").removeClass("hidden");
+    });
+
+    $('#image3').change(function() {
+        $(".image4").removeClass("hidden");
+    });
+
+    $('#image4').change(function() {
+        $(".allPhotos").removeClass("hidden");
+    });
+
+//    $('#image5').change(function() {
+//        $(".image6").removeClass("hidden");
+//    });
+//
+//    $('#image6').change(function() {
+//        $(".image7").removeClass("hidden");
+//    });
+//
+//    $('#image7').change(function() {
+//        $(".image8").removeClass("hidden");
+//    });
+//
+//    $('#image8').change(function() {
+//        $(".allPhotos").removeClass("hidden");
+//    });
+
+
 </script>
 <script async="async" defer="defer"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPDlSnR5Vfez6gsdfC_JZDc2KXRCjgf6c&amp;libraries=places&amp;callback=initMap">
