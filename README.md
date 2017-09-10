@@ -6,3 +6,5 @@ Nhsiwths Aleksandros
 Plakias Fwtios-Apostolos
 Poludoros Athanasios
 We need to fix somethings
+
+It has minor bugs 
