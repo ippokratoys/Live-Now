@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8"/>
+    <!--bootstrap and jquery-->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <!--fonts and icons-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!--for date range picker-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}" href="css/daterangepicker.css"/>
+
+    <!--custom css/js-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}" href="css/profile.css"/>
+
+    <title>My Books</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="nav-side-menu" th:replace="profile_menu :: nav-bar-profile"></div><!--end of side bar-->
+        </div><!--end of col-3 for the bar -->
+        <!--main content of profile-->
+        <div id="my_books" class="col-sm-9">
+            <h1>My Books</h1>
+            <h2 th:if="${allBooks?.size()==0}">Sorry you haven't book something :(</h2>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr>
+                        <th class="text-center">Apartment Name</th>
+                        <th class="text-center">From</th>
+                        <th class="text-center">To</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Rate</th>
+                    </tr>
+                    <tr th:each="oneBook : ${allBooks}">
+                        <td class="text-center" ><a th:href="@{/apartment(hotel-id=${oneBook.apartment.apartmentId})}" th:text="${oneBook.apartment.name}"></a></td>
+                        <td class="text-center" th:text="${oneBook.bookIn}">1/1/1970</td>
+                        <td class="text-center" th:text="${oneBook.bookOut}">1/1/2010</td>
+                        <td class="text-center" th:text="${oneBook.bookId}">007</td>
+                        <td class="text-center">
+                            <button th:attr="disabled=${oneBook.bookOut.before(curDate)  ? 'false' : 'true'}"> Rate</button>
+                        </td>
+                        <!--onclick="editApartment(1);"-->
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" th:src="@{/js/daterangepicker.js}" src="js/daterangepicker.js"></script>
+<script type="text/javascript" th:src="@{/js/profile.js}" src="js/profile.js"></script>
+
+</body>
+
+</html>

@@ -1,9 +1,7 @@
 package application.basicControllers;
 
-import application.database.Apartment;
-import application.database.Chat;
-import application.database.Login;
-import application.database.Message;
+import application.database.*;
+import application.database.repositories.BookInfoRepository;
 import application.database.repositories.ChatRepository;
 import application.database.repositories.LoginRepository;
 import application.database.repositories.MessageRepository;
@@ -17,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jws.WebParam;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,6 +36,9 @@ public class UserController {
 
     @Autowired
     LoginRepository loginRepository;
+
+    @Autowired
+    private BookInfoRepository bookInfoRepository;
 
     @RequestMapping(value = "/profile/user/new_message/{apartment_id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
@@ -106,5 +109,21 @@ public class UserController {
             return null;
         }
         return messageRepository.findAllByChatOrderByMessageId(chat);
+    }
+
+    @RequestMapping("/profile/user/books")
+    String getUserBooks(Model model,
+                        @AuthenticationPrincipal final UserDetails userDetails
+    ){
+        if(userDetails==null){
+            return "redirect:/login";
+        }
+        Login login = loginRepository.findOne(userDetails.getUsername());
+        List<BookInfo> bookInfos=null;
+        bookInfos = bookInfoRepository.findAllByLoginOrderByBookIn(login);
+        System.out.println(bookInfos.size());
+        model.addAttribute("allBooks",bookInfos);
+        model.addAttribute("curDate",new Date());
+        return "user_books";
     }
 }

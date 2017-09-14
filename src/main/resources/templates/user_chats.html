@@ -33,7 +33,7 @@
                     <th class="text-center">View chat</th>
                 </tr>
                 <tr th:each="chat : ${chats}" data-toggle="modal" data-target="#chat-modal" onclick="userShowChat(1);" th:onclick="${'userShowChat('+chat.chatId+')'}">
-                    <td class="text-center" th:text="${chat.apartment.name}">House Deep</td>
+                    <td class="text-center"><a th:href="@{/apartment(hotel-id=${chat.apartment.apartmentId})}" th:text="${chat.apartment.name}">Teleio Spiti</a></td>
                     <td class="text-center" th:text="${chat.messages?.size()}">11</td>
                     <td class="text-center">Click me ;(</td>
                 </tr>
