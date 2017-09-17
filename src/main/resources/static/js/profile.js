@@ -234,4 +234,13 @@ function resetChat(){
     $("#message-list").empty();
 }
 
+function rateApartment(apartmentId, apartmentName) {
+    console.log(apartmentName);
+    $("#rate-name").text(apartmentName);
+    console.log(apartmentId);
+    $("input[name='apartment-id']").val(apartmentId);
+    console.log("done");
+    return ;
+}
+
 //-- NOTE: No use time on insertChat.
