@@ -32,7 +32,7 @@
         <!--main content of profile-->
         <div id="my_info" class="col-sm-9">
             <h1>Add new Apartment</h1>
-            <form class="add-place-form" th:object="${apartment}" method="post" th:action="@{/profile/host/add_apartment}" action="add_apartment" id="new-apartment">
+            <form class="add-place-form" th:object="${apartment}" method="post" th:action="@{/profile/host/add_apartment}" action="add_apartment" enctype="multipart/form-data" id="new-apartment">
                 <div class="form-row">
                     <div class="form-group col-xs-12 col-md-6">
                         <label class="col-form-label" for="f-price">Basic Price</label>
@@ -237,7 +237,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input required="required" type="file" name="image1" id="image1"/>
+                            <input  type="file" name="image1" id="image1"/>
                         </div>
                     </div>
                 </div>
@@ -246,7 +246,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input required="required" type="file" name="image2" id="image2"/>
+                            <input type="file" name="image2" id="image2"/>
                         </div>
                     </div>
                 </div>
@@ -255,7 +255,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input required="required" type="file" name="image3" id="image3"/>
+                            <input type="file" name="image3" id="image3"/>
                         </div>
                     </div>
                 </div>
@@ -264,7 +264,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input required="required" type="file" name="image4" id="image4"/>
+                            <input type="file" name="image4" id="image4"/>
                         </div>
                     </div>
                 </div>
