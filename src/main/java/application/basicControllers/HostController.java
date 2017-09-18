@@ -75,15 +75,36 @@ public class HostController {
     @RequestMapping(value = "/profile/host/add_apartment",method = RequestMethod.POST)
     String postAddApartmentController(Model model,
                                       @ModelAttribute Apartment formApartment,
-                                      @RequestParam(name = "image1")MultipartFile image1,
-                                      @RequestParam(name = "image2")MultipartFile image2,
-                                      @RequestParam(name = "image3")MultipartFile image3,
-                                      @RequestParam(name = "image4")MultipartFile image4,
+                                      @RequestParam(name = "image1",required = false)MultipartFile image1,
+                                      @RequestParam(name = "image2",required = false)MultipartFile image2,
+                                      @RequestParam(name = "image3",required = false)MultipartFile image3,
+                                      @RequestParam(name = "image4",required = false)MultipartFile image4,
                                       @AuthenticationPrincipal final UserDetails userDetails
 
     ){
         System.out.println( formApartment.toString() );
         System.out.println("Creating Hotel " +formApartment.getName());
+        System.out.println("-----------");
+
+        System.out.println(image1);
+        System.out.println(image1.getSize());
+        System.out.println(image1.getOriginalFilename());
+        System.out.println("-----------");
+
+        System.out.println(image2);
+        System.out.println(image2.getSize());
+        System.out.println(image2.getOriginalFilename());
+        System.out.println("-----------");
+
+        System.out.println(image3);
+        System.out.println(image3.getSize());
+        System.out.println(image3.getOriginalFilename());
+        System.out.println("-----------");
+
+        System.out.println(image4);
+        System.out.println(image4.getSize());
+        System.out.println(image4.getOriginalFilename());
+        System.out.println("-----------");
         try {
             apartmentService.createApartment(loginRepository.findOne(userDetails.getUsername()),formApartment,image1,image2,image3,image4);
         } catch (Exception e) {
