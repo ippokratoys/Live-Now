@@ -1,19 +1,14 @@
 package application.services;
 
 
-import application.database.Apartment;
-import application.database.BookInfo;
-import application.database.Login;
-import application.database.UserRole;
-import application.database.repositories.ApartmentRepository;
-import application.database.repositories.AvailabilityRepository;
-import application.database.repositories.BookInfoRepository;
-import application.database.repositories.LoginRepository;
+import application.database.*;
+import application.database.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +26,9 @@ public class BookService {
 
     @Autowired
     BookInfoRepository bookInfoRepository;
+
+    @Autowired
+    BookReviewRepository bookReviewRepository;
 
     public boolean createBookInfo(int apartmentId,String username,String book_in,String book_out)throws Exception{
         Apartment apartment=apartmentRepository.findOne(apartmentId);
@@ -58,9 +56,30 @@ public class BookService {
         BookInfo newBookInfo=new BookInfo();
         newBookInfo.setLogin(login);
         newBookInfo.setApartment(apartment);
+        newBookInfo.setReviewDone(false);
         newBookInfo.setBookIn(format.parse(book_in));
         newBookInfo.setBookOut(format.parse(book_out));
         bookInfoRepository.save(newBookInfo);
+        return true;
+    }
+
+    public boolean createRating(int bookId,short rating,String content)throws Exception{
+        BookInfo bookInfo=bookInfoRepository.findOne(bookId);
+        BookReview oldBookReview=bookReviewRepository.findByBookInfo(bookInfo);
+        if(oldBookReview!=null){
+           throw new Exception("There is Review");
+        }
+        BookReview bookReview;
+        bookReview=new BookReview();
+        bookReview.setRating(rating);
+        bookReview.setComment(content);
+        bookReview.setBookInfo(bookInfo);
+        bookReview.setApartment(bookInfo.getApartment());
+        Date date = new Date();
+        bookReview.setTime(date);
+        bookInfo.setReviewDone(true);
+        bookInfoRepository.save(bookInfo);
+        bookReviewRepository.save(bookReview);
         return true;
     }
 }

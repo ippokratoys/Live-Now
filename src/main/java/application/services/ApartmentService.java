@@ -58,6 +58,8 @@ public class ApartmentService{
             newImage.setApartment(apartment1);
             Image image=imageRepository.save(newImage);
             String fileName="ApartmentPhotos/";
+            fileName+=apartment1.getLogin().getName();
+            fileName+=apartment1.getApartmentId();
             fileName+=image.getImageId();
             String[] buff=image1.getOriginalFilename().split("\\.");
             String fileNamePostFix=buff[buff.length-1];
@@ -71,6 +73,8 @@ public class ApartmentService{
             newImage.setApartment(apartment1);
             Image image=imageRepository.save(newImage);
             String fileName="ApartmentPhotos/";
+            fileName+=apartment1.getLogin().getName();
+            fileName+=apartment1.getApartmentId();
             fileName+=image.getImageId();
             String[] buff=image2.getOriginalFilename().split("\\.");
             String fileNamePostFix=buff[buff.length-1];
@@ -84,6 +88,8 @@ public class ApartmentService{
             newImage.setApartment(apartment1);
             Image image=imageRepository.save(newImage);
             String fileName="ApartmentPhotos/";
+            fileName+=apartment1.getLogin().getName();
+            fileName+=apartment1.getApartmentId();
             fileName+=image.getImageId();
             String[] buff=image3.getOriginalFilename().split("\\.");
             String fileNamePostFix=buff[buff.length-1];
@@ -97,6 +103,8 @@ public class ApartmentService{
             newImage.setApartment(apartment1);
             Image image=imageRepository.save(newImage);
             String fileName="ApartmentPhotos/";
+            fileName+=apartment1.getLogin().getName();
+            fileName+=apartment1.getApartmentId();
             fileName+=image.getImageId();
             String[] buff=image4.getOriginalFilename().split("\\.");
             String fileNamePostFix=buff[buff.length-1];
