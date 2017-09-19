@@ -234,11 +234,9 @@ function resetChat(){
     $("#message-list").empty();
 }
 
-function rateApartment(apartmentId, apartmentName) {
-    console.log(apartmentName);
+function rateApartment(bookId, apartmentName) {
     $("#rate-name").text(apartmentName);
-    console.log(apartmentId);
-    $("input[name='apartment-id']").val(apartmentId);
+    $("input[name='book-id']").val(bookId);
     console.log("done");
     return ;
 }

@@ -1,10 +1,7 @@
 package application.basicControllers;
 
 import application.database.*;
-import application.database.repositories.BookInfoRepository;
-import application.database.repositories.ChatRepository;
-import application.database.repositories.LoginRepository;
-import application.database.repositories.MessageRepository;
+import application.database.repositories.*;
 import application.services.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -36,6 +33,9 @@ public class UserController {
 
     @Autowired
     LoginRepository loginRepository;
+
+    @Autowired
+    ApartmentRepository apartmentRepository;
 
     @Autowired
     private BookInfoRepository bookInfoRepository;
@@ -125,5 +125,28 @@ public class UserController {
         model.addAttribute("allBooks",bookInfos);
         model.addAttribute("curDate",new Date());
         return "user_books";
+    }
+
+    @RequestMapping(value = "/profile/user/rate",method = RequestMethod.POST)
+    String submitRating(Model model,
+                        @AuthenticationPrincipal final UserDetails userDetails,
+                        @RequestParam(name = "rating") Double rating,
+                        @RequestParam(name = "book-id") int bookId,
+                        @RequestParam(name = "content") String content
+    ){
+        if(userDetails==null){
+            return "redirect:/login";
+        }
+        System.out.println("New rating : userDetails = [" + userDetails.getUsername() + "], rating = [" + rating + "], bookId = [" + bookId + "], content = [" + content + "]");
+        BookInfo bookInfo= bookInfoRepository.findOne(bookId);
+        Login login = loginRepository.findOne(userDetails.getUsername());
+
+        if(bookInfo.getLogin().getUsername().equals(login.getUsername())){
+            System.out.println("WAITING for the service");
+        }else {
+            System.out.println("this is not your book");
+            return "redirect:/profile";
+        }
+        return "redirect:/profile/user/books?rating_done";
     }
 }

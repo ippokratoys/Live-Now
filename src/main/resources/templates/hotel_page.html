@@ -77,7 +77,7 @@
             <h3>Rental</h3>
             <h3 th:text="${apartment.price}+'€'">$99</h3>
             <h4 th:text="${apartment.plusPrice}+'€ extra for each person after '+${apartment.standardPeople}"></h4>
-            <h4 th:text="'+'+${apartment.cleanPrice}+'€ standar price.'"></h4>
+            <h4 th:text="'+'+${apartment.cleanPrice}+'€ cleaning price(fixed).'"></h4>
             <h6>per night</h6>
             <hr/>
             <p><label><i class="fa fa-calendar-check-o"></i> Check In - Check Out</label></p>
@@ -94,7 +94,7 @@
         </div>
         <div class="w3-bar-block">
             <a href="#apartment" class="w3-bar-item w3-button w3-padding-16"><i class="fa fa-building"></i> Apartment</a>
-            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-16" onclick="document.getElementById('subscribe').style.display='block'"><i class="fa fa-rss"></i> Subscribe</a>
+            <a th:inline="text" href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-16" onclick="document.getElementById('ratings').style.display='block'"><i class="fa fa-rss"></i> Rate ([[${'somehow get the rating/5'}]])</a>
             <a href="#contact" class="w3-bar-item w3-button w3-padding-16"><i class="fa fa-envelope"></i> Contact</a>
         </div>
     </nav>
@@ -270,20 +270,103 @@
             </form>
         </div>
 
-        <footer class="w3-container w3-padding-16" style="margin-top:32px">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></footer>
+        <!--<footer class="w3-container w3-padding-16" style="margin-top:32px">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></footer>-->
 
         <!-- End page content -->
     </div>
 
-    <!-- Subscribe Modal -->
-    <div id="subscribe" class="w3-modal">
+    <!-- Rate Modal -->
+    <div id="ratings" class="w3-modal">
         <div class="w3-modal-content w3-animate-zoom w3-padding-large">
             <div class="w3-container w3-white w3-center">
-                <i onclick="document.getElementById('subscribe').style.display='none'" class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
-                <h2 class="w3-wide">SUBSCRIBE</h2>
-                <p>Join our mailing list to receive updates on available dates and special offers.</p>
-                <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail"/></p>
-                <button type="button" class="w3-button w3-padding-large w3-green w3-margin-bottom" onclick="document.getElementById('subscribe').style.display='none'">Subscribe</button>
+                <i onclick="document.getElementById('ratings').style.display='none'" class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
+                <!--<h2 class="w3-wide">Ratings Of Apartment</h2>-->
+                <h2 id="rating-header" class="w3-wide"> Ratings Of Apartment (45 comments)</h2>
+                <div class="comments-list">
+                    <div class="w3-row media">
+                        <a class="w3-third " href="#">
+                            <img class="pull-left img-circle" src="http://lorempixel.com/400/400/people/1/"/>
+                        </a>
+                        <div class="w3-third media-body">
+                            <h4 class="media-heading user_name">Baltej Singh</h4>
+                            Wow! this is really great.
+                            Wow! this is really great.
+                            Wow! this is really great.
+                        </div>
+                        <div class="w3-third">
+                            <p class="pull-right"><small>22/10/95</small></p>
+                            <br/>
+                            <div class="stars" th:with="hotelRating=1">
+                                <span th:each="i : ${#numbers.sequence( 1, hotelRating,1)}" class="glyphicon glyphicon-star"></span>
+                                <th:block th:if="${5>hotelRating}">
+                                    <span th:each="i : ${#numbers.sequence( 4, hotelRating,-1)}" class="glyphicon glyphicon-star-empty"></span>
+                                </th:block>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="w3-row media">
+                        <a class="w3-third " href="#">
+                            <img class="pull-left img-circle" src="http://lorempixel.com/400/400/people/1/"/>
+                        </a>
+                        <div class="w3-third media-body">
+                            <h4 class="media-heading user_name">Baltej Singh</h4>
+                            Wow! this is really great.
+                            Wow! this is really great.
+                            Wow! this is really great.
+                        </div>
+                        <div class="w3-third">
+                            <p class="pull-right"><small>22/10/2</small></p>
+                            <br/>
+                            <div class="stars" th:with="hotelRating=5">
+                                <span th:each="i : ${#numbers.sequence( 1, hotelRating,1)}" class="glyphicon glyphicon-star"></span>
+                                <th:block th:if="${5>hotelRating}">
+                                    <span th:each="i : ${#numbers.sequence( 4, hotelRating,-1)}" class="glyphicon glyphicon-star-empty"></span>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="media">-->
+                        <!--<p class="pull-right"><small>5 days ago</small></p>-->
+                        <!--<a class="media-left" href="#">-->
+                            <!--<img src="http://lorempixel.com/40/40/people/2/"/>-->
+                        <!--</a>-->
+                        <!--<div class="media-body">-->
+
+                            <!--<h4 class="media-heading user_name">Baltej Singh</h4>-->
+                            <!--Wow! this is really great.-->
+
+                            <!--&lt;!&ndash;<p><small><a href="">Like</a> - <a href="">Share</a></small></p>&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="media">-->
+                        <!--<p class="pull-right"><small>5 days ago</small></p>-->
+                        <!--<a class="media-left" href="#">-->
+                            <!--<img src="http://lorempixel.com/40/40/people/3/"/>-->
+                        <!--</a>-->
+                        <!--<div class="media-body">-->
+
+                            <!--<h4 class="media-heading user_name">Baltej Singh</h4>-->
+                            <!--Wow! this is really great.-->
+
+                            <!--&lt;!&ndash;<p><small><a href="">Like</a> - <a href="">Share</a></small></p>&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="media">-->
+                        <!--<p class="pull-right"><small>5 days ago</small></p>-->
+                        <!--<a class="media-left" href="#">-->
+                            <!--<img src="http://lorempixel.com/40/40/people/4/"/>-->
+                        <!--</a>-->
+                        <!--<div class="media-body">-->
+
+                            <!--<h4 class="media-heading user_name">Baltej Singh</h4>-->
+                            <!--Wow! this is really great.-->
+
+                            <!--&lt;!&ndash;<p><small><a href="">Like</a> - <a href="">Share</a></small></p>&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+                <!--<button type="button" class="w3-button w3-padding-large w3-green w3-margin-bottom" onclick="document.getElementById('subscribe').style.display='none'">Subscribe</button>-->
             </div>
         </div>
     </div>

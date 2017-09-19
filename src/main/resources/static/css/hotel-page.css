@@ -1498,3 +1498,45 @@ a {
     max-height: 500px;
     min-height: 250px;
 }
+
+.user_name{
+    font-size:14px;
+    font-weight: bold;
+}
+.comments-list .media{
+    border-bottom: 1px dotted #ccc;
+    margin-bottom: 5px;
+}
+
+#rating-header{
+    margin-bottom: 10px;
+}
+
+.img-circle{
+    visibility: inherit;
+    max-height: 100px;
+    max-width: 100px;
+}
+
+.stars{
+    /* aka w3-display-bottomright*/
+    position: relative;
+    right: 0;
+    bottom: 0;
+}
+
+@media (max-width: 600px){
+    .img-circle{
+        visibility: hidden;
+    }
+    .stars{
+
+    }
+}
+
+.rating > input:checked ~ label /* show gold star when clicked */
+{ color: #FFD700;  } /* hover previous stars in list */
+
+.glyphicon-star{
+    color: #FFD700;
+}
