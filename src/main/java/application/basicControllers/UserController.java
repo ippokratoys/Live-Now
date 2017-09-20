@@ -3,6 +3,7 @@ package application.basicControllers;
 import application.database.*;
 import application.database.repositories.*;
 import application.services.ApartmentService;
+import application.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.MediaType;
@@ -21,6 +22,9 @@ import java.util.List;
  */
 @Controller
 public class UserController {
+
+    @Autowired
+    ReviewService reviewService;
 
     @Autowired
     ApartmentService apartmentService;
@@ -128,7 +132,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/profile/user/rate",method = RequestMethod.POST)
-    String submitRating(Model model,
+    String submitRatingApartment(Model model,
                         @AuthenticationPrincipal final UserDetails userDetails,
                         @RequestParam(name = "rating") Double rating,
                         @RequestParam(name = "book-id") int bookId,
@@ -142,6 +146,43 @@ public class UserController {
         Login login = loginRepository.findOne(userDetails.getUsername());
 
         if(bookInfo.getLogin().getUsername().equals(login.getUsername())){
+            short ratingToShort=rating.shortValue();
+            try {
+                reviewService.createBookReview(bookId,content,ratingToShort,bookInfo.getApartment().getApartmentId());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "redirect:/profile";
+            }
+            System.out.println("WAITING for the service");
+        }else {
+            System.out.println("this is not your book");
+            return "redirect:/profile";
+        }
+        return "redirect:/profile/user/books?rating_done";
+    }
+
+    @RequestMapping(value = "/profile/user/rate_host",method = RequestMethod.POST)
+    String submitRating(Model model,
+                        @AuthenticationPrincipal final UserDetails userDetails,
+                        @RequestParam(name = "rating") Double rating,
+                        @RequestParam(name = "book-id") int bookId,
+                        @RequestParam(name = "content") String content
+    ){
+        if(userDetails==null){
+            return "redirect:/login";
+        }
+        System.out.println("New rating for host: userDetails = [" + userDetails.getUsername() + "], rating = [" + rating + "], bookId = [" + bookId + "], content = [" + content + "]");
+        BookInfo bookInfo= bookInfoRepository.findOne(bookId);
+        Login login = loginRepository.findOne(userDetails.getUsername());
+
+        if(bookInfo.getLogin().getUsername().equals(login.getUsername())){
+            short ratingToShort=rating.shortValue();
+            try {
+                reviewService.createHostReview(bookId,content,userDetails.getUsername());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "redirect:/profile";
+            }
             System.out.println("WAITING for the service");
         }else {
             System.out.println("this is not your book");
