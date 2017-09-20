@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 @Service
@@ -30,7 +33,7 @@ public class BookService {
     @Autowired
     BookReviewRepository bookReviewRepository;
 
-    public boolean createBookInfo(int apartmentId,String username,String book_in,String book_out)throws Exception{
+    public boolean createBookInfo(int apartmentId,String username,String book_in,String book_out,int people)throws Exception{
         Apartment apartment=apartmentRepository.findOne(apartmentId);
         Login login=loginRepository.findOne(username);
         if(apartment==null || login==null){
@@ -59,15 +62,25 @@ public class BookService {
         newBookInfo.setReviewDone(false);
         newBookInfo.setBookIn(format.parse(book_in));
         newBookInfo.setBookOut(format.parse(book_out));
+        LocalDate dateBefore = format.parse(book_in).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate dateAfter = format.parse(book_out).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        long daysBetween = ChronoUnit.DAYS.between(dateBefore, dateAfter);
+        int price=0;
+        price=((int) (long) daysBetween)*apartment.getPrice()+apartment.getCleanPrice();
+        if(people>apartment.getStandardPeople()){
+            price+=(people-apartment.getStandardPeople())*apartment.getPlusPrice()*((int) (long) daysBetween);
+        }
+
+        newBookInfo.setPeople(people);
+        newBookInfo.setIncome(price);
         bookInfoRepository.save(newBookInfo);
         return true;
     }
 
     public boolean createRating(int bookId,short rating,String content)throws Exception{
         BookInfo bookInfo=bookInfoRepository.findOne(bookId);
-        BookReview oldBookReview=bookReviewRepository.findByBookInfo(bookInfo);
-        if(oldBookReview!=null){
-           throw new Exception("There is Review");
+        if(reviewExistance(bookId)){
+            throw new Exception("There is a review");
         }
         BookReview bookReview;
         bookReview=new BookReview();
@@ -81,5 +94,15 @@ public class BookService {
         bookInfoRepository.save(bookInfo);
         bookReviewRepository.save(bookReview);
         return true;
+    }
+
+    public boolean reviewExistance(int bookId){
+        BookInfo bookInfo=bookInfoRepository.findOne(bookId);
+        BookReview oldBookReview=bookReviewRepository.findByBookInfo(bookInfo);
+        if(oldBookReview!=null){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

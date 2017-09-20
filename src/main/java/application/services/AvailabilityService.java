@@ -44,7 +44,7 @@ public class AvailabilityService{
     }
 
     public Boolean checkAvailability(Apartment apartment,Date startDate,Date endDate){
-        String queryStrBook="Select * from book_info where book_info.apartment=:aparId and (:startDate between book_info.book_in and book_info.book_out) and (:endDate between book_info.book_in and book_info.book_out)";
+        String queryStrBook="Select * from book_info where book_info.apartment=:aparId and ((:startDate between book_info.book_in and book_info.book_out) or (:endDate between book_info.book_in and book_info.book_out) or (book_info.book_in BETWEEN :startDate and :endDate) or (book_info.book_out BETWEEN :startDate and :endDate))";
         Query queryBook=entityManager.createNativeQuery(queryStrBook, BookInfo.class);
 
         String queryStrAvailability="Select * from availability where availability.apartment_apartment_id=:aparId and (:startDate between availability.from_av and availability.to_av) and (:endDate between availability.from_av and availability.to_av)";

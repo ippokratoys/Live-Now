@@ -87,7 +87,7 @@
             <!--<input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckOut" required="true"/>-->
 
             <p><label><i class="fa fa-male"></i> Adults</label></p>
-            <input class="w3-input w3-border" type="number" value="1" name="Adults" min="1" th:max="${apartment.maxPeople}" id="view-num-of-ppl"/>
+            <input form="myform" class="w3-input w3-border" type="number" value="1" name="Adults" min="1" th:max="${apartment.maxPeople}" id="view-num-of-ppl"/>
 
             <p><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#book-modal" onclick="updateBookModal();">Book Now
             <i class="fa fa-search w3-margin-right"></i></button></p>
@@ -115,7 +115,7 @@
                     <h3 class="modal-title text-center">Book Apartment</h3>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/apartment/book}" method="post">
+                    <form th:action="@{/apartment/book}" method="post" id="myform">
                         <div class="row">
                             <label for="f-dates">Dates</label>
                             <input type="text" name="dates" readonly="readonly" id="f-dates"/>

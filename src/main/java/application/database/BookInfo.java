@@ -46,17 +46,22 @@ public class BookInfo implements Serializable {
 	@Column(name="review_done")
 	private boolean reviewDone;
 
+	private int income;
+
+	private int people;
+
+
 
 	//bi-directional many-to-one association to BookReview
+
 	@OneToMany(mappedBy="bookInfo")
 	private List<BookReview> bookReviews;
-
 	public BookInfo() {
 	}
+
 	public int getBookId() {
 		return this.bookId;
 	}
-
 	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
@@ -64,7 +69,6 @@ public class BookInfo implements Serializable {
 	public Date getBookIn() {
 		return this.bookIn;
 	}
-
 	public void setBookIn(Date bookIn) {
 		this.bookIn = bookIn;
 	}
@@ -144,5 +148,23 @@ public class BookInfo implements Serializable {
 
 	public void setReviewDone(boolean reviewDone) {
 		this.reviewDone = reviewDone;
+	}
+
+
+
+	public int getPeople() {
+		return people;
+	}
+
+	public void setPeople(int people) {
+		this.people = people;
+	}
+
+	public int getIncome() {
+		return income;
+	}
+
+	public void setIncome(int income) {
+		this.income = income;
 	}
 }

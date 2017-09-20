@@ -64,7 +64,7 @@ public class HostController {
                     Integer.parseInt(allParams.get("apartment-id")),
                     userDetails.getUsername(),
                     buff[0],
-                    buff[1]);
+                    buff[1],Integer.parseInt(allParams.get("Adults")));
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/";
