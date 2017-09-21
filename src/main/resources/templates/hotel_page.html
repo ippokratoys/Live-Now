@@ -313,10 +313,11 @@
                         <div class="w3-third">
                             <p class="pull-right"><small>22/10/95</small></p>
                             <br/>
-                            <div class="stars" th:with="hotelRating= ${aBookReview.rating}">
-                                <span th:each="i : ${#numbers.sequence( 1, hotelRating,1)}" class="glyphicon glyphicon-star"></span>
-                                <th:block th:if="${5>hotelRating}">
-                                    <span th:each="i : ${#numbers.sequence( 4, hotelRating,-1)}" class="glyphicon glyphicon-star-empty"></span>
+                            <div class="stars" th:with="hotelRating= ${aBookReview.rating}" >
+                                <span th:each="i : ${#numbers.sequence( 1, hotelRating,1)}" class="glyphicon glyphicon-star "></span>
+                                <span th:if="${ ( hotelRating.intValue().doubleValue() ) != (hotelRating) }" class="glyphicon glyphicon-star half"></span>
+                                <th:block th:if="${5>T(Math).ceil(hotelRating)}">
+                                    <span th:each="i : ${#numbers.sequence( 4, T(Math).ceil(hotelRating),-1)}" class="glyphicon glyphicon-star-empty"></span>
                                 </th:block>
                             </div>
 
@@ -345,12 +346,14 @@
                         <div class="w3-third">
                             <p class="pull-right"><small>22/10/95</small></p>
                             <br/>
-                            <div class="stars" th:with="hotelRating=1">
-                                <span th:each="i : ${#numbers.sequence( 1, hotelRating,1)}" class="glyphicon glyphicon-star"></span>
-                                <th:block th:if="${5>hotelRating}">
-                                    <span th:each="i : ${#numbers.sequence( 4, hotelRating,-1)}" class="glyphicon glyphicon-star-empty"></span>
+                            <div class="stars" th:with="hotelRating= 4.5" >
+                                <span th:each="i : ${#numbers.sequence( 1, hotelRating,1)}" class="glyphicon glyphicon-star "></span>
+                                <span th:if="${ ( hotelRating.intValue().doubleValue() ) != (hotelRating) }" class="glyphicon glyphicon-star half"></span>
+                                <th:block th:if="${5>T(Math).ceil(hotelRating)}">
+                                    <span th:each="i : ${#numbers.sequence( 4, T(Math).ceil(hotelRating),-1)}" class="glyphicon glyphicon-star-empty"></span>
                                 </th:block>
                             </div>
+
 
                         </div>
                     </div>

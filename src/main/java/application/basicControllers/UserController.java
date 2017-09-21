@@ -144,11 +144,10 @@ public class UserController {
         System.out.println("New rating : userDetails = [" + userDetails.getUsername() + "], rating = [" + rating + "], bookId = [" + bookId + "], content = [" + content + "]");
         BookInfo bookInfo= bookInfoRepository.findOne(bookId);
         Login login = loginRepository.findOne(userDetails.getUsername());
-
         if(bookInfo.getLogin().getUsername().equals(login.getUsername())){
             short ratingToShort=rating.shortValue();
             try {
-                reviewService.createBookReview(bookId,content,ratingToShort,bookInfo.getApartment().getApartmentId());
+                reviewService.createBookReview(bookId,content,rating,bookInfo.getApartment().getApartmentId());
             } catch (Exception e) {
                 e.printStackTrace();
                 return "redirect:/profile";
