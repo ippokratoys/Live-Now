@@ -53,6 +53,6 @@ function closeSlides() {
 }
 
 $( document ).ready(function() {
-    ;
+    $("#message-div").height(    $("#host-info").height());
 });
 // date range for check in and check out

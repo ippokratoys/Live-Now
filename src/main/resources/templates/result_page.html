@@ -179,12 +179,12 @@
                         <div class="caption">
                             <p class="hotel-cost" th:text="${oneApartment.price}+'€'">10€</p>
                             <p class="number-of-beds" th:text="${oneApartment.bed}+' beds'">4 beds</p>
-                            <p class="ratings">4.2/5(50)</p>
+                            <p th:inline="text" class="ratings">[[${@reviewService.getApartmentAvg(apartment)}]]/5([[${oneApartment.bookReviews.size()}]])</p>
                         </div>
                         <div class="caption-top">
-                            <p th:if="${oneApartment.type.equals('apartment')}" class="hotel-type">all the apartment</p>
-                            <p th:if="${oneApartment.type.equals('room')}" class="hotel-type">private room</p>
-                            <!--<p th:if="${oneApartment.type.equals('apartment')}" class="hotel-type"></p>-->
+                            <p th:inline="text" th:if="${oneApartment.type.equals('whole_apartment')}" class="hotel-type">[[${oneApartment.name}]] (All Apartment)</p>
+                            <p th:inline="text" th:if="${oneApartment.type.equals('private_room')}" class="hotel-type">[[${oneApartment.name}]] (Private Room)</p>
+                            <p th:inline="text" th:if="${oneApartment.type.equals('shared_room')}" class="hotel-type">[[${oneApartment.name}]] (Shared Room)</p>
                         </div>
                     </a>
                 </div>

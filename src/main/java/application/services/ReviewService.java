@@ -6,10 +6,11 @@ import application.database.repositories.BookInfoRepository;
 import application.database.repositories.BookReviewRepository;
 import application.database.repositories.HostReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-
+@Service
 public class ReviewService {
 
     @Autowired
@@ -45,9 +46,11 @@ public class ReviewService {
         Date date=new Date();
         newBookReview.setTime(date);
         bookReviewRepository.save(newBookReview);
+        book.setReviewDone(true);
+        bookInfoRepository.save(book);
     }
 
-    public  void createHostReview(int bookId,String content,String username)throws Exception{
+    public void createHostReview(int bookId,String content,String username)throws Exception{
         HostReview hostReview=new HostReview();
         BookInfo book=bookInfoRepository.findOne(bookId);
         if(book==null){
@@ -64,4 +67,7 @@ public class ReviewService {
         hostReviewRepository.save(hostReview);
     }
 
+    public double getApartmentAvg(Apartment apartment){
+        return 4.2;
+    }
 }
