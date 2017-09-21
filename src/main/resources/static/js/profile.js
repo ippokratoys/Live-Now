@@ -240,5 +240,11 @@ function rateApartment(bookId, apartmentName) {
     console.log("done");
     return ;
 }
+function rateHost(bookId, hostName) {
+    $("#rate-host-name").text(hostName);
+    $("input[name='book-id']").val(bookId);
+    console.log("done host");
+    return ;
+}
 
 //-- NOTE: No use time on insertChat.
