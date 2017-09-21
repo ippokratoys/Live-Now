@@ -25,7 +25,7 @@ public class ReviewService {
     HostReviewRepository hostReviewRepository;
 
 
-    public void createBookReview(int bookId,String comment,short rating,int apartmentId) throws Exception{
+    public void createBookReview(int bookId,String comment,double rating,int apartmentId) throws Exception{
         BookInfo book=bookInfoRepository.findOne(bookId);
         if(book==null){
             throw new Exception("There is not a book");

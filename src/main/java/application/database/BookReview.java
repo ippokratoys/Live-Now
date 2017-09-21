@@ -22,7 +22,7 @@ public class BookReview implements Serializable {
 
 	private String comment;
 
-	private short rating;
+	private double rating;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date time;
@@ -56,11 +56,11 @@ public class BookReview implements Serializable {
 		this.comment = comment;
 	}
 
-	public short getRating() {
+	public double getRating() {
 		return this.rating;
 	}
 
-	public void setRating(short rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 
