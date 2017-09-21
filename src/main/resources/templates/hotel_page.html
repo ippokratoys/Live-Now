@@ -257,18 +257,21 @@
 
         <!-- Contact -->
         <div class="w3-container" id="contact">
-            <h2>Host Info - Contact</h2>
-            <p>Questions? Go ahead, ask them:</p>
-            <small sec:authorize="!hasAuthority('customer')">You need to be log in as a customer/user (it's free)</small>
             <div class="w3-row">
                 <div class="w3-half" id="host-info">
-                    <img style="float:left" id="img-host" class="img-circle" src="img/pls.PNG"/>
+                    <h2 class="w3-center">Host Info</h2>
+                    <a onclick="document.getElementById('ratings-host').style.display='block'">
+                        <img style="float:left" id="img-host" class="img-circle" src="img/pls.PNG"/>
+                    </a>
                 <!--</div>-->
                 <!--<div class="w3-half">-->
                     <p th:text="${apartment.login.name}">Name</p>
                     <p th:text="${apartment.login.surname}">Surname</p>
                 </div>
                 <div class="w3-half" id="message-div">
+                    <h2 class="w3-center">Contact</h2>
+                    <p>Questions? Go ahead, ask them:</p>
+                    <small sec:authorize="!hasAuthority('customer')">You need to be log in as a customer/user (it's free)</small>
                     <form sec:authorize="hasAuthority('customer')" th:action="@{/profile/user/new_message}" action="/action_page.php" method="post" id="communicate-form" target="_blank" name="communicate-form">
                         <label class="w3-center" for="f-message"> Your Message</label>
                         <br/>
@@ -292,22 +295,25 @@
             <div class="w3-container w3-white w3-center">
                 <i onclick="document.getElementById('ratings').style.display='none'" class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
                 <!--<h2 class="w3-wide">Ratings Of Apartment</h2>-->
-                <h2 id="rating-header" class="w3-wide"> Ratings Of Apartment (45 comments)</h2>
+                <h2 th:text="'Ratings Of Apartment '+${apartment.bookReviews.size()}" id="rating-header" class="w3-wide"> Ratings Of Apartment (45 comments)</h2>
+                <h5 th:if="${apartment.bookReviews.size()==0}">No reviews for this apartment</h5>
                 <div class="comments-list">
-                    <div class="w3-row media">
+                    <div th:each="aBookReview : ${apartment.bookReviews}" class="w3-row media">
                         <a class="w3-third " href="#">
                             <img class="pull-left img-circle img-rating" src="http://lorempixel.com/400/400/people/1/"/>
                         </a>
                         <div class="w3-third media-body">
-                            <h4 class="media-heading user_name">Baltej Singh</h4>
-                            Wow! this is really great.
-                            Wow! this is really great.
-                            Wow! this is really great.
+                            <h4 th:text="${aBookReview.bookInfo.login.name}" class="media-heading user_name">Baltej Singh</h4>
+                            <p th:text="${aBookReview.comment}">
+                                Wow! this is really great.
+                                Wow! this is really great.
+                                Wow! this is really great.
+                            </p>
                         </div>
                         <div class="w3-third">
                             <p class="pull-right"><small>22/10/95</small></p>
                             <br/>
-                            <div class="stars" th:with="hotelRating=1">
+                            <div class="stars" th:with="hotelRating= ${aBookReview.rating}">
                                 <span th:each="i : ${#numbers.sequence( 1, hotelRating,1)}" class="glyphicon glyphicon-star"></span>
                                 <th:block th:if="${5>hotelRating}">
                                     <span th:each="i : ${#numbers.sequence( 4, hotelRating,-1)}" class="glyphicon glyphicon-star-empty"></span>
@@ -316,66 +322,6 @@
 
                         </div>
                     </div>
-                    <div class="w3-row media">
-                        <a class="w3-third " href="#">
-                            <img class="pull-left img-circle img-rating" src="http://lorempixel.com/400/400/people/1/"/>
-                        </a>
-                        <div class="w3-third media-body">
-                            <h4 class="media-heading user_name">Baltej Singh</h4>
-                            Wow! this is really great.
-                            Wow! this is really great.
-                            Wow! this is really great.
-                        </div>
-                        <div class="w3-third">
-                            <p class="pull-right"><small>22/10/2</small></p>
-                            <br/>
-                            <div class="stars" th:with="hotelRating=5">
-                                <span th:each="i : ${#numbers.sequence( 1, hotelRating,1)}" class="glyphicon glyphicon-star"></span>
-                                <th:block th:if="${5>hotelRating}">
-                                    <span th:each="i : ${#numbers.sequence( 4, hotelRating,-1)}" class="glyphicon glyphicon-star-empty"></span>
-                                </th:block>
-                            </div>
-                        </div>
-                    </div>
-                    <!--<div class="media">-->
-                        <!--<p class="pull-right"><small>5 days ago</small></p>-->
-                        <!--<a class="media-left" href="#">-->
-                            <!--<img src="http://lorempixel.com/40/40/people/2/"/>-->
-                        <!--</a>-->
-                        <!--<div class="media-body">-->
-
-                            <!--<h4 class="media-heading user_name">Baltej Singh</h4>-->
-                            <!--Wow! this is really great.-->
-
-                            <!--&lt;!&ndash;<p><small><a href="">Like</a> - <a href="">Share</a></small></p>&ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="media">-->
-                        <!--<p class="pull-right"><small>5 days ago</small></p>-->
-                        <!--<a class="media-left" href="#">-->
-                            <!--<img src="http://lorempixel.com/40/40/people/3/"/>-->
-                        <!--</a>-->
-                        <!--<div class="media-body">-->
-
-                            <!--<h4 class="media-heading user_name">Baltej Singh</h4>-->
-                            <!--Wow! this is really great.-->
-
-                            <!--&lt;!&ndash;<p><small><a href="">Like</a> - <a href="">Share</a></small></p>&ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="media">-->
-                        <!--<p class="pull-right"><small>5 days ago</small></p>-->
-                        <!--<a class="media-left" href="#">-->
-                            <!--<img src="http://lorempixel.com/40/40/people/4/"/>-->
-                        <!--</a>-->
-                        <!--<div class="media-body">-->
-
-                            <!--<h4 class="media-heading user_name">Baltej Singh</h4>-->
-                            <!--Wow! this is really great.-->
-
-                            <!--&lt;!&ndash;<p><small><a href="">Like</a> - <a href="">Share</a></small></p>&ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</div>-->
                 </div>
                 <!--<button type="button" class="w3-button w3-padding-large w3-green w3-margin-bottom" onclick="document.getElementById('subscribe').style.display='none'">Subscribe</button>-->
             </div>

@@ -1526,7 +1526,7 @@ a {
 }
 
 @media (max-width: 600px){
-    .img-circle{
+    .img-rating{
         visibility: hidden;
     }
     .stars{
