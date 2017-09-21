@@ -48,7 +48,7 @@ public class ReviewService {
         bookReviewRepository.save(newBookReview);
     }
 
-    public  void createHostReview(int bookId,String content,String username)throws Exception{
+    public void createHostReview(int bookId,String content,String username)throws Exception{
         HostReview hostReview=new HostReview();
         BookInfo book=bookInfoRepository.findOne(bookId);
         if(book==null){
@@ -65,4 +65,7 @@ public class ReviewService {
         hostReviewRepository.save(hostReview);
     }
 
+    public double getApartmentAvg(Apartment apartment){
+        return 4.2;
+    }
 }
