@@ -1,6 +1,7 @@
 package application.basicControllers;
 
 import application.database.Apartment;
+import application.database.BookInfo;
 import application.database.repositories.ApartmentRepository;
 import application.search.Result;
 import application.search.Search;
@@ -90,7 +91,8 @@ public class HomePage {
     String hotePageController(Model model,
                               @RequestParam(name = "hotel-id") int hotelId,
                               @RequestParam(name = "date-range",required = false,defaultValue = "") String dateRange,
-                              @RequestParam(name = "people",required = false,defaultValue = "1") Integer people
+                              @RequestParam(name = "people",required = false,defaultValue = "1") Integer people,
+                              @RequestParam(name = "book-failed",required = false,defaultValue = "1") String bookFailed
     ){
         Date from = null;
         Date to = null;
@@ -121,6 +123,9 @@ public class HomePage {
             }else{
                 model.addAttribute("hotelIsBusy",true);
             }
+        }
+        if(bookFailed.equals("true")){
+            model.addAttribute("hotelIsBusy",true);
         }
         model.addAttribute(people);
         return "hotel_page";

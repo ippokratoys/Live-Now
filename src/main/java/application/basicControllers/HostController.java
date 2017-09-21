@@ -64,8 +64,12 @@ public class HostController {
                     Integer.parseInt(allParams.get("apartment-id")),
                     userDetails.getUsername(),
                     buff[0],
-                    buff[1]);
+                    buff[1],Integer.parseInt(allParams.get("Adults")));
         } catch (Exception e) {
+            if(e.getMessage().equals("The apartment is not available")){
+                model.addAttribute("hotelIsBusy",true);
+                return  "redirect:/apartment?hotel-id="+allParams.get("apartment-id")+"&book-failed=true";
+            }
             e.printStackTrace();
             return "redirect:/";
         }

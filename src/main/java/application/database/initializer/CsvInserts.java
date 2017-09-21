@@ -229,6 +229,7 @@ public class CsvInserts{
                     e.printStackTrace();
                 }
                 bookInfo.setLogin(loginRepository.findOne(arr_in[5]));
+                bookInfo.setReviewDone(Boolean.parseBoolean(arr_in[6]));
                 bookInfoRepository.save(bookInfo);
             }
         }catch (FileNotFoundException e) {

@@ -46,6 +46,8 @@ public class ReviewService {
         Date date=new Date();
         newBookReview.setTime(date);
         bookReviewRepository.save(newBookReview);
+        book.setReviewDone(true);
+        bookInfoRepository.save(book);
     }
 
     public void createHostReview(int bookId,String content,String username)throws Exception{
