@@ -134,21 +134,23 @@ public class UserController {
     @RequestMapping(value = "/profile/user/rate",method = RequestMethod.POST)
     String submitRatingApartment(Model model,
                         @AuthenticationPrincipal final UserDetails userDetails,
-                        @RequestParam(name = "rating") Double rating,
+                        @RequestParam(name = "rating") Double ratingBook,
                         @RequestParam(name = "book-id") int bookId,
-                        @RequestParam(name = "content") String content
+                        @RequestParam(name = "content") String contentBook
+//                                 @RequestParam(name="rating2") Double ratingHost,
+//                                 @RequestParam(name="content2") Double contentHost
     ){
         if(userDetails==null){
             return "redirect:/login";
         }
-        System.out.println("New rating : userDetails = [" + userDetails.getUsername() + "], rating = [" + rating + "], bookId = [" + bookId + "], content = [" + content + "]");
+        System.out.println("New rating : userDetails = [" + userDetails.getUsername() + "], rating = [" + ratingBook + "], bookId = [" + bookId + "], content = [" + contentBook + "]");
         BookInfo bookInfo= bookInfoRepository.findOne(bookId);
         Login login = loginRepository.findOne(userDetails.getUsername());
 
         if(bookInfo.getLogin().getUsername().equals(login.getUsername())){
-            short ratingToShort=rating.shortValue();
+//            short ratingToShort=ratingBook.shortValue();
             try {
-                reviewService.createBookReview(bookId,content,ratingToShort,bookInfo.getApartment().getApartmentId());
+                reviewService.createBookReview(bookId,contentBook,ratingBook,bookInfo.getApartment().getApartmentId());
             } catch (Exception e) {
                 e.printStackTrace();
                 return "redirect:/profile";

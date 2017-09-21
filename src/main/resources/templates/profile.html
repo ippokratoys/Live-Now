@@ -30,7 +30,8 @@
             <form method="post" action="/profile" th:action="@{/profile}">
                 <div class="a-field">
                     <label for="f-image" class="a-label hidden">Photo : </label>
-                    <span class="a-value"><img class="img-responsive" src="http://www.andyworthington.co.uk/wp-content/uploads/shaker-aamer-nov-2012-1.jpg"/></span>
+                    <span class="a-value"><img class="img-responsive" th:src="${user.photoPath}"/></span>
+                    <!--<span class="a-value"><img class="img-responsive" src="http://www.andyworthington.co.uk/wp-content/uploads/shaker-aamer-nov-2012-1.jpg"/></span>-->
                     <input id="f-image" class="a-input hidden" type="file" value=""/>
                 </div>
 
