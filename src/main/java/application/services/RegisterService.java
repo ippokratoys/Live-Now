@@ -3,11 +3,18 @@ package application.services;
 import application.database.Login;
 import application.database.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import application.database.repositories.LoginRepository;
 import application.database.repositories.UserRoleRepository;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 
@@ -104,6 +111,54 @@ public class RegisterService{
                 throw new Exception("The password doesnot match with the confirm");
             }
             login.setPassword(password);
+        }
+        System.out.println(image);
+        if(image==null){
+            System.out.println("not image given");
+        }else{
+            Path pathFile = null;
+            Resource file = null;
+            pathFile= Paths.get("UsersPhotos/");
+            try {
+                String filename=login.getPhotoPath().replaceAll("UsersPhotos/","");
+                file=new UrlResource(pathFile.resolve(filename).toUri());
+                System.out.println(file.getURI());
+                if(file.exists() || file.isReadable()) {
+//                it's ok
+                    ;
+                }else {
+                    file=null;
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                file=null;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if(file==null){
+                System.out.println("file is nyll");
+                String fileName="UsersPhotos/";
+                fileName += login.getUsername();
+                String[] buff=image.getOriginalFilename().split("\\.");
+                String fileNamePostFix=buff[buff.length-1];
+                fileName+="."+fileNamePostFix;
+                fileUploadService.store(image,fileName);
+                login.setPhotoPath(fileName);
+            }else{
+                System.out.println("delete the old");
+                File deleteImage;
+                deleteImage=file.getFile();
+                deleteImage.delete();
+                login.setPhotoPath("not");
+                String fileName="UsersPhotos/";
+                fileName += login.getUsername();
+                String[] buff=image.getOriginalFilename().split("\\.");
+                String fileNamePostFix=buff[buff.length-1];
+                fileName+="."+fileNamePostFix;
+                fileUploadService.store(image,fileName);
+                login.setPhotoPath(fileName);
+            }
         }
         loginRepository.save(login);
     }

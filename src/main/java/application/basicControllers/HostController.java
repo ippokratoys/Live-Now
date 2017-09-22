@@ -109,6 +109,18 @@ public class HostController {
         System.out.println(image4.getSize());
         System.out.println(image4.getOriginalFilename());
         System.out.println("-----------");
+        if(image1.getSize()==0){
+            image1=null;
+        }
+        if(image2.getSize()==0){
+            image2=null;
+        }
+        if(image3.getSize()==0){
+            image3=null;
+        }
+        if(image4.getSize()==0){
+            image4=null;
+        }
         try {
             apartmentService.createApartment(loginRepository.findOne(userDetails.getUsername()),formApartment,image1,image2,image3,image4);
         } catch (Exception e) {

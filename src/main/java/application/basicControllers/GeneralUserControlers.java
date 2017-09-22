@@ -101,6 +101,7 @@ public class GeneralUserControlers {
     @RequestMapping(value = "/profile",method = RequestMethod.POST)
     String editProfile(Model model,
                        @AuthenticationPrincipal final UserDetails userDetails,
+                       @RequestParam(name = "photo")MultipartFile photo,
                        @RequestParam Map<String,String> allParams
     ){
         System.out.println("Yeeeezzz");
@@ -108,6 +109,9 @@ public class GeneralUserControlers {
             return "redirect:/login";
         }
         model.addAttribute("user",loginRepository.findOne(userDetails.getUsername()));
+        if(photo.getSize()==0){
+            photo=null;
+        }
         try {
             registerService.editLogin(
                     userDetails.getUsername(),
@@ -117,7 +121,7 @@ public class GeneralUserControlers {
                     allParams.get("email"),
                     allParams.get("password"),
                     allParams.get("confirm"),
-                    null
+                    photo
                     );
         } catch (Exception e) {
             model.addAttribute("error","pass_confirm");
