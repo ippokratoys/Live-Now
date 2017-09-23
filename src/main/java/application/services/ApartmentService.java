@@ -53,69 +53,32 @@ public class ApartmentService{
         }
         apartment.setLogin(login);
         Apartment apartment1=apartmentRepository.save(apartment);
-        if (image1!=null){
-            Image newImage=new Image();
-            newImage.setApartment(apartment1);
-            Image image=imageRepository.save(newImage);
-            String fileName="ApartmentPhotos/";
-            fileName+=apartment1.getLogin().getName();
-            fileName+=apartment1.getApartmentId();
-            fileName+=image.getImageId();
-            String[] buff=image1.getOriginalFilename().split("\\.");
-            String fileNamePostFix=buff[buff.length-1];
-            fileName+="."+fileNamePostFix;
-            fileUploadService.store(image1,fileName);
-            image.setPicturePath(fileName);
-            imageRepository.save(image);
-        }
-        if (image2!=null){
-            Image newImage=new Image();
-            newImage.setApartment(apartment1);
-            Image image=imageRepository.save(newImage);
-            String fileName="ApartmentPhotos/";
-            fileName+=apartment1.getLogin().getName();
-            fileName+=apartment1.getApartmentId();
-            fileName+=image.getImageId();
-            String[] buff=image2.getOriginalFilename().split("\\.");
-            String fileNamePostFix=buff[buff.length-1];
-            fileName+="."+fileNamePostFix;
-            fileUploadService.store(image2,fileName);
-            image.setPicturePath(fileName);
-            imageRepository.save(image);
-        }
-        if (image3!=null){
-            Image newImage=new Image();
-            newImage.setApartment(apartment1);
-            Image image=imageRepository.save(newImage);
-            String fileName="ApartmentPhotos/";
-            fileName+=apartment1.getLogin().getName();
-            fileName+=apartment1.getApartmentId();
-            fileName+=image.getImageId();
-            String[] buff=image3.getOriginalFilename().split("\\.");
-            String fileNamePostFix=buff[buff.length-1];
-            fileName+="."+fileNamePostFix;
-            fileUploadService.store(image3,fileName);
-            image.setPicturePath(fileName);
-            imageRepository.save(image);
-        }
-        if (image4!=null){
-            Image newImage=new Image();
-            newImage.setApartment(apartment1);
-            Image image=imageRepository.save(newImage);
-            String fileName="ApartmentPhotos/";
-            fileName+=apartment1.getLogin().getName();
-            fileName+=apartment1.getApartmentId();
-            fileName+=image.getImageId();
-            String[] buff=image4.getOriginalFilename().split("\\.");
-            String fileNamePostFix=buff[buff.length-1];
-            fileName+="."+fileNamePostFix;
-            fileUploadService.store(image4,fileName);
-            image.setPicturePath(fileName);
-            imageRepository.save(image);
-        }
+        save_image(image1,apartment1);
+        save_image(image2,apartment1);
+        save_image(image3,apartment1);
+        save_image(image4,apartment1);
 
         return true;
     }
+
+    public void save_image(MultipartFile image,Apartment apartment) throws Exception {
+        if (image!=null){
+            Image newImage=new Image();
+            newImage.setApartment(apartment);
+            Image Newimage2=imageRepository.save(newImage);
+            String fileName="ApartmentPhotos/";
+            fileName+=apartment.getLogin().getName();
+            fileName+=apartment.getApartmentId();
+            fileName+=Newimage2.getImageId();
+            String[] buff=image.getOriginalFilename().split("\\.");
+            String fileNamePostFix=buff[buff.length-1];
+            fileName+="."+fileNamePostFix;
+            fileUploadService.store(image,fileName);
+            Newimage2.setPicturePath(fileName);
+            imageRepository.save(Newimage2);
+        }
+    }
+
     public Boolean authentication(UserDetails userDetails, int apartmentId){
 
         if(userDetails==null){
