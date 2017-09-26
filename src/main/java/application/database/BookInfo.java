@@ -1,5 +1,7 @@
 package application.database;
 
+import org.springframework.stereotype.Controller;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
@@ -46,33 +48,36 @@ public class BookInfo implements Serializable {
 	@Column(name="review_done")
 	private boolean reviewDone;
 
+	@Column(name="host_review_done")
+	private boolean hostReviewDone;
+
 	private int income;
 
 	private int people;
 
 
 
-	//bi-directional many-to-one association to BookReview
 
+	//bi-directional many-to-one association to BookReview
 	@OneToMany(mappedBy="bookInfo")
 	private List<BookReview> bookReviews;
+
 	public BookInfo() {
 	}
-
 	public int getBookId() {
 		return this.bookId;
 	}
+
 	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
-
 	public Date getBookIn() {
 		return this.bookIn;
 	}
+
 	public void setBookIn(Date bookIn) {
 		this.bookIn = bookIn;
 	}
-
 	public Date getBookOut() {
 		return this.bookOut;
 	}
@@ -166,5 +171,13 @@ public class BookInfo implements Serializable {
 
 	public void setIncome(int income) {
 		this.income = income;
+	}
+
+	public boolean isHostReviewDone() {
+		return hostReviewDone;
+	}
+
+	public void setHostReviewDone(boolean hostReviewDone) {
+		this.hostReviewDone = hostReviewDone;
 	}
 }

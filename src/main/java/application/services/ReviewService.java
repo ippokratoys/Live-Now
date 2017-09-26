@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ReviewService {
@@ -64,10 +65,20 @@ public class ReviewService {
         hostReview.setContent(content);
         hostReview.setFrom_username(username);
         hostReview.setLogin(login);
+        book.setHostReviewDone(true);
+        bookInfoRepository.save(book);
         hostReviewRepository.save(hostReview);
     }
 
-    public double getApartmentAvg(Apartment apartment){
-        return 4.2;
+    public double getApartmentAvg(int  apartmentId){
+        System.out.println("apartment = [" + apartmentId + "]");
+        Apartment apartment=apartmentRepository.findOne(apartmentId);
+        List<BookReview> bookReviews =apartment.getBookReviews();
+        double sumOfRatings=0;
+        if(bookReviews.size()==0)return 0;
+        for(BookReview bookReview:bookReviews)
+            sumOfRatings+=bookReview.getRating();
+        double avrRating=sumOfRatings/bookReviews.size();
+        return avrRating;
     }
 }

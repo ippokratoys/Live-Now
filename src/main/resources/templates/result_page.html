@@ -175,11 +175,16 @@
             <div th:unless="${results== null || results.searchResult==null || results.searchResult.size() == 0}" class="row">
                 <div th:each="oneApartment : ${results.searchResult}" class="col-md-3 portfolio-item">
                     <a class="hotel-link" href="/hotel?hotel-id=1" th:href="@{/apartment(hotel-id=${oneApartment.apartmentId},date-range=${oldDateStr})}">
-                        <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
+                        <div th:if="${oneApartment.images.size()>0}">
+                            <img class="img-responsive" th:src="${oneApartment.images.get(0).picturePath}" alt=""/>
+                        </div>
+                        <div th:unless="${oneApartment.images.size()>0}">
+                            <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
+                        </div>
                         <div class="caption">
                             <p class="hotel-cost" th:text="${oneApartment.price}+'€'">10€</p>
                             <p class="number-of-beds" th:text="${oneApartment.bed}+' beds'">4 beds</p>
-                            <p th:inline="text" class="ratings">[[${@reviewService.getApartmentAvg(apartment)}]]/5([[${oneApartment.bookReviews.size()}]])</p>
+                            <p th:inline="text" class="ratings">[[${@reviewService.getApartmentAvg(oneApartment.apartmentId)}]]/5([[${oneApartment.bookReviews.size()}]])</p>
                         </div>
                         <div class="caption-top">
                             <p th:inline="text" th:if="${oneApartment.type.equals('whole_apartment')}" class="hotel-type">[[${oneApartment.name}]] (All Apartment)</p>

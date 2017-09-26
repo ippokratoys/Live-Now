@@ -230,6 +230,7 @@ public class CsvInserts{
                 }
                 bookInfo.setLogin(loginRepository.findOne(arr_in[5]));
                 bookInfo.setReviewDone(Boolean.parseBoolean(arr_in[6]));
+                bookInfo.setReviewDone(Boolean.parseBoolean(arr_in[9]));
                 bookInfoRepository.save(bookInfo);
             }
         }catch (FileNotFoundException e) {

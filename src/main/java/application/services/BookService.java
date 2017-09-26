@@ -77,32 +77,32 @@ public class BookService {
         return true;
     }
 
-    public boolean createRating(int bookId,short rating,String content)throws Exception{
-        BookInfo bookInfo=bookInfoRepository.findOne(bookId);
-        if(reviewExistance(bookId)){
-            throw new Exception("There is a review");
-        }
-        BookReview bookReview;
-        bookReview=new BookReview();
-        bookReview.setRating(rating);
-        bookReview.setComment(content);
-        bookReview.setBookInfo(bookInfo);
-        bookReview.setApartment(bookInfo.getApartment());
-        Date date = new Date();
-        bookReview.setTime(date);
-        bookInfo.setReviewDone(true);
-        bookInfoRepository.save(bookInfo);
-        bookReviewRepository.save(bookReview);
-        return true;
-    }
-
-    public boolean reviewExistance(int bookId){
-        BookInfo bookInfo=bookInfoRepository.findOne(bookId);
-        BookReview oldBookReview=bookReviewRepository.findByBookInfo(bookInfo);
-        if(oldBookReview!=null){
-            return true;
-        }else{
-            return false;
-        }
-    }
+//    public boolean createRating(int bookId,short rating,String content)throws Exception{
+//        BookInfo bookInfo=bookInfoRepository.findOne(bookId);
+//        if(reviewExistance(bookId)){
+//            throw new Exception("There is a review");
+//        }
+//        BookReview bookReview;
+//        bookReview=new BookReview();
+//        bookReview.setRating(rating);
+//        bookReview.setComment(content);
+//        bookReview.setBookInfo(bookInfo);
+//        bookReview.setApartment(bookInfo.getApartment());
+//        Date date = new Date();
+//        bookReview.setTime(date);
+//        bookInfo.setReviewDone(true);
+//        bookInfoRepository.save(bookInfo);
+//        bookReviewRepository.save(bookReview);
+//        return true;
+//    }
+//
+//    public boolean reviewExistance(int bookId){
+//        BookInfo bookInfo=bookInfoRepository.findOne(bookId);
+//        BookReview oldBookReview=bookReviewRepository.findByBookInfo(bookInfo);
+//        if(oldBookReview!=null){
+//            return true;
+//        }else{
+//            return false;
+//        }
+//    }
 }

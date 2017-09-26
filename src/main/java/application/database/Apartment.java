@@ -447,8 +447,7 @@ public class Apartment implements Serializable {
 		return this.images;
 	}
 
-	public void setImages(List<Image> images) {
-		this.images = images;
+	public void setImages(List<Image> images) { this.images = images;
 	}
 
 	public Image addImage(Image image) {
