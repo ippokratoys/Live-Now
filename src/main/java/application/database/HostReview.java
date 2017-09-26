@@ -30,6 +30,8 @@ public class HostReview implements Serializable {
 	@JoinColumn(name="login")
 	private Login login;
 
+	private double rating;
+
 
 	//bi-directional many-to-one association to BookInfo
 
@@ -75,5 +77,13 @@ public class HostReview implements Serializable {
 
 	public void setLogin(Login login) {
 		this.login = login;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 }

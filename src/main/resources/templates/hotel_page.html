@@ -94,7 +94,7 @@
         </div>
         <div class="w3-bar-block">
             <a href="#apartment" class="w3-bar-item w3-button w3-padding-16"><i class="fa fa-building"></i> Apartment</a>
-            <a th:inline="text" href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-16" onclick="document.getElementById('ratings').style.display='block'"><i class="fa fa-rss"></i> Rate ([[${'somehow get the rating/5'}]])</a>
+            <a th:inline="text" href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-16" onclick="document.getElementById('ratings').style.display='block'"><i class="fa fa-rss"></i> Rate [[${@reviewService.getApartmentAvg(apartment.apartmentId)}]]/5([[${apartment.bookReviews.size()}]])</a>
             <a href="#contact" class="w3-bar-item w3-button w3-padding-16"><i class="fa fa-envelope"></i> Host Info</a>
         </div>
     </nav>
@@ -261,7 +261,7 @@
                 <div class="w3-half" id="host-info">
                     <h2 class="w3-center">Host Info</h2>
                     <a onclick="document.getElementById('ratings-host').style.display='block'">
-                        <img style="float:left" id="img-host" class="img-circle" src="img/pls.PNG"/>
+                        <img style="float:left" id="img-host" class="img-circle img-responsive" th:src="${apartment.getLogin().getPhotoPath()}"/>
                     </a>
                 <!--</div>-->
                 <!--<div class="w3-half">-->
@@ -300,7 +300,7 @@
                 <div class="comments-list">
                     <div th:each="aBookReview : ${apartment.bookReviews}" class="w3-row media">
                         <a class="w3-third " href="#">
-                            <img class="pull-left img-circle img-rating" src="http://lorempixel.com/400/400/people/1/"/>
+                            <img class="pull-left img-circle img-responsive" th:src="${aBookReview.bookInfo.login.photoPath}"/>
                         </a>
                         <div class="w3-third media-body">
                             <h4 th:text="${aBookReview.bookInfo.login.name}" class="media-heading user_name">Baltej Singh</h4>
@@ -336,7 +336,7 @@
                 <h2 id="rating-host-header" class="w3-wide"> Ratings Of Host (4 comments)</h2>
                 <div th:each="aHostReview : ${apartment.login.hostReviews}" class="w3-row media">
                     <a class="w3-third " href="#">
-                        <img class="pull-left img-circle img-rating" src="http://lorempixel.com/400/400/people/1/"/>
+                        <img class="pull-left img-circle img-rating img-responsive" th:src="${aHostReview.login.photoPath}"/>
                     </a>
                     <div class="w3-third media-body">
                         <h4 th:text="${aHostReview.from_username}" class="media-heading user_name">Baltej Singh</h4>

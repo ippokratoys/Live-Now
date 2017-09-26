@@ -181,7 +181,7 @@ public class UserController {
         if(bookInfo.getLogin().getUsername().equals(login.getUsername())){
             short ratingToShort=rating.shortValue();
             try {
-                reviewService.createHostReview(bookId,content,userDetails.getUsername());
+                reviewService.createHostReview(bookId,content,rating,userDetails.getUsername());
             } catch (Exception e) {
                 e.printStackTrace();
                 return "redirect:/profile";

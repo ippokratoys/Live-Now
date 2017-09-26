@@ -51,7 +51,7 @@ public class ReviewService {
         bookInfoRepository.save(book);
     }
 
-    public void createHostReview(int bookId,String content,String username)throws Exception{
+    public void createHostReview(int bookId,String content,double rating,String username)throws Exception{
         HostReview hostReview=new HostReview();
         BookInfo book=bookInfoRepository.findOne(bookId);
         if(book==null){
@@ -63,6 +63,7 @@ public class ReviewService {
         Login login=book.getApartment().getLogin();
         hostReview.setBookInfo(book);
         hostReview.setContent(content);
+        hostReview.setRating(rating);
         hostReview.setFrom_username(username);
         hostReview.setLogin(login);
         book.setHostReviewDone(true);
