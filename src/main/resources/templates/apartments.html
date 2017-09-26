@@ -38,9 +38,16 @@
                     <tr th:each="apartment : ${apartments}">
                         <td class="text-center" th:text="${apartment.name}">Hooola</td>
                         <!--onclick="editApartment(1);"-->
-                        <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#add_dates" onclick="addDates(1);" th:onclick="'addDates('+${apartment.apartmentId}+')'">Add Dates</button></td>
-                        <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit_apartment" onclick="editApartment(1);" th:onclick="'editApartment('+${apartment.apartmentId}+')'">Edit Info</button></td>
-                        <td class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#view_chats" onclick="viewApartmentChats(1);" th:onclick="'viewApartmentChats('+${apartment.apartmentId}+')'">Messages</button></td>
+                        <td style="white-space: normal" class="text-center"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#add_dates" onclick="addDates(1);" th:onclick="'addDates('+${apartment.apartmentId}+')'">Add Dates</button></td>
+                        <td class="text-center">
+                            <div class="col-sm-6 col-md-6 col-xs-12">
+                                <button style="white-space: normal" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit_apartment" onclick="editApartment(1);" th:onclick="'editApartment('+${apartment.apartmentId}+')'">Edit Info</button>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-xs-12">
+                                <button style="white-space: normal" type="button" class="btn btn-primary btn-block" >Edit Photos</button>
+                            </div>
+                        </td>
+                        <td class="text-center"><button  style="white-space: normal" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#view_chats" onclick="viewApartmentChats(1);" th:onclick="'viewApartmentChats('+${apartment.apartmentId}+')'">Messages</button></td>
                     </tr>
                 </table>
             </div>
@@ -203,7 +210,7 @@
                                     </div>
                                     <div class="form-group col-xs-12 col-md-6">
                                         <label for="f-wifi">
-                                            <input th:field="*{wi_fi}" type="checkbox" id="f-wifi" name="wifi"/>
+                                            <input th:field="*{wiFi}" type="checkbox" id="f-wifi" name="wifi"/>
                                             wifi
                                         </label>
                                     </div>

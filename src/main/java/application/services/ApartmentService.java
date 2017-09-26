@@ -2,10 +2,7 @@ package application.services;
 
 import application.database.*;
 import application.database.repositories.*;
-import javafx.beans.binding.MapBinding;
-import javafx.collections.ObservableMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,31 +50,15 @@ public class ApartmentService{
         }
         apartment.setLogin(login);
         Apartment apartment1=apartmentRepository.save(apartment);
-        save_image(image1,apartment1);
-        save_image(image2,apartment1);
-        save_image(image3,apartment1);
-        save_image(image4,apartment1);
+        fileUploadService.save_image(image1,apartment1);
+        fileUploadService.save_image(image2,apartment1);
+        fileUploadService.save_image(image3,apartment1);
+        fileUploadService.save_image(image4,apartment1);
 
         return true;
     }
 
-    public void save_image(MultipartFile image,Apartment apartment) throws Exception {
-        if (image!=null){
-            Image newImage=new Image();
-            newImage.setApartment(apartment);
-            Image Newimage2=imageRepository.save(newImage);
-            String fileName="ApartmentPhotos/";
-            fileName+=apartment.getLogin().getName();
-            fileName+=apartment.getApartmentId();
-            fileName+=Newimage2.getImageId();
-            String[] buff=image.getOriginalFilename().split("\\.");
-            String fileNamePostFix=buff[buff.length-1];
-            fileName+="."+fileNamePostFix;
-            fileUploadService.store(image,fileName);
-            Newimage2.setPicturePath(fileName);
-            imageRepository.save(Newimage2);
-        }
-    }
+
 
     public Boolean authentication(UserDetails userDetails, int apartmentId){
 
