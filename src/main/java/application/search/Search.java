@@ -36,7 +36,6 @@ public class Search {
         this.hasParking = hasParking;
         this.hasElevator = hasElevator;
         this.hasAircondition = hasAircondition;
-
         this.roomType = roomType;
 
         this.maxCost = maxCost;
@@ -175,7 +174,7 @@ public class Search {
         if(maxCost>0){
             query.setParameter("price",this.maxCost);
         }
-        if(roomType!=""){
+        if(!roomType.equals("all") && !roomType.equals("")){
             query.setParameter("type",this.roomType);
         }
     }
@@ -185,7 +184,7 @@ public class Search {
         query+="SELECT * FROM apartment WHERE apartment.location=:loc and apartment.max_people>=:people ";
         if (hasWifi==true) {
             String and = needsAnd(query);
-            query+= and + "wi-fi=true ";
+            query+= and + "wi_fi=true ";
         }
         if (hasFrige==true) {
             String and = needsAnd(query);
@@ -211,7 +210,7 @@ public class Search {
             String and = needsAnd(query);
             query += and + "aircondition=true ";
         }
-        if(roomType!=null && !roomType.equals("")){
+        if(roomType!=null && !roomType.equals("all") && !roomType.equals("")){
             String and = needsAnd(query);
             query += and + "type=:type ";
         }

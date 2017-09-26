@@ -146,7 +146,7 @@ public class ApartmentService{
         apartment.setTrasnportationDescription(newApartment.getTrasnportationDescription());
         apartment.setTv(newApartment.getTv());
         apartment.setType(newApartment.getType());
-        apartment.setWi_fi(newApartment.getWi_fi());
+        apartment.setWiFi(newApartment.getWiFi());
         apartmentRepository.save(apartment);
         return true;
     }

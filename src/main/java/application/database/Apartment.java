@@ -91,8 +91,8 @@ public class Apartment implements Serializable {
 
 	private String type;
 
-	@Column(name = "`wi-fi`")
-	private boolean wi_fi;
+	@Column(name = "`wi_fi`")
+	private boolean wiFi;
 
 	//bi-directional many-to-one association to BookInfo
 
@@ -368,12 +368,12 @@ public class Apartment implements Serializable {
 		this.type = type;
 	}
 
-	public boolean getWi_fi() {
-		return this.wi_fi;
+	public boolean getWiFi() {
+		return this.wiFi;
 	}
 
-	public void setWi_fi(boolean wi_fi) {
-		this.wi_fi = wi_fi;
+	public void setWiFi(boolean wiFi) {
+		this.wiFi = wiFi;
 	}
 
 
@@ -535,7 +535,7 @@ public class Apartment implements Serializable {
 				", trasnportationDescription='" + trasnportationDescription + '\'' +
 				", tv=" + tv +
 				", type='" + type + '\'' +
-				", wi_fi=" + wi_fi +
+				", wi_fi=" + wiFi +
 				", bookInfos=" + bookInfos +
 				", bookReviews=" + bookReviews +
 				", chats=" + chats +

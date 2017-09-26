@@ -110,7 +110,7 @@ public class CsvInserts{
                 apartment.setTrasnportationDescription(arr_in[28]);
                 apartment.setTv(Boolean.parseBoolean(arr_in[29]));
                 apartment.setType(arr_in[30]);
-                apartment.setWi_fi(Boolean.parseBoolean(arr_in[31]));
+                apartment.setWiFi(Boolean.parseBoolean(arr_in[31]));
                 apartment.setLogin(loginRepository.findOne(arr_in[32]));
                 apartmentRepository.save(apartment);
             }
