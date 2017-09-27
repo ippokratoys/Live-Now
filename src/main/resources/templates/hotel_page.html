@@ -248,7 +248,7 @@
 
             <h4><strong>Transportation</strong></h4>
             <div id="map" class="place-map"></div>
-            <p th:inline="text"><i class="fa fa-map-marker" style="width:30px"></i>[[${apartment.location}]]</p>
+            <p th:inline="text"><i class="fa fa-map-marker" style="width:30px"></i>[[${apartment.country}]],[[${apartment.locality}]],[[${apartment.route}]] [[${apartment.streetNumber}]]</p>
             <p th:text="${apartment.trasnportationDescription}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             <!--<p>Subscribe to receive updates on available dates and special offers.</p>-->
             <!--<p><button class="w3-button w3-green w3-third" onclick="document.getElementById('subscribe').style.display='block'">Subscribe</button></p>-->

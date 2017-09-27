@@ -54,7 +54,6 @@ public class Apartment implements Serializable {
 
 	private boolean lift;
 
-	private String location;
 
 	private BigDecimal lon;
 
@@ -94,6 +93,16 @@ public class Apartment implements Serializable {
 	@Column(name = "`wi_fi`")
 	private boolean wiFi;
 
+	@Column(name="street_number")
+	private String streetNumber;
+
+	private String route;
+
+	private String locality;
+
+	private String country;
+
+
 	//bi-directional many-to-one association to BookInfo
 
 	@OneToMany(mappedBy = "apartment")
@@ -113,18 +122,17 @@ public class Apartment implements Serializable {
 
 	@OneToMany(mappedBy = "apartment")
 	private List<Image> images;
-
 	@ManyToOne
 	@JoinColumn(name = "login_username")
 	@JsonIgnore
 	private Login login;
+
 
 	//bi-directional many-to-one association to Availability
 
 	@OneToMany(mappedBy = "apartment")
 	@JsonIgnore
 	private List<Availability> availabilities;
-
 	public Apartment() {
 	}
 
@@ -240,13 +248,6 @@ public class Apartment implements Serializable {
 		this.lift = lift;
 	}
 
-	public String getLocation() {
-		return this.location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
 
 	public BigDecimal getLon() {
 		return this.lon;
@@ -266,6 +267,14 @@ public class Apartment implements Serializable {
 
 	public short getMinPeople() {
 		return this.minPeople;
+	}
+
+	public String getStreetNumber() {
+		return streetNumber;
+	}
+
+	public void setStreetNumber(String streetNumber) {
+		this.streetNumber = streetNumber;
 	}
 
 	public void setMinPeople(short minPeople) {
@@ -306,6 +315,30 @@ public class Apartment implements Serializable {
 
 	public short getPrice() {
 		return this.price;
+	}
+
+	public String getRoute() {
+		return route;
+	}
+
+	public void setRoute(String route) {
+		this.route = route;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getLocality() {
+		return locality;
+	}
+
+	public void setLocality(String locality) {
+		this.locality = locality;
 	}
 
 	public void setPrice(short price) {
@@ -519,7 +552,6 @@ public class Apartment implements Serializable {
 				", lat=" + lat +
 				", leavingRoom=" + leavingRoom +
 				", lift=" + lift +
-				", location='" + location + '\'' +
 				", lon=" + lon +
 				", maxPeople=" + maxPeople +
 				", minPeople=" + minPeople +
@@ -528,6 +560,10 @@ public class Apartment implements Serializable {
 				", pets=" + pets +
 				", plusPrice=" + plusPrice +
 				", price=" + price +
+				", streetNumber=" + streetNumber+
+				", locality=" + locality+
+				", country=" + country+
+				", route=" + route+
 				", rooms=" + rooms +
 				", rules='" + rules + '\'' +
 				", smoking=" + smoking +

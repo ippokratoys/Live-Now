@@ -108,11 +108,8 @@ public class ApartmentService{
         apartment.setHeat(newApartment.getHeat());
         apartment.setHouseDescription(newApartment.getHouseDescription());
         apartment.setKitchen(newApartment.getKitchen());
-        apartment.setLat(newApartment.getLat());
         apartment.setLeavingRoom(newApartment.getLeavingRoom());
         apartment.setLift(newApartment.getLift());
-        apartment.setLocation(newApartment.getLocation());
-        apartment.setLon(newApartment.getLon());
         apartment.setMaxPeople(newApartment.getMaxPeople());
         apartment.setMinPeople(newApartment.getMinPeople());
         apartment.setName(newApartment.getName());
@@ -126,7 +123,6 @@ public class ApartmentService{
         apartment.setStandardPeople(newApartment.getStandardPeople());
         apartment.setTrasnportationDescription(newApartment.getTrasnportationDescription());
         apartment.setTv(newApartment.getTv());
-        apartment.setType(newApartment.getType());
         apartment.setWiFi(newApartment.getWiFi());
         apartmentRepository.save(apartment);
         return true;

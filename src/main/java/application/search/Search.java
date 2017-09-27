@@ -9,10 +9,11 @@ import java.util.Date;
  * Created by thanasis on 16/8/2017.
  */
 public class Search {
-//    this 4 must be filed
+    private int cityNum;
+
+    //    this 4 must be filed
     private Date fromDate=null;
     private Date toDate=null;
-
     public Search() {
     }
 
@@ -93,6 +94,14 @@ public class Search {
         return hasKitchen;
     }
 
+    public int getCityNum() {
+        return cityNum;
+    }
+
+    public void setCityNum(int cityNum) {
+        this.cityNum = cityNum;
+    }
+
     public void setHasKitchen(boolean hasKitchen) {
         this.hasKitchen = hasKitchen;
     }
@@ -169,7 +178,10 @@ public class Search {
     }
 
     public void passParameter(String queryStr, Query query){
-        query.setParameter("loc", this.city );
+        String[] parts = this.city.split(" ");
+        for(int i=0;i<getCityNum();i++){
+            query.setParameter("loc"+i, "%"+parts[i]+"%" );
+        }
         query.setParameter("people",this.numberOfPerson);
         if(maxCost>0){
             query.setParameter("price",this.maxCost);
@@ -180,8 +192,14 @@ public class Search {
     }
 
     public String buildQuery(){
+        String[] parts = this.city.split(" ");
+        setCityNum(parts.length);
         String query="";
-        query+="SELECT * FROM apartment WHERE apartment.location=:loc and apartment.max_people>=:people ";
+        query+="SELECT * FROM apartment WHERE ";
+        for(int i=0;i<parts.length;i++) {
+            query+="(apartment.locality like :loc"+i+" or apartment.route like :loc"+i+" or apartment.country like :loc"+i+" ) and ";
+        }
+        query+="apartment.max_people>=:people ";
         if (hasWifi==true) {
             String and = needsAnd(query);
             query+= and + "wi_fi=true ";

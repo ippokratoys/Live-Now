@@ -90,7 +90,7 @@ public class CsvInserts{
                 }
                 apartment.setLeavingRoom(Boolean.parseBoolean(arr_in[13]));
                 apartment.setLift(Boolean.parseBoolean(arr_in[14]));
-                apartment.setLocation(arr_in[15]);
+                apartment.setLocality(arr_in[15]);
                 try{
                     apartment.setLon((BigDecimal) decimalFormat.parse(arr_in[16]));
                 }catch (ParseException e){
@@ -112,6 +112,9 @@ public class CsvInserts{
                 apartment.setType(arr_in[30]);
                 apartment.setWiFi(Boolean.parseBoolean(arr_in[31]));
                 apartment.setLogin(loginRepository.findOne(arr_in[32]));
+                apartment.setCountry(arr_in[33]);
+                apartment.setStreetNumber(arr_in[34]);
+                apartment.setRoute(arr_in[35]);
                 apartmentRepository.save(apartment);
             }
         }catch (FileNotFoundException e) {

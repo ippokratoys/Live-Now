@@ -51,15 +51,11 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-xs-12 col-md-4">
+                    <div class="form-group col-xs-12 col-md-6">
                         <label class="col-form-label" for="f-name">Name</label>
                         <input th:field="*{name}" type="text" class="form-control" id="f-name" required="required"/>
                     </div>
-                    <div class="form-group col-xs-12 col-md-4">
-                        <label class="col-form-label" for="f-location-name">Location</label>
-                        <input th:field="*{location}" class="form-control" name="location-name" id="f-location-name" required="required"/>
-                    </div>
-                    <div class="form-group col-xs-12 col-md-4">
+                    <div class="form-group col-xs-12 col-md-6">
                         <label class="col-form-label">Select on map where is this place</label>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#choose-location">Select</button>
                     </div>
@@ -194,6 +190,10 @@
                 <input class="btn btn-block btn-primary" id="new-place-btn" type="submit" value="Create New Place"/>
                 <input th:field="*{lat}" id="f-lat" name="lat" class="hidden" required="required"/>
                 <input th:field="*{lon}" id="f-lon" name="lon" class="hidden" required="required"/>
+                <input th:field="*{streetNumber}" id="street_number" name="street_number" class="hidden" />
+                <input th:field="*{route}" id="route" name="route" class="hidden" required="required"/>
+                <input th:field="*{locality}" id="locality" name="locality" class="hidden" required="required"/>
+                <input th:field="*{country}" id="country" name="country" class="hidden" required="required"/>
             </form>
 
         </div>
@@ -327,37 +327,48 @@
         google.maps.event.trigger(map, 'resize');
     });
 </script>
-<script>
+<script th:inline="javascript">
+    var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        country: 'long_name'
+    };
+
     var placeSearch, autocomplete;
     var apartmentPosition = null;
     var apartmentMarker = null;
     var map = null;
+
     function initMap() {
+        // When the user selects an address from the dropdown, populate the address
         var uluru = {lat: 37.9833333, lng: 23.7333333};
+
         autocomplete = new google.maps.places.Autocomplete(
             /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
             {types: ['geocode']});
 
-        // When the user selects an address from the dropdown, populate the address
         // fields in the form.
         autocomplete.addListener('place_changed', fillInAddress);
-
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 7,
             center: uluru
         });
         map.addListener('click', function(e) {
-            placeMarkerAndPanTo(e.latLng, map);
+            alert(e.toString());
+            placeMarkerAndPanTo(e.latLng, e);
         });
         $("#clear-points").click(function (e) {
 //                    it's trying to submit the form
             e.preventDefault();
             clearPoints();
+
         });
 
     }
 
-    function locationPicked(pos) {
+    /*<![CDATA[*/
+    function locationPicked(pos,place,type) {
         apartmentPosition=pos;
         apartmentMarker = new google.maps.Marker({
             position: apartmentPosition,
@@ -367,8 +378,41 @@
         alert(pos);
         $("#f-lat").val(pos.lat);
         $("#f-lon").val(pos.lng);
+        if(type==1){
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                if (componentForm[addressType]) {
+                    var val = place.address_components[i][componentForm[addressType]];
+                    document.getElementById(addressType).value = val;
+                }
+            }
+        }else if(type==0){
+            var geocoder = new google.maps.Geocoder;
+            var latlng = { lat: pos.lat() , lng: pos.lng()};
+            geocoder.geocode({'location': latlng}, function(results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        for (var i = 0; i < results[0].address_components.length; i++) {
+                            var addressType = results[0].address_components[i].types[0];
+                            if (componentForm[addressType]) {
+                                var val = results[0].address_components[i][componentForm[addressType]];
+                                document.getElementById(addressType).value = val;
+                            }
+                        }
+                    } else {
+                        window.alert('No results found');
+                    }
+                } else {
+                    window.alert('Geocoder failed due to: ' + status);
+                }
+            });
+
+        }
+
+
         map.panTo(pos);
     }
+    /*]]>*/
     function clearPoints() {
         if(apartmentPosition!=null){
             apartmentMarker.setMap(null);
@@ -378,9 +422,10 @@
             $("#f-lon").val("");
         }
     }
-    function placeMarkerAndPanTo(latLng, map) {
+    function placeMarkerAndPanTo(latLng, theEvent) {
         if(apartmentPosition==null){
-            locationPicked(latLng);
+
+            locationPicked(latLng,autocomplete,0);
         }else{
             return;
         }
@@ -388,7 +433,8 @@
     function fillInAddress() {
         // Get the place details from the autocomplete object.
         var place = autocomplete.getPlace();
-        locationPicked(place.geometry.location);
+
+        locationPicked(place.geometry.location,place,1);
 
         // Get each component of the address from the place details
         // and fill the corresponding field on the form.

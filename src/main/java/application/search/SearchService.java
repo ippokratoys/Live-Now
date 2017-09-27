@@ -30,13 +30,18 @@ public class SearchService {
         System.out.println(apartmentsResult.size());
 
         List<Apartment> apartmentsResultsFinal=new ArrayList<Apartment>();
-
         for (Apartment oneApartment :
                 apartmentsResult) {
             if(availabilityService.checkAvailability(oneApartment,search.getFromDate(),search.getToDate())){
                 apartmentsResultsFinal.add(oneApartment);
             }
         }
+        Collections.sort(apartmentsResultsFinal, new Comparator<Apartment>() {
+            @Override
+            public int compare(Apartment o1, Apartment o2) {
+                return Double.compare(o1.getPrice(), o2.getPrice());
+            }
+        });
         System.out.println("\nend of results\n");
         Result searchResults = new Result(apartmentsResultsFinal,page);
         return searchResults;
