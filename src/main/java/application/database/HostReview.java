@@ -1,6 +1,7 @@
 package application.database;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 
 /**
@@ -26,21 +27,20 @@ public class HostReview implements Serializable {
 	@JoinColumn(name="book_id")
 	private BookInfo bookInfo;
 
-	@ManyToOne
-	@JoinColumn(name="login")
-	private Login login;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date time;
 
 	private double rating;
 
 
-	//bi-directional many-to-one association to BookInfo
 
+	//bi-directional many-to-one association to BookInfo
 	public HostReview() {
 	}
+
 	public int getReviewId() {
 		return this.reviewId;
 	}
-
 	public void setReviewId(int reviewId) {
 		this.reviewId = reviewId;
 	}
@@ -49,6 +49,14 @@ public class HostReview implements Serializable {
 
 	public String getContent() {
 		return content;
+	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
 	}
 
 	public void setContent(String content) {
@@ -71,13 +79,6 @@ public class HostReview implements Serializable {
 		this.bookInfo = bookInfo;
 	}
 
-	public Login getLogin() {
-		return login;
-	}
-
-	public void setLogin(Login login) {
-		this.login = login;
-	}
 
 	public double getRating() {
 		return rating;

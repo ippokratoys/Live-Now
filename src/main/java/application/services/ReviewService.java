@@ -65,7 +65,8 @@ public class ReviewService {
         hostReview.setContent(content);
         hostReview.setRating(rating);
         hostReview.setFrom_username(username);
-        hostReview.setLogin(login);
+        Date date=new Date();
+        hostReview.setTime(date);
         book.setHostReviewDone(true);
         bookInfoRepository.save(book);
         hostReviewRepository.save(hostReview);

@@ -44,12 +44,64 @@
                                 <button style="white-space: normal" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit_apartment" onclick="editApartment(1);" th:onclick="'editApartment('+${apartment.apartmentId}+')'">Edit Info</button>
                             </div>
                             <div class="col-sm-6 col-md-6 col-xs-12">
-                                <button style="white-space: normal" type="button" class="btn btn-primary btn-block" >Edit Photos</button>
+                                <button style="white-space: normal" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit_photos" onclick="editPhotos(1);" th:onclick="'editPhotos('+${apartment.apartmentId}+')'">Edit Photos</button>
                             </div>
                         </td>
                         <td class="text-center"><button  style="white-space: normal" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#view_chats" onclick="viewApartmentChats(1);" th:onclick="'viewApartmentChats('+${apartment.apartmentId}+')'">Messages</button></td>
                     </tr>
                 </table>
+            </div>
+            <!--edit photos -->
+            <div id="edit_photos" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+
+                    <!--Modal content-->
+                    <div id="photos_actual" class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title text-center">Edit Apartment's Photos </h3>
+                        </div>
+                        <div class="modal-body">
+                            <h4 id="photos_header"></h4>
+                            <table id="photos_table" class="table table-hover">
+                                <tr>
+                                    <th class="text-center">Photo</th>
+                                    <th class="text-center">Delete</th>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">1/1/1</td>
+                                    <td class="text-center">2/1/2</td>
+                                </tr>
+                            </table>
+                            <form  id="new_image" method="post" th:action="@{/profile/host/images}" action="/profile/host/images" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="photo" class="cols-sm-2 control-label">Add Apartment Photo</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                            <input required="required" type="file" name="photo" id="photo"/>
+                                            <input type="hidden" id="apartmentId" name="apartmentId" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 col-sm-6">
+                                    <input class="btn btn-block btn-primary" id="add_photo"   type="submit" value="Add Photo"/>
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                    <div id="photo_loading" class="modal-content">
+                        <div class="modal-header text-center">
+                            <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                        </div>
+                    </div>
+
+                </div>
             </div>
             <div id="edit_apartment" class="modal fade" role="dialog">
                 <div class="modal-dialog modal-lg">

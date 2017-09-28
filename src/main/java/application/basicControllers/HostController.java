@@ -1,15 +1,13 @@
 package application.basicControllers;
 
-import application.database.Apartment;
-import application.database.Availability;
-import application.database.Chat;
-import application.database.Message;
+import application.database.*;
 import application.database.repositories.ApartmentRepository;
 import application.database.repositories.ChatRepository;
 import application.database.repositories.LoginRepository;
 import application.services.ApartmentService;
 import application.services.AvailabilityService;
 import application.services.BookService;
+import application.services.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -48,6 +46,9 @@ public class HostController {
     private ApartmentRepository apartmentRepository;
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private FileUploadService fileUploadService;
 
     @RequestMapping(value = "/apartment/book",method = RequestMethod.POST)
     String bookApartment(Model model,
@@ -247,6 +248,41 @@ public class HostController {
         }
         System.out.println("-----------------------");
         return true;
+    }
+
+    @RequestMapping(value = "/profile/host/apartment/images/{apartment_id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    List<Image> getImagesInfo(@AuthenticationPrincipal final UserDetails userDetails,
+                               @PathVariable(value = "apartment_id") int apartmentId
+
+    ){
+        Apartment apartment = apartmentRepository.findOne(apartmentId);
+        if(apartment==null){
+            System.out.println("No apartment with id "+apartmentId);
+            return null;
+        }
+        List<Image> images=apartment.getImages();
+        System.out.println("YEa editing photos");
+        return images;
+    }
+
+    @RequestMapping(value = "/profile/host/images",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    String saveImage(@AuthenticationPrincipal final UserDetails userDetails,
+                      @RequestParam(name="photo") MultipartFile photo,
+                      @RequestParam(name= "apartmentId") int apartmentId
+    ){
+        if(photo.getSize()==0){
+            System.out.println("None an image");
+        }
+        System.out.println("Ready to save an image");
+        Apartment apartment=apartmentRepository.findOne(apartmentId);
+        try{
+            fileUploadService.save_image(photo,apartment);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "redirect:/apartments";
     }
 
     @RequestMapping(value = "/profile/host/apartment/chats/{apartment_id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)

@@ -57,10 +57,6 @@ public class Login implements Serializable {
 
 	@OneToMany(mappedBy="login")
 	@JsonIgnore
-	private List<HostReview> hostReviews;
-
-	@OneToMany(mappedBy="login")
-	@JsonIgnore
 	private List<Chat> chats;
 
 	@OneToMany(mappedBy="login")
@@ -202,27 +198,7 @@ public class Login implements Serializable {
 		return apartment;
 	}
 
-	public List<HostReview> getHostReviews() {
-		return this.hostReviews;
-	}
 
-	public void setHostReviews(List<HostReview> hostReviews) {
-		this.hostReviews= hostReviews;
-	}
-
-	public HostReview addHostReview(HostReview hostReview) {
-		getHostReviews().add(hostReview);
-		hostReview.setLogin(this);
-
-		return hostReview;
-	}
-
-	public HostReview removeHostReview(HostReview hostReview) {
-		getHostReviews().remove(hostReview);
-		hostReview.setLogin(null);
-
-		return hostReview;
-	}
 
 	public List<Chat> getChats() {
 		return this.chats;

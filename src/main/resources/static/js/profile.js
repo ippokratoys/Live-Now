@@ -10,6 +10,42 @@ function editInfo() {
     $("input[type='submit']").removeClass("hidden");
 };
 
+function editPhotos(apartmentId) {
+    cur_apartment_id=apartmentId;
+    $("#edit_photos").addClass("hidden");
+    $("#photo_loading").removeClass("hidden");
+    $.getJSON("/profile/host/apartment/images/"+apartmentId,function (data) {
+        $("#photos_header").html("<h4>"+
+            data.length+" Images"+
+            "</h4>"
+        );
+        $("#apartmentId").val(apartmentId);
+        $("#photos_table").html("<tr>"+
+            "<th class='text-center'>Photo</th>"+
+            "<th class='text-center'>Delete</th>"+
+            "</tr>");
+        if(data=="" || data ==null){
+            $("#photos_table").append(
+                "<tr>" +
+                "<td class='text-center'>"+"No Photos yet :("+"</td>" +
+                "<td class='text-center'>"+"Add one"+"</td>" +
+                "</tr>");
+        }else{
+            var i;
+            for(i=0;i<data.length;i++){
+                $("#photos_table").append(
+                    "<tr>" +
+                    "<td class='text-center'>"+"<img class=\"img-responsive\" src=\"/"+data[i].picturePath+"\" alt=\"\"/>"+"</td>" +
+                    "<td class='text-center'>"+"\n" +
+                    "<button type=\"button\" class=\"btn btn-primary\">Delete</button>"+"</td>" +
+                    "</tr>");
+            }
+        }
+        $("#edit_photos").removeClass("hidden");
+        $("#photo_loading").addClass("hidden");
+    });
+}
+
 function addDates(apartmentId) {
     cur_apartment_id=apartmentId;
     $("#add_actual").addClass("hidden");
