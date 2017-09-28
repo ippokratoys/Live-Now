@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8"/>
+    <!--bootstrap and jquery-->
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!--fonts and icons-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!--for date range picker-->
+    <link rel="stylesheet" type="text/css" href="css/daterangepicker.css"/>
+
+    <!--custom css/js-->
+    <link rel="stylesheet" type="text/css" href="css/profile.css"/>
+
+    <title>User Profile</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!--main content of profile-->
+        <div id="my_info" class="col-sm-6">
+            <h1>User Profile</h1>
+            <div class="a-field">
+                <label class="a-label hidden">Photo : </label>
+                <span class="a-value"><img class="img-responsive" th:src="${user.photoPath}"/></span>
+            </div>
+
+            <div class="a-field">
+                <label class="a-label">Name : </label>
+                <span class="a-value" th:text="${user.name}"> Tns</span>
+            </div>
+
+            <div class="a-field">
+                <label  class="a-label">Surname : </label>
+                <span class="a-value" th:text="${user.surname}">Pol</span>
+            </div>
+
+            <div class="a-field">
+                <label class="a-label">Telephone : </label>
+                <span class="a-value" th:text="${user.phoneNum}">210-1111</span>
+            </div>
+
+            <div class="a-field">
+                <label class="a-label">Email: </label>
+                <span class="a-value" th:text="${user.email}">apostolos@gmail.com</span>
+            </div>
+            <div th:each="role : ${userRole}">
+                <div th:if="${role.role=='host'}">
+                    <div th:if="${user.enabled==false}">
+                        <form th:action="@{/admin/acceptUser(username=${user.username}) }" name="accept" method="POST" id="accept_form">
+                            <button id="accept" type="submit" form="accept_form" class="btn btn-primary btn-md"  onclick="hide()">Accept</button>
+                            <input type="hidden" name="accept" value="yes"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function hide() {
+        document.getElementById("button_show").style.display="none";</script>
+}
+
+<script th:src="@{/js/jquery.js}" src="js/jquery.js"></script>
+<script th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" th:src="@{/js/daterangepicker.js}" src="js/daterangepicker.js"></script>
+</body>
+
+</html>

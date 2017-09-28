@@ -30,9 +30,8 @@ public class AdminController {
         if(userDetails==null){
             return "redirect:/login";
         }
-        Iterable<Login> users=loginRepository.findAll();
-        model.addAttribute("users",users);
-        return "users";
+        model.addAttribute("users",loginRepository.findAll());
+        return "admin";
     }
 
     @RequestMapping("/userInfo")
@@ -45,7 +44,7 @@ public class AdminController {
         }
         Login login=loginRepository.findOne(username);
         List<UserRole> userRoles=login.getUserRoles();
-        model.addAttribute("userInfo",login);
+        model.addAttribute("user",login);
         model.addAttribute("userRole",userRoles);
         for(UserRole userRole:userRoles){
             if(userRole.getRole()=="host"){
@@ -54,6 +53,15 @@ public class AdminController {
                 break;
             }
         }
-        return "userInfo";
+        return "user_info";
+    }
+    @RequestMapping("/admin/acceptUser")
+    String acceptHost(@RequestParam(name="username")String username
+                      ){
+        System.out.println("Accept "+username);
+        Login login=loginRepository.findOne(username);
+        login.setEnabled(true);
+        loginRepository.save(login);
+        return "redirect:/profile/admin";
     }
 }

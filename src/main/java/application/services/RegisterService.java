@@ -63,7 +63,7 @@ public class RegisterService{
         if(allParams.get("user-role").equals("host")){
             newLogin.setIsHost(true);
             newLogin.setIsCustomer(false);
-            newLogin.setEnabled(true);
+            newLogin.setEnabled(false);
             newUserRole.setRole("host");
         }else if (allParams.get("user-role").equals("customer")){
             newLogin.setIsHost(false);
@@ -74,7 +74,7 @@ public class RegisterService{
             flag_both=1;
             newLogin.setIsHost(true);
             newLogin.setIsCustomer(true);
-            newLogin.setEnabled(true);
+            newLogin.setEnabled(false);
             newUserRole.setRole("host");
             newUserRole2.setRole("customer");
             newUserRole2.setLogin(newLogin);
