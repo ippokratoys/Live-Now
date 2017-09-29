@@ -68,6 +68,7 @@
                         <th class="text-center">Times Booked</th>
                         <th class="text-center">Rating(Number Of Ratings)</th>
                         <th class="text-center">Number Of Images</th>
+                        <th class="text-center">Get The XML</th>
                     </tr>
                     <tr th:each="oneApartment : ${user.apartments}">
                         <td class="text-center">
@@ -76,6 +77,7 @@
                         <td class="text-center" th:text="${oneApartment.bookInfos.size()}"></td>
                         <td class="text-center" th:text=" ${@reviewService.getApartmentAvg(oneApartment.apartmentId)+ '('+ oneApartment.bookReviews.size()+')'}"></td>
                         <td class="text-center" th:text="${oneApartment.images.size()}"></td>
+                        <td class="text-center" ><a> <i class="fa fa-download" aria-hidden="true"></i></a> </td>
                     </tr>
                 </table>
             </div>
