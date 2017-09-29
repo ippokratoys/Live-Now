@@ -158,47 +158,49 @@
         <!-- Slideshow Header -->
         <div class="w3-container" id="apartment">
             <h2 class="w3-text-green" th:text="${apartment.name}">The Apartment</h2>
-            <div class="w3-display-container mySlides">
-                <img src="/w3images/livingroom.jpg" style="width:100%;margin-bottom:-6px"/>
-                <div class="close-photo-div" onclick="closeSlides()">
-                    <i class="fa fa-times">Close</i>
+            <th:block th:each="onePhoto : ${apartment.images}">
+                <div class="w3-display-container mySlides">
+                    <img th:src="${onePhoto.picturePath}" src="/w3images/livingroom.jpg" style="width:100%;margin-bottom:-6px"/>
+                    <div class="close-photo-div" onclick="closeSlides()">
+                        <i class="fa fa-times" style="background-color: white">Close</i>
+                    </div>
+                    <!--<div class="w3-display-bottomleft w3-container w3-black">-->
+                        <!--<p>Living Room</p>-->
+                    <!--</div>-->
                 </div>
-                <div class="w3-display-bottomleft w3-container w3-black">
-                    <p>Living Room</p>
-                </div>
-            </div>
-            <div class="w3-display-container mySlides">
-                <img src="/w3images/diningroom.jpg" style="width:100%;margin-bottom:-6px"/>
-                <div class="w3-display-bottomleft w3-container w3-black">
-                    <p>Dining Room</p>
-                </div>
-            </div>
-            <div class="w3-display-container mySlides">
-                <img src="/w3images/bedroom.jpg" style="width:100%;margin-bottom:-6px"/>
-                <div class="w3-display-bottomleft w3-container w3-black">
-                    <p>Bedroom</p>
-                </div>
-            </div>
-            <div class="w3-display-container mySlides">
-                <img src="/w3images/livingroom2.jpg" style="width:100%;margin-bottom:-6px"/>
-                <div class="w3-display-bottomleft w3-container w3-black">
-                    <p>Living Room II</p>
-                </div>
-            </div>
+            </th:block>
+            <!--<div class="w3-display-container mySlides">-->
+                <!--<img src="/w3images/diningroom.jpg" style="width:100%;margin-bottom:-6px"/>-->
+                <!--<div class="w3-display-bottomleft w3-container w3-black">-->
+                    <!--<p>Dining Room</p>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="w3-display-container mySlides">-->
+                <!--<img src="/w3images/bedroom.jpg" style="width:100%;margin-bottom:-6px"/>-->
+                <!--<div class="w3-display-bottomleft w3-container w3-black">-->
+                    <!--<p>Bedroom</p>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="w3-display-container mySlides">-->
+                <!--<img src="/w3images/livingroom2.jpg" style="width:100%;margin-bottom:-6px"/>-->
+                <!--<div class="w3-display-bottomleft w3-container w3-black">-->
+                    <!--<p>Living Room II</p>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
-        <div class="w3-row-padding w3-section">
-            <div class="w3-col s3">
-                <img class="demo w3-opacity w3-hover-opacity-off" src="/w3images/livingroom.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(1)" title="Living room"/>
+        <div class="w3-row-padding w3-section" th:if="${apartment.images.size() &gt; 0}">
+            <div class="w3-col s3" th:each="i : ${#numbers.sequence( 0, apartment.images.size()-1,1)}">
+                <img th:with="oneClickVar=${i+1}" th:src="${apartment.images.get(i).picturePath}" class="demo w3-opacity w3-hover-opacity-off" src="/w3images/livingroom.jpg" style="width:100%;cursor:pointer" th:onclick="${'currentDiv('+oneClickVar+')'}" onclick="currentDiv(1)" title="Living room"/>
             </div>
-            <div class="w3-col s3">
-                <img class="demo w3-opacity w3-hover-opacity-off" src="/w3images/diningroom.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(2)" title="Dining room"/>
-            </div>
-            <div class="w3-col s3">
-                <img class="demo w3-opacity w3-hover-opacity-off" src="/w3images/bedroom.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(3)" title="Bedroom"/>
-            </div>
-            <div class="w3-col s3">
-                <img class="demo w3-opacity w3-hover-opacity-off" src="/w3images/livingroom2.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(4)" title="Second Living Room"/>
-            </div>
+            <!--<div class="w3-col s3">-->
+                <!--<img class="demo w3-opacity w3-hover-opacity-off" src="/w3images/diningroom.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(2)" title="Dining room"/>-->
+            <!--</div>-->
+            <!--<div class="w3-col s3">-->
+                <!--<img class="demo w3-opacity w3-hover-opacity-off" src="/w3images/bedroom.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(3)" title="Bedroom"/>-->
+            <!--</div>-->
+            <!--<div class="w3-col s3">-->
+                <!--<img class="demo w3-opacity w3-hover-opacity-off" src="/w3images/livingroom2.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(4)" title="Second Living Room"/>-->
+            <!--</div>-->
         </div>
 
         <div class="w3-container">
@@ -329,37 +331,37 @@
         </div>
     </div>
     <div id="ratings-host" class="w3-modal">
-        <div class="w3-modal-content w3-animate-zoom w3-padding-large">
-            <div class="w3-container w3-white w3-center">
-                <i onclick="document.getElementById('ratings-host').style.display='none'" class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
-                <!--<h2 class="w3-wide">Ratings Of Apartment</h2>-->
-                <h2 id="rating-host-header" class="w3-wide"> Ratings Of Host (4 comments)</h2>
-                <div th:each="aHostReview : ${apartment.login.hostReviews}" class="w3-row media">
-                    <a class="w3-third " href="#">
-                        <img class="pull-left img-circle img-rating img-responsive" th:src="${aHostReview.login.photoPath}"/>
-                    </a>
-                    <div class="w3-third media-body">
-                        <h4 th:text="${aHostReview.from_username}" class="media-heading user_name">Baltej Singh</h4>
-                        <p th:text="${aHostReview.content}">
-                            He was A W E S O M E ;) !
-                        </p>
-                    </div>
-                    <div class="w3-third">
-                        <p class="pull-right"><small>22/10/95</small></p>
-                        <br/>
-                        <div class="stars" th:with="hostRating= 1" >
-                            <span th:each="i : ${#numbers.sequence( 1, hostRating,1)}" class="glyphicon glyphicon-star "></span>
-                            <span th:if="${ ( hostRating.intValue().doubleValue() ) != (hostRating) }" class="glyphicon glyphicon-star half"></span>
-                            <th:block th:if="${5>T(Math).ceil(hostRating)}">
-                                <span th:each="i : ${#numbers.sequence( 4, T(Math).ceil(hostRating),-1)}" class="glyphicon glyphicon-star-empty"></span>
-                            </th:block>
-                        </div>
+        <!--<div class="w3-modal-content w3-animate-zoom w3-padding-large">-->
+            <!--<div class="w3-container w3-white w3-center">-->
+                <!--<i onclick="document.getElementById('ratings-host').style.display='none'" class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>-->
+                <!--&lt;!&ndash;<h2 class="w3-wide">Ratings Of Apartment</h2>&ndash;&gt;-->
+                <!--<h2 id="rating-host-header" class="w3-wide"> Ratings Of Host (4 comments)</h2>-->
+                <!--<div th:each="aHostReview : ${apartment.login.hostReviews}" class="w3-row media">-->
+                    <!--<a class="w3-third " href="#">-->
+                        <!--<img class="pull-left img-circle img-rating img-responsive" th:src="${aHostReview.login.photoPath}"/>-->
+                    <!--</a>-->
+                    <!--<div class="w3-third media-body">-->
+                        <!--<h4 th:text="${aHostReview.from_username}" class="media-heading user_name">Baltej Singh</h4>-->
+                        <!--<p th:text="${aHostReview.content}">-->
+                            <!--He was A W E S O M E ;) !-->
+                        <!--</p>-->
+                    <!--</div>-->
+                    <!--<div class="w3-third">-->
+                        <!--<p class="pull-right"><small>22/10/95</small></p>-->
+                        <!--<br/>-->
+                        <!--<div class="stars" th:with="hostRating= 1" >-->
+                            <!--<span th:each="i : ${#numbers.sequence( 1, hostRating,1)}" class="glyphicon glyphicon-star "></span>-->
+                            <!--<span th:if="${ ( hostRating.intValue().doubleValue() ) != (hostRating) }" class="glyphicon glyphicon-star half"></span>-->
+                            <!--<th:block th:if="${5>T(Math).ceil(hostRating)}">-->
+                                <!--<span th:each="i : ${#numbers.sequence( 4, T(Math).ceil(hostRating),-1)}" class="glyphicon glyphicon-star-empty"></span>-->
+                            <!--</th:block>-->
+                        <!--</div>-->
 
-                    </div>
-                </div>
-                <!--<button type="button" class="w3-button w3-padding-large w3-green w3-margin-bottom" onclick="document.getElementById('subscribe').style.display='none'">Subscribe</button>-->
-            </div>
-        </div>
+                    <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<button type="button" class="w3-button w3-padding-large w3-green w3-margin-bottom" onclick="document.getElementById('subscribe').style.display='none'">Subscribe</button>&ndash;&gt;-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </div>
 <script async="async" defer="defer"
