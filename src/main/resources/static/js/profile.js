@@ -10,6 +10,20 @@ function editInfo() {
     $("input[type='submit']").removeClass("hidden");
 };
 
+function deletePhoto(photoId,apartmentId){
+    var link = "/profile/host/delete_image?photoId="+photoId;
+    $.getJSON(link,function (data) {
+        if(data===true){
+            alert("Photo Has been Deleted");
+            editPhotos(apartmentId);
+        }else{
+            console.log(data.toString());
+        }
+    });
+
+    console.log("deleted photoId:"+photoId.toString()+" of apartment id "+ apartmentId);
+}
+
 function editPhotos(apartmentId) {
     cur_apartment_id=apartmentId;
     $("#edit_photos").addClass("hidden");
@@ -35,9 +49,14 @@ function editPhotos(apartmentId) {
             for(i=0;i<data.length;i++){
                 $("#photos_table").append(
                     "<tr>" +
-                    "<td class='text-center'>"+"<img class=\"img-responsive\" src=\"/"+data[i].picturePath+"\" alt=\"\"/>"+"</td>" +
-                    "<td class='text-center'>"+"\n" +
-                    "<button type=\"button\" class=\"btn btn-primary\">Delete</button>"+"</td>" +
+                    "<td class='text-center'>"
+                      +"<img class=\"img-responsive\" src=\"/"+data[i].picturePath+"\" alt=\"\"/>"
+                    +"</td>" +
+
+                    "<td class='text-center'>"+
+                      "<button type='button' class='btn btn-primary' onclick=\'deletePhoto("+data[i].imageId+","+apartmentId + ")'>Delete</button>"+
+                    "</td>" +
+
                     "</tr>");
             }
         }

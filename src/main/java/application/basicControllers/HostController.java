@@ -3,12 +3,15 @@ package application.basicControllers;
 import application.database.*;
 import application.database.repositories.ApartmentRepository;
 import application.database.repositories.ChatRepository;
+import application.database.repositories.ImageRepository;
 import application.database.repositories.LoginRepository;
 import application.services.ApartmentService;
 import application.services.AvailabilityService;
 import application.services.BookService;
 import application.services.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +52,9 @@ public class HostController {
     private ApartmentRepository apartmentRepository;
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private ImageRepository imageRepository;
 
     @Autowired
     private FileUploadService fileUploadService;
@@ -266,8 +275,7 @@ public class HostController {
         return images;
     }
 
-    @RequestMapping(value = "/profile/host/images",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
+    @RequestMapping(value = "/profile/host/images")
     String saveImage(@AuthenticationPrincipal final UserDetails userDetails,
                       @RequestParam(name="photo") MultipartFile photo,
                       @RequestParam(name= "apartmentId") int apartmentId
@@ -282,7 +290,37 @@ public class HostController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "redirect:/apartments";
+        return "redirect:/profile/host/apartments";
+    }
+
+    @RequestMapping(value = "/profile/host/delete_image",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    boolean saveImage(@AuthenticationPrincipal final UserDetails userDetails,
+                     @RequestParam(name= "photoId") int photoId
+    ){
+
+        System.out.println("Ready to delete an Image");
+        Image imageToDel = imageRepository.findOne(photoId);
+        if(imageToDel==null){
+            return false;
+        }
+        try{
+            Path pathFile = null;
+            Resource file = null;
+            pathFile= Paths.get("ApartmentPhotos/");
+
+            File deleteImage;
+            String filename=imageToDel.getPicturePath().replaceAll("ApartmentPhotos/","");
+            file=new UrlResource(pathFile.resolve(filename).toUri());
+
+            deleteImage=file.getFile();
+            deleteImage.delete();
+
+            imageRepository.delete(photoId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @RequestMapping(value = "/profile/host/apartment/chats/{apartment_id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)

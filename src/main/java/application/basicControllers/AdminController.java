@@ -50,7 +50,7 @@ public class AdminController {
         return "admin";
     }
 
-    @RequestMapping("/userInfo")
+    @RequestMapping("profile/admin/userInfo")
     String getUserInfo(Model model,
                        @RequestParam(name="username")String username,
                        @AuthenticationPrincipal final UserDetails userDetails
@@ -71,7 +71,8 @@ public class AdminController {
         }
         return "user_info";
     }
-    @RequestMapping("/admin/acceptUser")
+
+    @RequestMapping("profile/admin/acceptUser")
     String acceptHost(@RequestParam(name="username")String username
                       ){
         System.out.println("Accept "+username);
@@ -81,7 +82,7 @@ public class AdminController {
         return "redirect:/profile/admin";
     }
 
-    @RequestMapping("/admin/XML")
+    @RequestMapping("profile/admin/XML")
     Boolean createXml(){
         int apartmentId=2;
         Apartment apartment=apartmentRepository.findOne(apartmentId);
