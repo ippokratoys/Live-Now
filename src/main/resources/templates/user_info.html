@@ -61,6 +61,24 @@
                     </div>
                 </div>
             </div>
+            <div class="row" th:if="${@registerService.isHost(user.username)}">
+                <table class="table table-hover">
+                    <tr>
+                        <th class="text-center">Apartment Name</th>
+                        <th class="text-center">Times Booked</th>
+                        <th class="text-center">Rating(Number Of Ratings)</th>
+                        <th class="text-center">Number Of Images</th>
+                    </tr>
+                    <tr th:each="oneApartment : ${user.apartments}">
+                        <td class="text-center">
+                            <a th:text="${oneApartment.name}" th:href="@{/apartment(hotel-id=${oneApartment.apartmentId})}"></a>
+                        </td>
+                        <td class="text-center" th:text="${oneApartment.bookInfos.size()}"></td>
+                        <td class="text-center" th:text=" ${@reviewService.getApartmentAvg(oneApartment.apartmentId)+ '('+ oneApartment.bookReviews.size()+')'}"></td>
+                        <td class="text-center" th:text="${oneApartment.images.size()}"></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>

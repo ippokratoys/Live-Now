@@ -3,6 +3,7 @@ package application.basicControllers;
 import application.database.*;
 import application.database.repositories.ApartmentRepository;
 import application.database.repositories.LoginRepository;
+import application.services.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,6 +39,9 @@ public class AdminController {
     @Autowired
     ApartmentRepository apartmentRepository;
 
+    @Autowired
+    RegisterService registerService;
+
     @RequestMapping(value = "/profile/admin",method = RequestMethod.GET)
     String getLogins(Model model,
                          @AuthenticationPrincipal final UserDetails userDetails
@@ -47,6 +51,12 @@ public class AdminController {
             return "redirect:/login";
         }
         model.addAttribute("users",loginRepository.findAll());
+        System.out.println("-----------");
+        for (Login oneUser :
+                loginRepository.findAll()) {
+            System.out.println(oneUser.getUsername()+": host="+ ( registerService.isHost(oneUser.getUsername())).toString() +"\t "+"user " +registerService.isUser(oneUser.getUsername()));
+        }
+        System.out.println("-----------");
         return "admin";
     }
 
