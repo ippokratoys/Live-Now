@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class Security extends WebSecurityConfigurerAdapter{
-    private final String USER_NAME_QUERY="select login.username, login.password, login.enabled    from login      where login.username=?";
+    private final String USER_NAME_QUERY="select login.username, login.password, 1    from login,user_role  where login.username=? and user_role.username=login.username and (user_role.role='customer' or login.enabled=true) ";
     private final String USER_ROLE_QUERY="select login.username,user_role.role "+" from login,user_role "+" where login.username = ? and user_role.username=login.username";
 
     @Autowired

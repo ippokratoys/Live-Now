@@ -162,4 +162,16 @@ public class RegisterService{
         }
         loginRepository.save(login);
     }
+
+    public boolean isHostEnabled(String username){
+        Login login=loginRepository.findOne(username);
+        if(login==null){
+            return false;
+        }
+        if(login.getUserRoles().contains("host")){
+            return login.getEnabled();
+        }else{
+            return false;
+        }
+    }
 }

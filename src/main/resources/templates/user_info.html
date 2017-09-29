@@ -54,7 +54,7 @@
             <div th:each="role : ${userRole}">
                 <div th:if="${role.role=='host'}">
                     <div th:if="${user.enabled==false}">
-                        <form th:action="@{/admin/acceptUser(username=${user.username}) }" name="accept" method="POST" id="accept_form">
+                        <form th:action="@{/profile/admin/acceptUser(username=${user.username}) }" name="accept" method="POST" id="accept_form">
                             <button id="accept" type="submit" form="accept_form" class="btn btn-primary btn-md"  onclick="hide()">Accept</button>
                             <input type="hidden" name="accept" value="yes"/>
                         </form>
