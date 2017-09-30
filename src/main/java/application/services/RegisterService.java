@@ -162,4 +162,46 @@ public class RegisterService{
         }
         loginRepository.save(login);
     }
+
+    public Boolean isHostEnabled(String username){
+        Login login=loginRepository.findOne(username);
+        if(login==null){
+            return false;
+        }
+        for (UserRole role : login.getUserRoles()) {
+            if (role.getRole().equals("host")){
+                //if he is a host what ever the var says
+                return login.getEnabled();
+            }
+        }
+        //if not a host
+        return false;
+    }
+
+    public Boolean isHost(String username){
+        Login login=loginRepository.findOne(username);
+        if(login==null){
+            return false;
+        }
+        for (UserRole role : login.getUserRoles()) {
+            if (role.getRole().equals("host")){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Boolean isUser(String username){
+        Login login=loginRepository.findOne(username);
+        if(login==null){
+            return false;
+        }
+        for (UserRole role : login.getUserRoles()) {
+            if (role.getRole().equals("customer")){
+                return true;
+            }
+        }
+        return false;
+    }
 }

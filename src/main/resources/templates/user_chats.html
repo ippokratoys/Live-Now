@@ -19,30 +19,31 @@
     <title>My Apartments</title>
 </head>
 <body>
-<div class="row">
-    <div class="col-sm-3">
-        <div class="nav-side-menu" th:replace="profile_menu :: nav-bar-profile"></div><!--end of side bar-->
-    </div><!--end of col-3 for the bar -->
-    <div id="my_chats" class="col-sm-9">
-        <h1>My Chats With Hosts</h1>
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <tr>
-                    <th class="text-center">Apartment Name</th>
-                    <th class="text-center">Number Of messages</th>
-                    <th class="text-center">View chat</th>
-                </tr>
-                <tr th:each="chat : ${chats}" data-toggle="modal" data-target="#chat-modal" onclick="userShowChat(1);" th:onclick="${'userShowChat('+chat.chatId+')'}">
-                    <td class="text-center"><a th:href="@{/apartment(hotel-id=${chat.apartment.apartmentId})}" th:text="${chat.apartment.name}">Teleio Spiti</a></td>
-                    <td class="text-center" th:text="${chat.messages?.size()}">11</td>
-                    <td class="text-center">Click me ;(</td>
-                </tr>
-            </table>
-        </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="nav-side-menu" th:replace="profile_menu :: nav-bar-profile"></div><!--end of side bar-->
+        </div><!--end of col-3 for the bar -->
+        <div id="my_chats" class="col-sm-9">
+            <h1>My Chats With Hosts</h1>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr>
+                        <th class="text-center">Apartment Name</th>
+                        <th class="text-center">Number Of messages</th>
+                        <th class="text-center">View chat</th>
+                    </tr>
+                    <tr th:each="chat : ${chats}" data-toggle="modal" data-target="#chat-modal" onclick="userShowChat(1);" th:onclick="${'userShowChat('+chat.chatId+')'}">
+                        <td class="text-center"><a th:href="@{/apartment(hotel-id=${chat.apartment.apartmentId})}" th:text="${chat.apartment.name}">Teleio Spiti</a></td>
+                        <td class="text-center" th:text="${chat.messages?.size()}">11</td>
+                        <td class="text-center">Click me ;(</td>
+                    </tr>
+                </table>
+            </div>
 
+        </div>
     </div>
 </div>
-
 <div id="chat-modal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 

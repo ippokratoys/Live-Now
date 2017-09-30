@@ -3,6 +3,7 @@ package application.basicControllers;
 import application.database.*;
 import application.database.repositories.ApartmentRepository;
 import application.database.repositories.LoginRepository;
+import application.services.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,6 +38,9 @@ public class AdminController {
     @Autowired
     ApartmentRepository apartmentRepository;
 
+    @Autowired
+    RegisterService registerService;
+
     @RequestMapping(value = "/profile/admin",method = RequestMethod.GET)
     String getLogins(Model model,
                          @AuthenticationPrincipal final UserDetails userDetails
@@ -46,10 +50,16 @@ public class AdminController {
             return "redirect:/login";
         }
         model.addAttribute("users",loginRepository.findAll());
+        System.out.println("-----------");
+        for (Login oneUser :
+                loginRepository.findAll()) {
+            System.out.println(oneUser.getUsername()+": host="+ ( registerService.isHost(oneUser.getUsername())).toString() +"\t "+"user " +registerService.isUser(oneUser.getUsername()));
+        }
+        System.out.println("-----------");
         return "admin";
     }
 
-    @RequestMapping("/userInfo")
+    @RequestMapping("profile/admin/userInfo")
     String getUserInfo(Model model,
                        @RequestParam(name="username")String username,
                        @AuthenticationPrincipal final UserDetails userDetails
@@ -70,7 +80,8 @@ public class AdminController {
         }
         return "user_info";
     }
-    @RequestMapping("/admin/acceptUser")
+
+    @RequestMapping("profile/admin/acceptUser")
     String acceptHost(@RequestParam(name="username")String username
                       ){
         System.out.println("Accept "+username);
@@ -80,7 +91,7 @@ public class AdminController {
         return "redirect:/profile/admin";
     }
 
-    @RequestMapping("/admin/XML")
+    @RequestMapping("profile/admin/XML")
     Boolean createXml(){
         int apartmentId=2;
         Apartment apartment=apartmentRepository.findOne(apartmentId);

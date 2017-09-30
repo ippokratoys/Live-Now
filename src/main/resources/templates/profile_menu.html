@@ -15,14 +15,13 @@
                 </a>
             </li>
             <!--<li sec:authentication="principal.authorities"></li>-->
-            <li sec:authorize="hasAuthority('customer')" th:classappend="${#httpServletRequest.getRequestURI().contains('/user') ? 'active':''}" data-toggle="collapse" data-target="#user-menu" class="collapsed">
+            <li sec:authorize="hasAuthority('customer')" th:classappend="${#httpServletRequest.getRequestURI().contains('profile/user') ? 'active':''}" data-toggle="collapse" data-target="#user-menu" class="collapsed">
                 <a href="#"><i class="fa fa-gift fa-lg"></i> User Menu <span class="arrow"></span></a>
             </li>
             <ul sec:authorize="hasAuthority('customer')" class="sub-menu collapse" id="user-menu">
                 <li th:classappend="${#httpServletRequest.getRequestURI().contains('/user/chats') ? 'active':''}"><a href="/profile/user/chats">Messages</a></li>
                 <li th:classappend="${#httpServletRequest.getRequestURI().contains('/user/books') ? 'active':''}"><a href="#" th:href="@{/profile/user/books}">My Books</a></li>
-                <li><a href="#">Buttons</a></li>
-                <li><a href="#">Tabs Accordions</a></li>
+                <li th:text="${#httpServletRequest.remoteUser}"><a href="#">Buttons</a></li>
                 <li><a href="#">Typography</a></li>
                 <li><a href="#">FontAwesome</a></li>
                 <li><a href="#">Slider</a></li>
@@ -31,11 +30,11 @@
                 <li><a href="#">Bootstrap Model</a></li>
             </ul>
 
-            <li sec:authorize="hasAuthority('host')" data-toggle="collapse" data-target="#host-menu" class="collapsed" th:classappend="${#httpServletRequest.getRequestURI().contains('/host') ? 'active':''}">
+            <li sec:authorize="hasAuthority('host')" th:if="${@registerService.isHostEnabled(#httpServletRequest.remoteUser)==true}" data-toggle="collapse" data-target="#host-menu" class="collapsed" th:classappend="${#httpServletRequest.getRequestURI().contains('/host') ? 'active':''}">
                 <a href="#"><i class="fa fa-gift fa-lg"></i> Host Menu <span class="arrow"></span></a>
             </li>
 
-            <ul sec:authorize="hasAuthority('host')" class="sub-menu collapse" id="host-menu">
+            <ul sec:authorize="hasAuthority('host')" th:if="${@registerService.isHostEnabled(#httpServletRequest.remoteUser)==true}" class="sub-menu collapse" id="host-menu">
                 <li>
                     <a th:classappend="${#httpServletRequest.getRequestURI().endsWith('/apartments') ? 'active':''}" th:href="@{/profile/host/apartments}">
                         <i class="fa fa-bed fa-lg"></i> Apartments

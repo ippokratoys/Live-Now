@@ -10,28 +10,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
 
+    <!--custom css/js-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}" href="css/profile.css"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="css/main.css"/>
+
     <title>Admin</title>
 </head>
 <body>
-<div class="row">
-    <div id="my_chats">
-        <h1>List Of Users</h1>
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <tr>
-                    <th class="text-center">User Username</th>
-                    <th class="text-center">Waiting Verification</th>
-                    <th class="text-center">User's Information</th>
-                </tr>
-                <tr th:each="user : ${users}">
-                    <td class="text-center" th:text="${user.username}">Apostolos</td>
-                    <td class="text-center">
-                        <p th:if="${user.enabled==false}">Need Verification</p>
-                        <p th:unless="${user.enabled==false}">He is Enabled</p>
-                    </td>
-                    <td class="text-center"><a th:href="@{/userInfo(username=${user.username})}" class="btn btn-primary btn-block btn-md">User Information</a></td>
-                </tr>
-            </table>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="nav-side-menu" th:replace="profile_menu :: nav-bar-profile"></div><!--end of side bar-->
+        </div><!--end of col-3 for the bar -->
+
+        <div id="my_chats" class="col-sm-9">
+            <h1>List Of Users</h1>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr>
+                        <th class="text-center">User Username</th>
+                        <th class="text-center">Host</th>
+                        <th class="text-center">User</th>
+                        <th class="text-center">Waiting Verification</th>
+                        <th class="text-center">User's Information</th>
+                    </tr>
+                    <tr th:each="user : ${users}">
+                        <td class="text-center" th:text="${user.username}">Apostolos</td>
+                        <td class="text-center">
+                            <i class="fa fa-check" aria-hidden="true" th:if="${@registerService.isHost(user.username)}"></i>
+                            <i class="fa fa-times" aria-hidden="true" th:if="${!@registerService.isHost(user.username)}" ></i>
+                        </td>
+                        <td class="text-center">
+                            <i class="fa fa-check" aria-hidden="true" th:if="${@registerService.isUser(user.username)}" ></i>
+                            <i class="fa fa-times" aria-hidden="true" th:if="${!@registerService.isUser(user.username)}" ></i>
+                        </td>
+                        <td class="text-center">
+                            <p th:if="${user.enabled==false}">Need Verification</p>
+                            <p th:unless="${user.enabled==false}">He is Enabled</p>
+                        </td>
+                        <td class="text-center"><a th:href="@{/profile/admin/userInfo(username=${user.username})}" class="btn btn-primary btn-block btn-md">User Information</a></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -39,8 +60,6 @@
 
 <script th:src="@{/js/jquery.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" th:src="@{/js/daterangepicker.js}" src="js/daterangepicker.js"></script>
 <script type="text/javascript" th:src="@{/js/profile.js}" src="js/profile.js"></script>
 
 </body>
