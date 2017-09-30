@@ -76,8 +76,8 @@
             <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-transparent w3-display-topright"></i>
             <h3>Rental</h3>
             <h3 th:text="${apartment.price}+'€'">$99</h3>
-            <h4 th:text="${apartment.plusPrice}+'€ extra for each person after '+${apartment.standardPeople}"></h4>
-            <h4 th:text="'+'+${apartment.cleanPrice}+'€ cleaning price(fixed).'"></h4>
+            <h5 th:text="${apartment.plusPrice}+'+€ extra for each person after '+${apartment.standardPeople}"></h5>
+            <h5 th:text="'+'+${apartment.cleanPrice}+'€ cleaning price(fixed).'"></h5>
             <h6>per night</h6>
             <hr/>
             <p><label><i class="fa fa-calendar-check-o"></i> Check In - Check Out</label></p>
@@ -158,6 +158,10 @@
         <!-- Slideshow Header -->
         <div class="w3-container" id="apartment">
             <h2 class="w3-text-green" th:text="${apartment.name}">The Apartment</h2>
+            <h6 th:inline="text" th:if="${apartment.type.equals('whole_apartment')}" class="hotel-type">(All Apartment)</h6>
+            <h6 th:inline="text" th:if="${apartment.type.equals('private_room')}" class="hotel-type">(Private Room)</h6>
+            <h6 th:inline="text" th:if="${apartment.type.equals('shared_room')}" class="hotel-type">(Shared Room)</h6>
+
             <th:block th:each="onePhoto : ${apartment.images}">
                 <div class="w3-display-container mySlides">
                     <img th:src="${onePhoto.picturePath}" src="/w3images/livingroom.jpg" style="width:100%;margin-bottom:-6px"/>
