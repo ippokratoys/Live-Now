@@ -333,7 +333,7 @@ public class AdminController {
                     tempHostReview.appendChild(reviewId);
 
                     Element user = doc.createElement("from");
-                    user.appendChild(doc.createTextNode(hostReview.getFrom_username()));
+                    user.appendChild(doc.createTextNode(hostReview.getLogin().getUsername()));
                     tempHostReview.appendChild(user);
 
                     Element content = doc.createElement("content");

@@ -1,10 +1,7 @@
 package application.services;
 
 import application.database.*;
-import application.database.repositories.ApartmentRepository;
-import application.database.repositories.BookInfoRepository;
-import application.database.repositories.BookReviewRepository;
-import application.database.repositories.HostReviewRepository;
+import application.database.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +19,9 @@ public class ReviewService {
 
     @Autowired
     BookReviewRepository bookReviewRepository;
+
+    @Autowired
+    LoginRepository loginRepository;
 
     @Autowired
     HostReviewRepository hostReviewRepository;
@@ -64,10 +64,10 @@ public class ReviewService {
         hostReview.setBookInfo(book);
         hostReview.setContent(content);
         hostReview.setRating(rating);
-        hostReview.setFrom_username(username);
         Date date=new Date();
         hostReview.setTime(date);
         book.setHostReviewDone(true);
+        hostReview.setLogin(login);
         bookInfoRepository.save(book);
         hostReviewRepository.save(hostReview);
     }

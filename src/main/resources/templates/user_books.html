@@ -51,7 +51,7 @@
                             <button th:attr="disabled=${oneBook.bookOut.before(curDate) and oneBook.reviewDone==false   ? 'false' : 'true'}" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#rating_modal" onclick="rateApartment(1,'Villa Mercendes');" th:onclick="'rateApartment('+${oneBook.bookId}+',\''+${oneBook.apartment.name}+'\')'">Rate</button>
                         </td>
                         <td class="text-center">
-                            <button th:attr="disabled=${oneBook.bookOut.before(curDate)   ? 'false' : 'true'}" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#rating_host_modal" onclick="rateHost(1,'Villa Mercendes');" th:onclick="'rateHost('+${oneBook.bookId}+',\''+${oneBook.apartment.login.name}+' '+${oneBook.apartment.login.surname}+'\')'">Comment</button>
+                            <button th:attr="disabled=${oneBook.bookOut.before(curDate) and oneBook.hostReviewDone==false  ? 'false' : 'true'}" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#rating_host_modal" onclick="rateHost(1,'Villa Mercendes');" th:onclick="'rateHost('+${oneBook.bookId}+',\''+${oneBook.apartment.login.name}+' '+${oneBook.apartment.login.surname}+'\')'">Comment</button>
                         </td>
                     </tr>
                 </table>
