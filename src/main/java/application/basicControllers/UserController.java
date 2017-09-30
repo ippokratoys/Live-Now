@@ -3,6 +3,7 @@ package application.basicControllers;
 import application.database.*;
 import application.database.repositories.*;
 import application.services.ApartmentService;
+import application.services.RecommendationService;
 import application.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -43,6 +44,9 @@ public class UserController {
 
     @Autowired
     private BookInfoRepository bookInfoRepository;
+
+    @Autowired
+    RecommendationService recommendationService;
 
     @RequestMapping(value = "/profile/user/new_message/{apartment_id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
@@ -193,4 +197,10 @@ public class UserController {
         }
         return "redirect:/profile/user/books?rating_done";
     }
+
+    @RequestMapping(value = "/rec")
+        String recommendation(){
+            recommendationService.recommendation("apostolos");
+            return "redirect:/";
+        }
 }
