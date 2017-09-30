@@ -71,7 +71,7 @@
 
     <!-- Sidebar -->
     <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-        <form action="result" method="get">
+        <form action="result" th:action="@{/result}" method="get">
             <ul class="nav sidebar-nav">
                 <li class="sidebar-brand">
                     FILTERS
@@ -92,11 +92,11 @@
 
                 <li>
                     <!--<label for="f-room-type">Room type</label>-->
-                    <select id="f-room-type">
-                        <option value="all" name="roomType">Anything</option>
-                        <option value="whole_apartment" name="roomType">Whole Apartment</option>
-                        <option value="shared_room" name="roomType"> Shared Room</option>
-                        <option value="private_room" name="room-type">Private Room</option>
+                    <select id="f-room-type" name="roomType">
+                        <option value="all">Anything</option>
+                        <option value="whole_apartment">Whole Apartment</option>
+                        <option value="shared_room"> Shared Room</option>
+                        <option value="private_room">Private Room</option>
                     </select>
                 </li>
                 <li>
@@ -313,7 +313,9 @@
         if([[${oldValues.maxCost>0}]]){
             $('#f-max-cost').val([[${oldValues.maxCost}]]);
         }
-
+        if([[${oldValues.roomType}]]!=""){
+            $('#f-room-type').val([[${oldValues.roomType}]]);
+        }
         /*]]>*/
     });
 

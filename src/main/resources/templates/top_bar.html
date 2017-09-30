@@ -22,9 +22,13 @@
             <th:block th:if="${#httpServletRequest.remoteUser}">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <form th:action="@{/logout}" method="post">
-                            <input type="submit" th:value="Logout" class="btn-info"/>
-                        </form>
+                        <a>
+                            <form th:action="@{/logout}" id="logout-form" method="post">
+                                <button type="submit" form="logout-form" class="btn-link">
+                                    <span class="glyphicon glyphicon-log-out"></span> Logout
+                                </button>
+                            </form>
+                        </a>
                     </li>
                     <li>
                         <a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile</a>
