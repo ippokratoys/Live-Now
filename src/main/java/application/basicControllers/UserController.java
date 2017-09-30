@@ -204,7 +204,7 @@ public class UserController {
     @RequestMapping(value = "/rec")
         String recommendation(){
             recommendationService.recommendation("apostolos107");
-            System.out.println(recommendation.getVal());
+//            System.out.println(recommendation.getVal());
             return "redirect:/";
         }
 }

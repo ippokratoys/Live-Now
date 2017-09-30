@@ -36,8 +36,8 @@ public class FileUploadService {
             newImage.setApartment(apartment);
             Image Newimage2=imageRepository.save(newImage);
             String fileName="ApartmentPhotos/";
-            fileName+=apartment.getLogin().getName();
-            fileName+=apartment.getApartmentId();
+            fileName+=apartment.getLogin().getName()+"-";
+            fileName+=apartment.getApartmentId()+"-";
             fileName+=Newimage2.getImageId();
             String[] buff=image.getOriginalFilename().split("\\.");
             String fileNamePostFix=buff[buff.length-1];

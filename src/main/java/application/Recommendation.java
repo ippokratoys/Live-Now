@@ -26,7 +26,7 @@ public class Recommendation {
 
     @PostConstruct
     public void init(){
-        lsh = new LSHSuperBit(stages, buckets, numberOfApartments);
+//        lsh = new LSHSuperBit(stages, buckets, numberOfApartments);
         val=5;
     }
 }

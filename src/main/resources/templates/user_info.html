@@ -77,7 +77,14 @@
                         <td class="text-center" th:text="${oneApartment.bookInfos.size()}"></td>
                         <td class="text-center" th:text=" ${@reviewService.getApartmentAvg(oneApartment.apartmentId)+ '('+ oneApartment.bookReviews.size()+')'}"></td>
                         <td class="text-center" th:text="${oneApartment.images.size()}"></td>
-                        <td class="text-center" ><a> <i class="fa fa-download" aria-hidden="true"></i></a> </td>
+                        <td class="text-center" >
+                            <form method="post" th:action="@{/profile/admin/XML}" action="/profile/admin/XML">
+                                <input type="hidden" id="apartmentId" name="apartmentId" th:value="${oneApartment.apartmentId}"/>
+                                <button class="btn-info" type="submit">
+                                    <i class="fa fa-download"  aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -89,6 +96,7 @@
     function hide() {
         document.getElementById("button_show").style.display = "none";
     }
+
 </script>
 
 <script th:src="@{/js/jquery.js}" src="js/jquery.js"></script>
