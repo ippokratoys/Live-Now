@@ -192,6 +192,9 @@ public class Search {
     }
 
     public String buildQuery(){
+        System.out.println("----------------search----------");
+        System.out.println(this.toString());
+        System.out.println("----------------end-------------");
         String[] parts = this.city.split(" ");
         setCityNum(parts.length);
         String query="";
@@ -230,14 +233,34 @@ public class Search {
         }
         if(roomType!=null && !roomType.equals("all") && !roomType.equals("")){
             String and = needsAnd(query);
-            query += and + "type=:type ";
+            query += and + "apartment.type=:type ";
         }
         if(maxCost>0){
             String and =needsAnd(query);
-            query+=and+"price<=:price";
+            query+=and+" apartment.price<=:price ";
         }
         query+=";";
         System.out.println(query);
         return query;
+    }
+
+    @Override
+    public String toString() {
+        return "Search{" +
+                "cityNum=" + cityNum +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", city='" + city + '\'' +
+                ", numberOfPerson=" + numberOfPerson +
+                ", hasWifi=" + hasWifi +
+                ", hasFrige=" + hasFrige +
+                ", hasKitchen=" + hasKitchen +
+                ", hasTV=" + hasTV +
+                ", hasParking=" + hasParking +
+                ", hasElevator=" + hasElevator +
+                ", hasAircondition=" + hasAircondition +
+                ", roomType='" + roomType + '\'' +
+                ", maxCost=" + maxCost +
+                '}';
     }
 }

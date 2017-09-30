@@ -94,6 +94,10 @@ public class GeneralUserControlers {
         if(userDetails==null){
             return "redirect:/login";
         }
+        if( userDetails.getAuthorities().iterator().next().getAuthority().contains("admin") ){
+            //if he is an admin he can only be admin!!! nothing else
+            return "redirect:/profile/admin";
+        }
         model.addAttribute("user",loginRepository.findOne(userDetails.getUsername()));
         return "profile";
     }

@@ -56,7 +56,7 @@ public class HomePage {
                             @RequestParam(value = "elevator",required = false, defaultValue = "false") Boolean elevator,
                             @RequestParam(value = "air-condition",required = false, defaultValue = "false") Boolean airCondition,
                             @RequestParam(value = "page",required = false, defaultValue = "1") Integer pageNum,
-                            @RequestParam(value = "roomType" ,required=false,defaultValue = "")String RoomType
+                            @RequestParam(value = "roomType" ,required=false,defaultValue = "")String roomType
     ){
         Date fromDate=null;
         Date toDate=null;
@@ -77,9 +77,9 @@ public class HomePage {
             e.printStackTrace();
             return "index";
         }
-//        System.out.println("model = [" + model + "], dateRange = [" + dateRange + "], city = [" + city + "], people = [" + people + "], maxCost = [" + maxCost + "], wifi = [" + wifi + "], fridge = [" + fridge + "], kitchen = [" + kitchen + "], tv = [" + tv + "], parking = [" + parking + "], elevator = [" + elevator + "], airCondition = [" + airCondition + "]");
+        System.out.println("model = [" + model + "], dateRange = [" + dateRange + "], city = [" + city + "], people = [" + people + "], maxCost = [" + maxCost + "], wifi = [" + wifi + "], fridge = [" + fridge + "], kitchen = [" + kitchen + "], tv = [" + tv + "], parking = [" + parking + "], elevator = [" + elevator + "], airCondition = [" + airCondition + "], pageNum = [" + pageNum + "], roomType = [" + roomType + "]");
 
-        Search filters = new Search(fromDate,toDate,city,people,wifi,fridge,kitchen,tv,parking,elevator,airCondition,RoomType,maxCost);
+        Search filters = new Search(fromDate,toDate,city,people,wifi,fridge,kitchen,tv,parking,elevator,airCondition,roomType,maxCost);
         Result searchResults = searchService.getResultList(filters,pageNum);
         model.addAttribute("results",searchResults);
 
