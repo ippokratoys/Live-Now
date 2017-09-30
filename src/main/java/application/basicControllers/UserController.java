@@ -1,5 +1,6 @@
 package application.basicControllers;
 
+import application.Recommendation;
 import application.database.*;
 import application.database.repositories.*;
 import application.services.ApartmentService;
@@ -198,9 +199,12 @@ public class UserController {
         return "redirect:/profile/user/books?rating_done";
     }
 
+    @Autowired
+    Recommendation recommendation;
     @RequestMapping(value = "/rec")
         String recommendation(){
-            recommendationService.recommendation("apostolos");
+            recommendationService.recommendation("apostolos107");
+            System.out.println(recommendation.getVal());
             return "redirect:/";
         }
 }
