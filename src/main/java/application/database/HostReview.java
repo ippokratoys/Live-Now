@@ -1,5 +1,7 @@
 package application.database;
 
+
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
@@ -21,8 +23,6 @@ public class HostReview implements Serializable {
 
 	private String content;
 
-	private String from_username;
-
 	@ManyToOne
 	@JoinColumn(name="book_id")
 	private BookInfo bookInfo;
@@ -32,20 +32,29 @@ public class HostReview implements Serializable {
 
 	private double rating;
 
-
+	@ManyToOne
+	private Login login;
 
 	//bi-directional many-to-one association to BookInfo
+
 	public HostReview() {
 	}
-
 	public int getReviewId() {
 		return this.reviewId;
 	}
+
 	public void setReviewId(int reviewId) {
 		this.reviewId = reviewId;
 	}
 
 
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
 
 	public String getContent() {
 		return content;
@@ -63,13 +72,6 @@ public class HostReview implements Serializable {
 		this.content = content;
 	}
 
-	public String getFrom_username() {
-		return from_username;
-	}
-
-	public void setFrom_username(String from_username) {
-		this.from_username = from_username;
-	}
 
 	public BookInfo getBookInfo() {
 		return bookInfo;

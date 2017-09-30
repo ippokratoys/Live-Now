@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -334,7 +333,7 @@ public class AdminController {
                     tempHostReview.appendChild(reviewId);
 
                     Element user = doc.createElement("from");
-                    user.appendChild(doc.createTextNode(hostReview.getFrom_username()));
+                    user.appendChild(doc.createTextNode(hostReview.getLogin().getUsername()));
                     tempHostReview.appendChild(user);
 
                     Element content = doc.createElement("content");

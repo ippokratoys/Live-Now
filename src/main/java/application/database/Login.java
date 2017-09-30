@@ -1,6 +1,7 @@
 package application.database;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.catalina.Host;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -62,6 +63,10 @@ public class Login implements Serializable {
 	@OneToMany(mappedBy="login")
 	@JsonIgnore
 	private List<BookInfo> bookInfos;
+
+	@OneToMany(mappedBy = "login")
+	@JsonIgnore
+	private  List<HostReview> hostReviews;
 
 	public Login() {
 	}
@@ -244,4 +249,24 @@ public class Login implements Serializable {
 		return bookInfo;
 	}
 
+
+	public List<HostReview> getHostReviews() {
+		return hostReviews;
+	}
+
+	public void setHostReviews(List<HostReview> hostReviews) {
+		this.hostReviews = hostReviews;
+	}
+
+	public HostReview addHostReview(HostReview hostReview) {
+		getHostReviews().add(hostReview);
+		hostReview.setLogin(this);
+		return hostReview;
+	}
+
+	public HostReview removeBookInfo(HostReview hostReview) {
+		getHostReviews().remove(hostReview);
+		hostReview.setLogin(null);
+		return hostReview;
+	}
 }
