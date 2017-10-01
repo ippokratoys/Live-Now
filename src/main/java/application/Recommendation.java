@@ -141,9 +141,9 @@ public class Recommendation {
             if(aSameUser==null){
                 continue;
             }
-//            if(myUserInfo==aSameUser){
-//                continue;
-//            }
+            if(myUserInfo==aSameUser){
+                continue;
+            }
             map.put("name",aSameUser);
             curCos=cosineSimilarity(myUserInfo.getRatings(),aSameUser.getRatings());
             map.put("rating",curCos);
