@@ -29,6 +29,9 @@ public class InitController {
 
     @Autowired
     Recommendation recommendation;
+
+    @Autowired
+    ApartmentCsvInsert apartmentCsvInsert;
     @RequestMapping("/init/all")
     String initAll(){
         csvInserts.loginCsvInsertions("csv/login.csv",loginRepository);
@@ -51,6 +54,16 @@ public class InitController {
         return "redirect:/";
     }
 
+    @RequestMapping("init/apar")
+    String initApartments(){
+        try {
+            apartmentCsvInsert.initApartment();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("done");
+        return "redirect:/";
+    }
     @RequestMapping("/add/rec")
     String addRec(){
 
