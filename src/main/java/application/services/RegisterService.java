@@ -74,7 +74,6 @@ public class RegisterService{
             newLogin.setIsCustomer(true);
             newLogin.setEnabled(true);
             newUserRole.setRole("customer");
-//            recommendation.addCustomer(newLogin.getUsername());
         }else{
             flag_both=1;
             newLogin.setIsHost(true);
@@ -83,7 +82,6 @@ public class RegisterService{
             newUserRole.setRole("host");
             newUserRole2.setRole("customer");
             newUserRole2.setLogin(newLogin);
-//            recommendation.addCustomer(newLogin.getUsername());
         }
         newUserRole.setLogin(newLogin);
         Login dbLogin=loginRepository.save(newLogin);
@@ -100,6 +98,9 @@ public class RegisterService{
         fileUploadService.store(image,fileName);
         dbLogin.setPhotoPath(fileName);
         loginRepository.save(dbLogin);
+        if(allParams.get("user-role").equals("customer") || allParams.get("user-role").equals("both")){
+            recommendation.addCustomer(newLogin.getUsername());
+        }
         return true;
     }
 

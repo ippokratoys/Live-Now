@@ -75,7 +75,7 @@ public class ApartmentService{
         fileUploadService.save_image(image2,apartment1);
         fileUploadService.save_image(image3,apartment1);
         fileUploadService.save_image(image4,apartment1);
-//        recommendation.addApartment(apartment1.getApartmentId());
+        recommendation.addApartment(apartment1.getApartmentId());
         return true;
     }
 

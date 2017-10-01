@@ -205,6 +205,7 @@ public class Recommendation {
         UserInfoRec newUserInfoRec=new UserInfoRec(loginRepository.findOne(username),numberOfApartments);
         int curBucket;
         newUserInfoRec.updateBucket(lsh);
+        System.out.println("aaa");
         int newPosition=-1;
         for(int i=0 ;i<allUsersInfo.size();i++){
             if(allUsersInfo.get(i).getUsername().compareTo(username)>0){
@@ -212,6 +213,7 @@ public class Recommendation {
                 break;
             }
         }
+        System.out.println("aaa");
         if(newPosition==-1){
             allUsersInfo.add(newUserInfoRec);
         }else{
@@ -222,8 +224,9 @@ public class Recommendation {
     }
 
     public void addReview(Double rating,String username,int apartmentId){
-        int position=findUser(username);
         int index=findApartment(apartmentId);
+        int position=findUser(username);
+        System.out.println(index+"  "+position);
         allUsersInfo.get(position).getRatings().set(index,rating);
         int oldBucket=allUsersInfo.get(position).getBucket();
         allUsersInfo.get(position).updateBucket(lsh);
@@ -235,7 +238,7 @@ public class Recommendation {
     }
 
     private int findApartment(int apartmentId){
-        int high=allUsersInfo.size()-1;
+        int high=numberOfApartments-1;
         int low=0;
         while(high >= low) {
             int middle = (low + high) / 2;
