@@ -32,6 +32,9 @@ public class ApartmentCsvInsert{
     private static final int COL_LAT= 44;
     private static final int COL_LON= 45;
     private static final int COL_CITY= 38;
+    private static final int COL_PRICE= 56;
+    private static final int COL_CLEAN_PRICE= 60;
+    private static final int COL_EXTRA_PPL= 62;
 
     @Autowired
     ApartmentRepository apartmentRepository;
@@ -55,6 +58,8 @@ public class ApartmentCsvInsert{
             login.setSurname("Rich");
             login.setEmail("air@bn.com");
             login.setPhoneNum("+302106000000");
+            login.setEnabled(true);
+            login.setPhotoPath("UsersPhotos/none");
             loginRepository.save(login);
             UserRole userRole=new UserRole();
             userRole.setLogin(login);
@@ -72,6 +77,7 @@ public class ApartmentCsvInsert{
             System.out.print(" City "+line.get(COL_CITY));
             System.out.print(" LAT "+line.get(COL_LAT));
             System.out.print(" LON "+line.get(COL_LON));
+            System.out.println(" Price "+line.get(COL_PRICE));
             System.out.println("    line "+readUntilNow);
             if(readUntilNow==1){
                 continue;
@@ -84,6 +90,19 @@ public class ApartmentCsvInsert{
             apartment.setLat(new BigDecimal(line.get(COL_LAT)));
             apartment.setLon(new BigDecimal(line.get(COL_LON)));
             apartment.setLocality(line.get(COL_CITY));
+            apartment.setMinPeople((short) 0);
+            apartment.setStandardPeople((short) 2);
+            apartment.setStandardPeople((short) 7);
+            if(readUntilNow%3==0)
+                apartment.setType("whole_apartment");
+            if(readUntilNow%3==1)
+                apartment.setType("private_room");
+            if(readUntilNow%3==2)
+                apartment.setType("shared_room");
+            apartment.setPrice(((short) Double.parseDouble(line.get(COL_PRICE).substring(1))));
+            apartment.setCleanPrice(((short) Double.parseDouble(line.get(COL_CLEAN_PRICE).substring(1))));
+            apartment.setPlusPrice(((short) Double.parseDouble(line.get(COL_EXTRA_PPL).substring(1))));
+            apartment.setLogin(login);
 
             apartmentRepository.save(apartment);
             apartmentRepository.findOne(apartment.getApartmentId());
