@@ -97,7 +97,7 @@ public class CsvInserts{
 //                    System.out.println("Does not Exists");
                     Login login=new Login();
                     login.setUsername(arr_in[3]);
-                    login.setEmail(arr_in+"@gmail.com");
+                    login.setEmail(arr_in[3]+"@gmail.com");
                     login.setEnabled(true);
                     login.setName(arr_in[4]);
                     login.setPassword("123");
