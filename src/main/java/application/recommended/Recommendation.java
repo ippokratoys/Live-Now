@@ -178,11 +178,19 @@ public class Recommendation {
             Map<String,Object> curMap =queue.remove();
             UserInfoRec curUser =(UserInfoRec) curMap.get("name");
             Double curSimil = (Double) curMap.get("rating");
+            if(curSimil==0)continue;
             for(int i=0 ; i<curUser.getRatings().size();i++){
-                if(curUser.getRatings().get(i)>=4.0 && myUserInfo.getRatings().get(i)>0){
+                if(curUser.getRatings().get(i)>=4.0 && (myUserInfo.getRatings().get(i)==0 || myUserInfo.hasRatings==false)){
+                    for(int j=0;j<apartments.size();j++){
+                        if(apartments.get(j).getApartmentId()==apartmentsIdArray.get(i)){
+                            continue;
+                        }
+                    }
                     apartments.add(apartmentRepository.findOne(apartmentsIdArray.get(i)));
+                    if(apartments.size()>=5)break;
                 }
             }
+            if(apartments.size()>=5)break;
 //            System.out.println( curUser.getUsername() +"\t"+curSimil);
         }
         return apartments;
