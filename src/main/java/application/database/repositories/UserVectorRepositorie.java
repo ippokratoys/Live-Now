@@ -16,15 +16,15 @@ import java.util.List;
 
 public interface UserVectorRepositorie extends CrudRepository<UserVector, String>{
 
-    public int countAllByRoomTypeAndLogin(String roomType, Login login);
+    public Integer countAllByRoomTypeAndLogin(String roomType, Login login);
 
     public List<UserVectorRepositorie> findAllByLogin(Login login);
 
     @Query("SELECT AVG(x.people) FROM UserVector x where x.login=?1 and x.people<>0")
-    public double findAvgMaxPplOfLogin(Login login);
+    public Double findAvgMaxPplOfLogin(Login login);
 
     @Query("SELECT AVG(x.price) FROM UserVector x where x.login=?1 and x.price<>0")
-    public double findAvgMaxPriceOfLogin(Login login);
+    public Double findAvgMaxPriceOfLogin(Login login);
 
     @Query("SELECT count(x) FROM UserVector x where x.login=?1 and (" +
             "(x.searchString1 like ?2 OR x.searchString1 like ?3) or" +
