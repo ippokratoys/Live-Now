@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.*;
+
 /**
  * Created by thanasis on 31/8/2017.
  */
@@ -41,6 +43,14 @@ public class InitController {
         csvInserts.bookInfoCsvInsertions("csv/book_info.csv",bookInfoRepository,apartmentRepository,loginRepository);
         return "redirect:/";
     }
+
+    @RequestMapping("/init/all2")
+    String initAll2(){
+        csvInserts.loginCsvInsertions2("csv/reviews.csv",loginRepository);
+
+        return "redirect:/";
+    }
+
 
     @RequestMapping("/init/rec")
     String initRec(){

@@ -66,11 +66,7 @@ public class UserController {
             //if it's not a user
             return null;
         }
-        ArrayList<Integer> arrayList=new ArrayList<>(3);
-        arrayList.add(1);
-        arrayList.add(2);
-        arrayList.add(3);
-        return (List<Apartment>) apartmentRepository.findAll(arrayList);
+        return recommendation.getRec(userDetails.getUsername());
     }
 
     @RequestMapping(value = "/profile/user/new_message/{apartment_id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

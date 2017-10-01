@@ -8,7 +8,6 @@ import application.database.repositories.ApartmentRepository;
 import application.database.repositories.AvailabilityRepository;
 import application.database.repositories.LoginRepository;
 import application.database.repositories.UserRoleRepository;
-import org.hibernate.resource.jdbc.LogicalConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,6 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -83,14 +81,6 @@ public class ApartmentCsvInsert{
             Apartment apartment;
             List<String> line = parseLine(scanner.nextLine());
             readUntilNow++;
-            System.out.print(line.get(COL_ID)+" "+line.get(COL_NAME).trim().replace("\"",""));
-            System.out.print(" City "+line.get(COL_CITY));
-            System.out.print(" LAT "+line.get(COL_LAT));
-            System.out.print(" LON "+line.get(COL_LON));
-            System.out.print(" Price "+line.get(COL_PRICE).replace("\"$",""));
-            System.out.print(" Price Clean "+line.get(COL_CLEAN_PRICE).replace("\"$",""));
-            System.out.print(" Price Extra"+line.get(COL_EXTRA_PPL).replace("\"$",""));
-            System.out.println("    line "+readUntilNow);
             if(readUntilNow==1){
                 continue;
             }
@@ -101,7 +91,7 @@ public class ApartmentCsvInsert{
             apartment.setCountry(line.get(COL_COUNTRY).trim().replace("\"",""));
             apartment.setLat(new BigDecimal(line.get(COL_LAT)));
             apartment.setLon(new BigDecimal(line.get(COL_LON)));
-            apartment.setLocality(line.get(COL_CITY));
+            apartment.setLocality(line.get(COL_CITY).replaceAll("\"",""));
             apartment.setMinPeople((short) 0);
             apartment.setStandardPeople((short) 2);
             apartment.setMaxPeople((short) 7);
@@ -122,6 +112,7 @@ public class ApartmentCsvInsert{
             availability.setApartment(apartment);
             availability.setFromAv(format.parse("22/10/1996"));
             availability.setToAv(format.parse("22/10/2020"));
+
             availabilityRepository.save(availability);
             if(readUntilNow==100)break;
         }

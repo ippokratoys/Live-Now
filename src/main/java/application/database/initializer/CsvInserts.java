@@ -3,11 +3,19 @@ package application.database.initializer;
 
 import application.database.*;
 import application.database.repositories.*;
+import org.apache.catalina.Host;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
 import java.io.*;
 import java.math.BigDecimal;
 import java.text.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 @Service
@@ -49,6 +57,125 @@ public class CsvInserts{
                 }
             }
         }
+    }
+
+    @Autowired
+    UserRoleRepository userRoleRepository;
+
+    @Autowired
+    ApartmentRepository apartmentRepository;
+
+    @Autowired
+    BookReviewRepository bookReviewRepository;
+
+    @Autowired
+    HostReviewRepository hostReviewRepository;
+
+    @Autowired
+    BookInfoRepository bookInfoRepository;
+
+    public void loginCsvInsertions2(String csvFile,LoginRepository loginRepository){
+        String line="";
+        String csvSplitBy=",";
+        BufferedReader buf =null;
+        Calendar cal = Calendar.getInstance();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        List<Apartment> apartments=(List<Apartment>) apartmentRepository.findAll();
+        int amountOfApartments=apartments.size();
+        try{
+            buf = new BufferedReader(new InputStreamReader(new FileInputStream(csvFile), "UTF8"));
+            buf.readLine();
+            int counter=0;
+            while((line = buf.readLine()) != null){
+                if(counter==100)break;
+                String[] arr_in = line.split(csvSplitBy);
+                Login oldLogin=loginRepository.findOne(arr_in[3]);
+                arr_in[2]=arr_in[2].replaceAll("\"","");
+                arr_in[4]=arr_in[4].replaceAll("\"","");
+
+                if(oldLogin==null){
+//                    System.out.println("Does not Exists");
+                    Login login=new Login();
+                    login.setUsername(arr_in[3]);
+                    login.setEmail(arr_in[3]+"@gmail.com");
+                    login.setEnabled(true);
+                    login.setName(arr_in[4]);
+                    login.setPassword("123");
+                    login.setPhoneNum("6980594039");
+                    login.setPhotoPath("/UserPhotos/not");
+                    login.setSurname("Plakias");
+                    login.setValid(true);
+                    Login newLogin=loginRepository.save(login);
+
+                    UserRole userRole=new UserRole();
+                    userRole.setLogin(newLogin);
+                    userRole.setRole("customer");
+                    userRoleRepository.save(userRole);
+                    oldLogin=newLogin;
+                }
+                int apartmentId=ThreadLocalRandom.current().nextInt(1,amountOfApartments+1);
+
+                for(int i=0;i<10;i++){
+                    BookInfo bookInfo=new BookInfo();
+                    bookInfo.setHostReviewDone(true);
+                    bookInfo.setReviewDone(true);
+                    bookInfo.setIncome(222);
+                    bookInfo.setPeople(4);
+                    try {
+                        cal.setTime(format.parse(arr_in[2]));
+                        cal.add(Calendar.DAY_OF_MONTH, -3);
+                        bookInfo.setBookIn(cal.getTime());
+                        bookInfo.setBookOut(format.parse(arr_in[2]));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    Apartment apartment=apartmentRepository.findOne((apartmentId+i)%amountOfApartments);
+                    bookInfo.setApartment(apartment);
+                    bookInfo.setLogin(oldLogin);
+                    BookInfo newBookInfo=bookInfoRepository.save(bookInfo);
+
+                    HostReview hostReview=new HostReview();
+                    hostReview.setLogin(oldLogin);
+                    hostReview.setContent("yolo");
+                    hostReview.setBookInfo(newBookInfo);
+                    int randomNum = ThreadLocalRandom.current().nextInt(1, 5 + 1);
+                    hostReview.setRating(randomNum);
+
+                    BookReview bookReview=new BookReview();
+                    bookReview.setApartment(apartment);
+                    bookReview.setBookInfo(newBookInfo);
+                    bookReview.setComment("yolo");
+                    bookReview.setRating(randomNum);
+                    try {
+                        hostReview.setTime(format.parse(arr_in[2]));
+                        bookReview.setTime(format.parse(arr_in[2]));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                    bookReviewRepository.save(bookReview);
+                    hostReviewRepository.save(hostReview);
+                }
+
+//                System.out.println("Username: "+arr_in[3]+"Rating: "+randomNum);
+                counter++;
+            }
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (buf != null) {
+                try {
+                    buf.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println("finished");
     }
 
     public void apartmentCsvInsertions(String csvFile, ApartmentRepository apartmentRepository ,LoginRepository loginRepository){
