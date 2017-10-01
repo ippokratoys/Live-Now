@@ -3,11 +3,15 @@ package application.basicControllers;
 import application.database.Apartment;
 import application.database.BookInfo;
 import application.database.repositories.ApartmentRepository;
+import application.recommended.Recommendation;
 import application.search.Result;
 import application.search.Search;
 import application.search.SearchService;
 import application.services.AvailabilityService;
+import application.services.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +34,12 @@ public class HomePage {
 
     @Autowired
     SearchService searchService;
+
+    @Autowired
+    RegisterService registerService;
+
+    @Autowired
+    Recommendation recommendation;
 
     SimpleDateFormat dateFormat=new SimpleDateFormat("MM/dd/yyy");
     {
@@ -56,7 +66,8 @@ public class HomePage {
                             @RequestParam(value = "elevator",required = false, defaultValue = "false") Boolean elevator,
                             @RequestParam(value = "air-condition",required = false, defaultValue = "false") Boolean airCondition,
                             @RequestParam(value = "page",required = false, defaultValue = "1") Integer pageNum,
-                            @RequestParam(value = "roomType" ,required=false,defaultValue = "")String roomType
+                            @RequestParam(value = "roomType" ,required=false,defaultValue = "")String roomType,
+                            @AuthenticationPrincipal final UserDetails userDetails
     ){
         Date fromDate=null;
         Date toDate=null;
@@ -81,6 +92,11 @@ public class HomePage {
 
         Search filters = new Search(fromDate,toDate,city,people,wifi,fridge,kitchen,tv,parking,elevator,airCondition,roomType,maxCost);
         Result searchResults = searchService.getResultList(filters,pageNum);
+        if(userDetails!=null && registerService.isUser(userDetails.getUsername())){
+            //if we have a new search from a user
+            System.out.println("Updating the search thing");
+            recommendation.newSearch(userDetails.getUsername(),filters);
+        }
         model.addAttribute("results",searchResults);
 
         model.addAttribute("oldDateStr",dateRange);

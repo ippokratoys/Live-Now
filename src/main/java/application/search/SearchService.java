@@ -27,7 +27,7 @@ public class SearchService {
         Query query=entityManager.createNativeQuery(queryStr,Apartment.class);
         search.passParameter(queryStr,query);
         List<Apartment> apartmentsResult = query.getResultList();
-        System.out.println(apartmentsResult.size());
+        System.out.println(apartmentsResult.size()+" results");
 
         List<Apartment> apartmentsResultsFinal=new ArrayList<Apartment>();
         for (Apartment oneApartment :

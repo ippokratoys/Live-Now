@@ -1,6 +1,6 @@
 package application.services;
 
-import application.Recommendation;
+import application.recommended.Recommendation;
 import application.database.*;
 import application.database.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +19,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

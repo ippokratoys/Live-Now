@@ -68,6 +68,10 @@ public class Login implements Serializable {
 	@JsonIgnore
 	private  List<HostReview> hostReviews;
 
+	@OneToMany(mappedBy="login")
+	@JsonIgnore
+	private List<UserVector> userVectors;
+
 	public Login() {
 	}
 
@@ -269,4 +273,13 @@ public class Login implements Serializable {
 		hostReview.setLogin(null);
 		return hostReview;
 	}
+
+	public List<UserVector> getUserVectors() {
+		return userVectors;
+	}
+
+	public void setUserVectors(List<UserVector> userVectors) {
+		this.userVectors = userVectors;
+	}
+
 }

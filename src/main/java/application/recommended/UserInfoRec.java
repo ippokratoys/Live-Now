@@ -1,4 +1,4 @@
-package recommended;
+package application.recommended;
 
 import application.database.Apartment;
 import application.database.BookReview;
@@ -10,23 +10,34 @@ import java.util.ArrayList;
 public class UserInfoRec {
 
     private String username;
-
+    boolean hasRatings=false;
     private int bucket;
 
     ArrayList<Double> ratings;
 
     public UserInfoRec(Login login){
+        hasRatings=false;
         username = login.getUsername();
         ratings = new ArrayList<Double>();
     }
 
     public UserInfoRec(Login login,int numOfApartments){
+        hasRatings=false;
         username = login.getUsername();
         ratings = new ArrayList<Double>(numOfApartments);
         for(int i=0;i<numOfApartments;i++)ratings.add(0.0);
     }
 
     public UserInfoRec() {
+        hasRatings=false;
+    }
+
+    public boolean isHasRatings() {
+        return hasRatings;
+    }
+
+    public void setHasRatings(boolean hasRatings) {
+        this.hasRatings = hasRatings;
     }
 
     public String getUsername() {
@@ -49,12 +60,17 @@ public class UserInfoRec {
     public void updateApartment(Apartment apartment,int index){
         for (BookReview oneReview :apartment.getBookReviews()) {
             if (oneReview.getBookInfo().getLogin().getUsername().equals(username)) {
+                hasRatings=true;
                 ratings.set(index,oneReview.getRating());
             }
         }
     }
 
     public void updateBucket(LSHSuperBit lshSuperBit){
+        if(hasRatings==false){
+            //if he has ratings the he can't
+            return;
+        }
         //get the array
         int arraySize = ratings.size();
         double[] ratingsToArray=new double[arraySize];
@@ -89,5 +105,15 @@ public class UserInfoRec {
 
     public void setRatings(ArrayList<Double> ratings) {
         this.ratings = ratings;
+    }
+
+    public void firstRating() {
+        this.hasRatings=true;
+        //set all the ratings as zero
+        for (int i = 0; i < ratings.size(); i++) {
+            ratings.set(i,0.0);
+        }
+        //so it's sure different with the previous one
+        bucket = -1;
     }
 }

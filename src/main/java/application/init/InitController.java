@@ -1,14 +1,13 @@
 package application.init;
 
-import application.Recommendation;
+import application.database.Login;
+import application.recommended.Recommendation;
 import application.database.initializer.CsvInserts;
 import application.database.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.io.*;
 
 /**
  * Created by thanasis on 31/8/2017.
@@ -79,5 +78,13 @@ public class InitController {
 
         return "redirect:/";
     }
+    @RequestMapping("/get?")
+    String testSeatches(@RequestParam("name")String name ,
+                        @RequestParam("aprt") int apart
+    ){
+        Login login=loginRepository.findOne(name);
 
+        recommendation.calcRatingOfApartment(login,apartmentRepository.findOne(apart));
+        return "redirect:/";
+    }
 }

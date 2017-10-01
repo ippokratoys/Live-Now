@@ -1,6 +1,6 @@
 package application.basicControllers;
 
-import application.Recommendation;
+import application.recommended.Recommendation;
 import application.database.*;
 import application.database.repositories.*;
 import application.services.ApartmentService;
@@ -8,7 +8,6 @@ import application.services.RecommendationService;
 import application.services.RegisterService;
 import application.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,8 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.WebParam;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
