@@ -101,9 +101,9 @@ public class ApartmentCsvInsert{
                 apartment.setType("private_room");
             if(readUntilNow%3==2)
                 apartment.setType("shared_room");
-            apartment.setPrice(((short) Double.parseDouble(line.get(COL_PRICE).replace("\"$",""))));
-            apartment.setCleanPrice((short) (random.nextInt(50)%20));
-            apartment.setPlusPrice(((short) (random.nextInt()%20)));
+            apartment.setPrice((short) Math.abs( Double.parseDouble(line.get(COL_PRICE).replace("\"$",""))));
+            apartment.setCleanPrice((short) Math.abs(random.nextInt(50)%20));
+            apartment.setPlusPrice(((short) Math.abs(random.nextInt()%20)));
             apartment.setLogin(login);
 
             apartmentRepository.save(apartment);

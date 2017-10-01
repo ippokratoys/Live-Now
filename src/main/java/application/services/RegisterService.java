@@ -1,6 +1,6 @@
 package application.services;
 
-import application.Recommendation;
+import application.recommended.Recommendation;
 import application.database.Login;
 import application.database.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -76,7 +76,7 @@
             <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-transparent w3-display-topright"></i>
             <h3>Rental</h3>
             <h3 th:text="${apartment.price}+'€'">$99</h3>
-            <h5 th:text="${apartment.plusPrice}+'+€ extra for each person after '+${apartment.standardPeople}"></h5>
+            <h5 th:text="'+'+${apartment.plusPrice}+'€ extra for each person after '+${apartment.standardPeople}"></h5>
             <h5 th:text="'+'+${apartment.cleanPrice}+'€ cleaning price(fixed).'"></h5>
             <h6>per night</h6>
             <hr/>

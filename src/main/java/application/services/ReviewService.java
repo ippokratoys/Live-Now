@@ -1,6 +1,6 @@
 package application.services;
 
-import application.Recommendation;
+import application.recommended.Recommendation;
 import application.database.*;
 import application.database.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
