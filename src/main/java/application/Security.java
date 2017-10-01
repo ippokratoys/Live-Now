@@ -33,9 +33,14 @@ public class Security extends WebSecurityConfigurerAdapter{
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeRequests()
-                    .antMatchers("**").permitAll()
+                .antMatchers("/profile/admin/**").hasAuthority("admin")
+                .antMatchers("/admin/**").hasAuthority("admin")
+                .antMatchers("/profile/user/**").hasAuthority("customer")
+                .antMatchers("/profile/host/**").hasAuthority("host")
+                .antMatchers("**").permitAll()
+                .antMatchers("/profile").hasAnyAuthority("customer","customer","admin")
                 .and()
-                    .formLogin().loginPage("/login").permitAll().successForwardUrl("/")
+                    .formLogin().loginPage("/login").permitAll()
                 .and()
                     .logout().logoutSuccessUrl("/login?logout").permitAll();
     }

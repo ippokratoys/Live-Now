@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8"/>
     <!--bootstrap and jquery-->
-    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.min.css" rel="stylesheet"/>
 
     <!--fonts and icons-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
 
-    <!--for date range picker-->
-    <link rel="stylesheet" type="text/css" href="css/daterangepicker.css"/>
 
     <!--custom css/js-->
-    <link rel="stylesheet" type="text/css" href="css/profile.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}" href="css/profile.css"/>
 
     <title>profile_host</title>
 </head>
