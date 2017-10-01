@@ -82,10 +82,10 @@ public class Recommendation {
         //find the bucket
         for(UserInfoRec oneInfo:allUsersInfo){
             //only if he has rate somting
+            int curBucket;
+            oneInfo.updateBucket(lsh);
+            curBucket=oneInfo.getBucket();
             if(oneInfo.isHasRatings()){
-                int curBucket;
-                oneInfo.updateBucket(lsh);
-                curBucket=oneInfo.getBucket();
                 usersInBuckets.get(curBucket).add(oneInfo);
     //            System.out.println(oneInfo.getBucket());
             }else{
@@ -118,12 +118,6 @@ public class Recommendation {
         return -1;
     }
 
-    private List<Apartment> getRecFromSearch(UserInfoRec askedUser){
-        if(allUsersInfo==null)return null;
-        //this will be called from getRec if the user doesn't have ratings
-        return null;
-    }
-
     public List<Apartment> getRec(String username){
         if(allUsersInfo==null)return null;
         int index=findUser(username);
@@ -131,7 +125,6 @@ public class Recommendation {
         UserInfoRec myUserInfo = allUsersInfo.get(index);
         if(index<0){
             System.out.println("No user found with name "+username);
-            this.getRecFromSearch(myUserInfo);
             return null;
         }
 //        System.out.println(index);
@@ -229,6 +222,8 @@ public class Recommendation {
 
     public void addApartment(int apartmentId){
         numberOfApartments++;
+        sb=new SuperBit(numberOfApartments);
+        lsh=new LSHSuperBit(stages, buckets,numberOfApartments);
         apartmentsIdArray.add(apartmentId);
         for(UserInfoRec userInfoRec:allUsersInfo){
             if(userInfoRec.isHasRatings()){
@@ -239,6 +234,7 @@ public class Recommendation {
                 Apartment apartment = apartmentRepository.findOne(apartmentId);
                 double rate = calcRatingOfApartment(loginRepository.findOne(userInfoRec.getUsername()),apartment);
                 System.out.println("New Appartment with rating "+rate+" from "+userInfoRec.getUsername());
+
                 //if don't have ratings
             }
         }
@@ -340,17 +336,21 @@ public class Recommendation {
         System.out.println("He prefers "+hePreferes+" apartment: "+apartment.getType());
         System.out.println("score:"+score);
         //check the price if it's less
-        double avgPrice = userVectorRepositorie.findAvgMaxPriceOfLogin(login);
-        if( apartment.getPrice()<((int) avgPrice)+5 || avgPrice==0.0){
-            score+=1.0;
+        Double avgPrice = userVectorRepositorie.findAvgMaxPriceOfLogin(login);
+        if( avgPrice!=null && avgPrice!=0.0 ){
+            if(apartment.getPrice()<avgPrice.intValue()+5 ){
+                score+=1.0;
+            }
         }
         System.out.println("avgPrice:"+avgPrice+" apartment:"+apartment.getPrice());
         System.out.println("score:"+score);
 
         //check the people
-        double avgPeople = userVectorRepositorie.findAvgMaxPplOfLogin(login);
-        if(apartment.getMaxPeople()<avgPeople+1 || avgPeople==0){
-            score+=1.0;
+        Double avgPeople = userVectorRepositorie.findAvgMaxPplOfLogin(login);
+        if( avgPeople!=null && avgPeople!=0.0 ) {
+            if (apartment.getMaxPeople() < avgPeople + 1) {
+                score += 1.0;
+            }
         }
         System.out.println("avgPrice:"+avgPeople+" apartment:"+apartment.getMaxPeople());
         System.out.println("score:"+score);
