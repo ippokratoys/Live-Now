@@ -116,17 +116,85 @@
     });
 </script>
 
-<div id="myCarousel" class="carousel my-carousel" data-ride="carousel">
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var username = [[${#httpServletRequest.remoteUser}]];
+    /*]]>*/
+    /*<![CDATA[*/
+    function getRecomendeds(){
+        if(username===null){
+            //if the username is null you can't show rec
+        }else{
+            //we are not
+            var link = "/user/getRec";
+            $.getJSON(link,function (data) {
+                if(data===null){
+                    console.log("not a user");
+                    return;
+                }else{
+                    console.log(data.toString());
+                    var i;
+                    var carouselContent = $("#carousel-inner");
+                    $("#carousel-inner").text("");//empty all the items
+
+                    for(i=0;i<data.length;i++){
+                        console.log(data[i].name);
+                        var newTxt="";
+                        var imagePath=data[i].images[0];
+                        if(data[i].images===null || data[i].images.length===0){
+                            imagePath='http://via.placeholder.com/350x150';
+                        }
+                        if(i==0){
+                            newTxt='<div class="item active">';
+                        }else{
+                            newTxt='<div class="item">';
+                        }
+
+                        newTxt+=
+                                '<img src=\"'+ imagePath+'\"/>'
+                                +'<a href=\"/apartment?hotel-id='+data[i].apartmentId +'\">'
+                                    +'<div class="carousel-caption">'
+                                        +'<h3>'+data[i].name+'</h3>'
+                                        +'<p>'+data[i].price+'e '+data[i].country+'</p>'
+                                    +'</div>'
+                                +'</a>'
+                                  +'</div>';
+                        carouselContent.append(newTxt);
+                    }
+                    $("#carousel-dots").text("");
+                    for(i=0;i<data.length;i++) {
+                        if(i==0){
+                            $("#carousel-dots").append('<li class="active" data-target="#myCarousel" data-slide-to=\"'+i+'\"></li>');
+                        }else{
+                            $("#carousel-dots").append('<li data-target="#myCarousel" data-slide-to=\"'+i+'\"></li>');
+
+                        }
+                    }
+                        if(data.length>0){
+                        $('#myCarousel').removeClass("hidden");//show the carousel
+                    }else{
+                        console.log("no data");
+                    }
+                }
+            });
+        }
+    }
+    getRecomendeds();
+    /*]]>*/
+
+</script>
+
+<div id="myCarousel" class="hidden carousel my-carousel" data-ride="carousel">
   <!-- Indicators -->
-  <ol class="carousel-indicators">
+  <ol class="carousel-indicators" id="carousel-dots">
     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
     <li data-target="#myCarousel" data-slide-to="1"></li>
     <li data-target="#myCarousel" data-slide-to="2"></li>
   </ol>
 
   <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    <div class="item active">
+  <div class="carousel-inner" id="carousel-inner">
+    <div class="item">
       <img src="C:\Users\User\Desktop\hotel1.jpg" alt="Los Angeles"/>
         <div class="carousel-caption">
                  <h3>Rating</h3>

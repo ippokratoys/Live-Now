@@ -51,6 +51,6 @@ public class InitController {
         return "redirect:/";
     }
 
-   
+
 
 }

@@ -5,6 +5,7 @@ import application.database.*;
 import application.database.repositories.*;
 import application.services.ApartmentService;
 import application.services.RecommendationService;
+import application.services.RegisterService;
 import application.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.jws.WebParam;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +50,28 @@ public class UserController {
 
     @Autowired
     RecommendationService recommendationService;
+
+    @Autowired
+    RegisterService registerService;
+
+    @RequestMapping(value = "/user/getRec", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    List<Apartment> getRecApartments(@AuthenticationPrincipal final UserDetails userDetails){
+        if(userDetails==null){
+            //if he is not log in
+            return null;
+        }
+        Login login = loginRepository.findOne(userDetails.getUsername());
+        if(registerService.isUser(userDetails.getUsername())!=true){
+            //if it's not a user
+            return null;
+        }
+        ArrayList<Integer> arrayList=new ArrayList<>(3);
+        arrayList.add(1);
+        arrayList.add(2);
+        arrayList.add(3);
+        return (List<Apartment>) apartmentRepository.findAll(arrayList);
+    }
 
     @RequestMapping(value = "/profile/user/new_message/{apartment_id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
