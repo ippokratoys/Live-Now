@@ -14,8 +14,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import static application.init.CsvReader.parseLine;
@@ -35,6 +38,12 @@ public class ApartmentCsvInsert{
     private static final int COL_PRICE= 56;
     private static final int COL_CLEAN_PRICE= 60;
     private static final int COL_EXTRA_PPL= 62;
+
+    DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    {
+        format = new SimpleDateFormat("dd/MM/yyyy");
+    }
+
 
     @Autowired
     ApartmentRepository apartmentRepository;
@@ -69,6 +78,7 @@ public class ApartmentCsvInsert{
         String csvFile = "csv/listings.csv";
         Scanner scanner = new Scanner(new File(csvFile));
         int readUntilNow=0;
+        Random random = new Random(11);
         while (scanner.hasNext()){
             Apartment apartment;
             List<String> line = parseLine(scanner.nextLine());
@@ -77,7 +87,9 @@ public class ApartmentCsvInsert{
             System.out.print(" City "+line.get(COL_CITY));
             System.out.print(" LAT "+line.get(COL_LAT));
             System.out.print(" LON "+line.get(COL_LON));
-            System.out.println(" Price "+line.get(COL_PRICE));
+            System.out.print(" Price "+line.get(COL_PRICE).replace("\"$",""));
+            System.out.print(" Price Clean "+line.get(COL_CLEAN_PRICE).replace("\"$",""));
+            System.out.print(" Price Extra"+line.get(COL_EXTRA_PPL).replace("\"$",""));
             System.out.println("    line "+readUntilNow);
             if(readUntilNow==1){
                 continue;
@@ -92,25 +104,25 @@ public class ApartmentCsvInsert{
             apartment.setLocality(line.get(COL_CITY));
             apartment.setMinPeople((short) 0);
             apartment.setStandardPeople((short) 2);
-            apartment.setStandardPeople((short) 7);
+            apartment.setMaxPeople((short) 7);
             if(readUntilNow%3==0)
                 apartment.setType("whole_apartment");
             if(readUntilNow%3==1)
                 apartment.setType("private_room");
             if(readUntilNow%3==2)
                 apartment.setType("shared_room");
-            apartment.setPrice(((short) Double.parseDouble(line.get(COL_PRICE).substring(1))));
-            apartment.setCleanPrice(((short) Double.parseDouble(line.get(COL_CLEAN_PRICE).substring(1))));
-            apartment.setPlusPrice(((short) Double.parseDouble(line.get(COL_EXTRA_PPL).substring(1))));
+            apartment.setPrice(((short) Double.parseDouble(line.get(COL_PRICE).replace("\"$",""))));
+            apartment.setCleanPrice((short) (random.nextInt(50)%20));
+            apartment.setPlusPrice(((short) (random.nextInt()%20)));
             apartment.setLogin(login);
 
             apartmentRepository.save(apartment);
             apartmentRepository.findOne(apartment.getApartmentId());
-//            Availability availability = new Availability();
-//            availability.setApartment(apartment);
-//            availability.setFromAv(new Date(1990,1,1));
-//            availability.setFromAv(new Date(2100,1,1));
-//            availabilityRepository.save(availability);
+            Availability availability = new Availability();
+            availability.setApartment(apartment);
+            availability.setFromAv(format.parse("22/10/1996"));
+            availability.setToAv(format.parse("22/10/2020"));
+            availabilityRepository.save(availability);
             if(readUntilNow==100)break;
         }
     }
