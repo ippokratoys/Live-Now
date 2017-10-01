@@ -356,9 +356,11 @@ public class Recommendation {
         System.out.println("score:"+score);
 
         //check the area can give you up to 2 points
-        int timesSearchedArea=userVectorRepositorie.getTimesLoginSearchedForArea(login,apartment.getCountry(),apartment.getLocality());
+        Integer timesSearchedArea=userVectorRepositorie.getTimesLoginSearchedForArea(login,apartment.getCountry(),apartment.getLocality());
         System.out.println(" times Searched = "+timesSearchedArea);
-        score+=Math.min( timesSearchedArea/userVector.size()*10,2);
+        if(timesSearchedArea!=null){
+            score+=Math.min( timesSearchedArea/userVector.size()*10,2);
+        }
         System.out.println("total Score : "+score+" for aprtment "+apartment.getApartmentId());
         System.out.println("--------------------------");
         return score;
