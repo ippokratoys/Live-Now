@@ -77,7 +77,7 @@ public class ApartmentCsvInsert{
             System.out.print(" City "+line.get(COL_CITY));
             System.out.print(" LAT "+line.get(COL_LAT));
             System.out.print(" LON "+line.get(COL_LON));
-            System.out.println(" Price "+line.get(COL_PRICE));
+            System.out.println(" Price "+line.get(COL_PRICE).replace("\"$",""));
             System.out.println("    line "+readUntilNow);
             if(readUntilNow==1){
                 continue;
@@ -89,28 +89,28 @@ public class ApartmentCsvInsert{
             apartment.setCountry(line.get(COL_COUNTRY).trim().replace("\"",""));
             apartment.setLat(new BigDecimal(line.get(COL_LAT)));
             apartment.setLon(new BigDecimal(line.get(COL_LON)));
-            apartment.setLocality(line.get(COL_CITY));
+            apartment.setLocality(line.get(COL_CITY).replaceAll("\"",""));
             apartment.setMinPeople((short) 0);
             apartment.setStandardPeople((short) 2);
-            apartment.setStandardPeople((short) 7);
+            apartment.setMaxPeople((short) 7);
             if(readUntilNow%3==0)
                 apartment.setType("whole_apartment");
             if(readUntilNow%3==1)
                 apartment.setType("private_room");
             if(readUntilNow%3==2)
                 apartment.setType("shared_room");
-            apartment.setPrice(((short) Double.parseDouble(line.get(COL_PRICE).substring(1))));
-            apartment.setCleanPrice(((short) Double.parseDouble(line.get(COL_CLEAN_PRICE).substring(1))));
-            apartment.setPlusPrice(((short) Double.parseDouble(line.get(COL_EXTRA_PPL).substring(1))));
+            apartment.setPrice(((short) Double.parseDouble(line.get(COL_PRICE).replace("\"$",""))));
+//            apartment.setCleanPrice(((short) Double.parseDouble(line.get(COL_CLEAN_PRICE).replace("\"$",""))));
+//            apartment.setPlusPrice(((short) Double.parseDouble(line.get(COL_EXTRA_PPL).replace("\"$",""))));
             apartment.setLogin(login);
 
             apartmentRepository.save(apartment);
             apartmentRepository.findOne(apartment.getApartmentId());
-//            Availability availability = new Availability();
-//            availability.setApartment(apartment);
-//            availability.setFromAv(new Date(1990,1,1));
-//            availability.setFromAv(new Date(2100,1,1));
-//            availabilityRepository.save(availability);
+            Availability availability = new Availability();
+            availability.setApartment(apartment);
+            availability.setFromAv(new Date(1990,1,1));
+            availability.setFromAv(new Date(2100,1,1));
+            availabilityRepository.save(availability);
             if(readUntilNow==100)break;
         }
     }

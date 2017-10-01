@@ -87,7 +87,7 @@ public class CsvInserts{
             buf.readLine();
             int counter=0;
             while((line = buf.readLine()) != null){
-                if(counter==5000)break;
+                if(counter==100)break;
                 String[] arr_in = line.split(csvSplitBy);
                 Login oldLogin=loginRepository.findOne(arr_in[3]);
                 arr_in[2]=arr_in[2].replaceAll("\"","");
@@ -113,47 +113,49 @@ public class CsvInserts{
                     userRoleRepository.save(userRole);
                     oldLogin=newLogin;
                 }
-
-                BookInfo bookInfo=new BookInfo();
-                bookInfo.setHostReviewDone(true);
-                bookInfo.setReviewDone(true);
-                bookInfo.setIncome(222);
-                bookInfo.setPeople(4);
-                try {
-                    cal.setTime(format.parse(arr_in[2]));
-                    cal.add(Calendar.DAY_OF_MONTH, -3);
-                    bookInfo.setBookIn(cal.getTime());
-                    bookInfo.setBookOut(format.parse(arr_in[2]));
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
                 int apartmentId=ThreadLocalRandom.current().nextInt(1,amountOfApartments+1);
-                Apartment apartment=apartmentRepository.findOne(apartmentId);
-                bookInfo.setApartment(apartment);
-                bookInfo.setLogin(oldLogin);
-                BookInfo newBookInfo=bookInfoRepository.save(bookInfo);
 
-                HostReview hostReview=new HostReview();
-                hostReview.setLogin(oldLogin);
-                hostReview.setContent("yolo");
-                hostReview.setBookInfo(newBookInfo);
-                int randomNum = ThreadLocalRandom.current().nextInt(1, 5 + 1);
-                hostReview.setRating(randomNum);
+                for(int i=0;i<10;i++){
+                    BookInfo bookInfo=new BookInfo();
+                    bookInfo.setHostReviewDone(true);
+                    bookInfo.setReviewDone(true);
+                    bookInfo.setIncome(222);
+                    bookInfo.setPeople(4);
+                    try {
+                        cal.setTime(format.parse(arr_in[2]));
+                        cal.add(Calendar.DAY_OF_MONTH, -3);
+                        bookInfo.setBookIn(cal.getTime());
+                        bookInfo.setBookOut(format.parse(arr_in[2]));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    Apartment apartment=apartmentRepository.findOne((apartmentId+i)%amountOfApartments);
+                    bookInfo.setApartment(apartment);
+                    bookInfo.setLogin(oldLogin);
+                    BookInfo newBookInfo=bookInfoRepository.save(bookInfo);
 
-                BookReview bookReview=new BookReview();
-                bookReview.setApartment(apartment);
-                bookReview.setBookInfo(newBookInfo);
-                bookReview.setComment("yolo");
-                bookReview.setRating(randomNum);
-                try {
-                    hostReview.setTime(format.parse(arr_in[2]));
-                    bookReview.setTime(format.parse(arr_in[2]));
-                }catch (Exception e){
-                    e.printStackTrace();
+                    HostReview hostReview=new HostReview();
+                    hostReview.setLogin(oldLogin);
+                    hostReview.setContent("yolo");
+                    hostReview.setBookInfo(newBookInfo);
+                    int randomNum = ThreadLocalRandom.current().nextInt(1, 5 + 1);
+                    hostReview.setRating(randomNum);
+
+                    BookReview bookReview=new BookReview();
+                    bookReview.setApartment(apartment);
+                    bookReview.setBookInfo(newBookInfo);
+                    bookReview.setComment("yolo");
+                    bookReview.setRating(randomNum);
+                    try {
+                        hostReview.setTime(format.parse(arr_in[2]));
+                        bookReview.setTime(format.parse(arr_in[2]));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                    bookReviewRepository.save(bookReview);
+                    hostReviewRepository.save(hostReview);
                 }
-
-                bookReviewRepository.save(bookReview);
-                hostReviewRepository.save(hostReview);
 
 //                System.out.println("Username: "+arr_in[3]+"Rating: "+randomNum);
                 counter++;
