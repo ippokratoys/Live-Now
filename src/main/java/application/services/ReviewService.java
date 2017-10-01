@@ -52,7 +52,7 @@ public class ReviewService {
         bookReviewRepository.save(newBookReview);
         book.setReviewDone(true);
         bookInfoRepository.save(book);
-//        recommendation.addReview(rating,book.getLogin().getUsername(),apartmentId);
+        recommendation.addReview(rating,book.getLogin().getUsername(),apartmentId);
     }
 
     public void createHostReview(int bookId,String content,double rating,String username)throws Exception{

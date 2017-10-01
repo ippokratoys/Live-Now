@@ -51,6 +51,10 @@ public class InitController {
         return "redirect:/";
     }
 
+    @RequestMapping("/add/rec")
+    String addRec(){
 
+        return "redirect:/";
+    }
 
 }
