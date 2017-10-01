@@ -339,7 +339,7 @@
             <div class="w3-container w3-white w3-center">
                 <i onclick="document.getElementById('ratings-host').style.display='none'" class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
                 <!--<h2 class="w3-wide">Ratings Of Apartment</h2>-->
-                <h2 id="rating-host-header" class="w3-wide"> Ratings Of Host (4 comments)</h2>
+                <h2 id="rating-host-header" class="w3-wide"> Ratings Of Host</h2>
                 <div th:each="aHostReview : ${apartment.login.hostReviews}" class="w3-row media">
                     <a class="w3-third " href="#">
                         <img class="pull-left img-circle img-rating img-responsive" th:src="${aHostReview.login.photoPath}"/>
@@ -353,7 +353,7 @@
                     <div class="w3-third">
                         <p class="pull-right" th:text="${aHostReview.time}"><small>22/10/95</small></p>
                         <br/>
-                        <div class="stars" th:with="hostRating= 1" >
+                        <div class="stars" th:with="hostRating= ${aHostReviw.rating}" >
                             <span th:each="i : ${#numbers.sequence( 1, hostRating,1)}" class="glyphicon glyphicon-star "></span>
                             <span th:if="${ ( hostRating.intValue().doubleValue() ) != (hostRating) }" class="glyphicon glyphicon-star half"></span>
                             <th:block th:if="${5>T(Math).ceil(hostRating)}">
