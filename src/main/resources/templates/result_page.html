@@ -182,10 +182,10 @@
                         <div th:unless="${oneApartment.images.size()>0}">
                             <img class="img-responsive" src="http://placehold.it/750x450" alt=""/>
                         </div>
-                        <div class="caption">
+                        <div class="caption" th:with="rateAprt=${#numbers.formatDecimal(@reviewService.getApartmentAvg(oneApartment.apartmentId), 0, 2)}">
                             <p class="hotel-cost" th:text="${oneApartment.price}+'€'">10€</p>
                             <p class="number-of-beds" th:text="${oneApartment.bed}+' beds'">4 beds</p>
-                            <p th:inline="text" class="ratings">[[${@reviewService.getApartmentAvg(oneApartment.apartmentId)}]]/5([[${oneApartment.bookReviews.size()}]])</p>
+                            <p th:inline="text" class="ratings">[[${rateAprt}]]/5([[${oneApartment.bookReviews.size()}]])</p>
                         </div>
                         <div class="caption-top">
                             <p th:inline="text" th:if="${oneApartment.type.equals('whole_apartment')}" class="hotel-type">[[${oneApartment.name}]] (All Apartment)</p>
