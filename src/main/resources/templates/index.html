@@ -66,15 +66,31 @@
 <!-- Page Content -->
 <div class="container">
     <div class="row">
-        <div class="center my-login">
-            <form action="/result" method="get">
-                <input class="date-range" type="text" placeholder="Select Date" required="required" name="date-range" 		id="date-range" />
-                <input class="place-name" type="text" placeholder="Select City-Neighbor" required="required" name="city" 		id="city" />
-                <input class="people" type="number" min="0" placeholder="4 Persons" required="required" name="people" id="people" />
-                <div class="row">
-                    <input type="submit" value="Search" style="display: block"/>
+        <div class="center text-center">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="text-center">Apartment Search</h3>
                 </div>
-            </form>
+                <div class="panel-body">
+                    <form action="/result" method="get">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input class="date-range" type="text" placeholder="Select Date" required="required" name="date-range" 		id="date-range" />
+                            </div>
+                            <div class="col-md-3">
+                                <input class="place-name" type="text" placeholder="Select City-Neighbor" required="required" name="city" 		id="city" />
+                            </div>
+                            <div class="col-md-3">
+                                <input class="people" type="number" min="0" placeholder="4 Persons" required="required" name="people" id="people" />
+                            </div>
+                            <div class="col-md-2">
+                                <input type="submit" value="Search" class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
         </div>
     </div>
 
