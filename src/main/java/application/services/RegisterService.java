@@ -1,5 +1,6 @@
 package application.services;
 
+import application.Recommendation;
 import application.database.Login;
 import application.database.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class RegisterService{
 
     @Autowired
     FileUploadService fileUploadService;
+
+    @Autowired
+    Recommendation recommendation;
 
     public Boolean createLogin(Map<String,String> allParams,MultipartFile image) throws Exception{
 
@@ -70,6 +74,7 @@ public class RegisterService{
             newLogin.setIsCustomer(true);
             newLogin.setEnabled(true);
             newUserRole.setRole("customer");
+//            recommendation.addCustomer(newLogin.getUsername());
         }else{
             flag_both=1;
             newLogin.setIsHost(true);
@@ -78,6 +83,7 @@ public class RegisterService{
             newUserRole.setRole("host");
             newUserRole2.setRole("customer");
             newUserRole2.setLogin(newLogin);
+//            recommendation.addCustomer(newLogin.getUsername());
         }
         newUserRole.setLogin(newLogin);
         Login dbLogin=loginRepository.save(newLogin);

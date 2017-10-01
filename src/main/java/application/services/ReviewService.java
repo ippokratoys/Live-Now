@@ -1,5 +1,6 @@
 package application.services;
 
+import application.Recommendation;
 import application.database.*;
 import application.database.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class ReviewService {
     @Autowired
     HostReviewRepository hostReviewRepository;
 
+    @Autowired
+    Recommendation recommendation;
 
     public void createBookReview(int bookId,String comment,double rating,int apartmentId) throws Exception{
         BookInfo book=bookInfoRepository.findOne(bookId);
@@ -49,6 +52,7 @@ public class ReviewService {
         bookReviewRepository.save(newBookReview);
         book.setReviewDone(true);
         bookInfoRepository.save(book);
+//        recommendation.addReview(rating,book.getLogin().getUsername(),apartmentId);
     }
 
     public void createHostReview(int bookId,String content,double rating,String username)throws Exception{

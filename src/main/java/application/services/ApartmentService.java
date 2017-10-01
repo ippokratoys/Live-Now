@@ -1,5 +1,6 @@
 package application.services;
 
+import application.Recommendation;
 import application.database.*;
 import application.database.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class ApartmentService{
 
     @Autowired
     LoginRepository loginRepository;
+
+    @Autowired
+    Recommendation recommendation;
 
     @Autowired
     ChatRepository chatRepository;
@@ -54,7 +58,7 @@ public class ApartmentService{
         fileUploadService.save_image(image2,apartment1);
         fileUploadService.save_image(image3,apartment1);
         fileUploadService.save_image(image4,apartment1);
-
+//        recommendation.addApartment(apartment1.getApartmentId());
         return true;
     }
 

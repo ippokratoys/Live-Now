@@ -1,10 +1,12 @@
 package application.init;
 
+import application.Recommendation;
 import application.database.initializer.CsvInserts;
 import application.database.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by thanasis on 31/8/2017.
@@ -25,6 +27,8 @@ public class InitController {
     @Autowired
     CsvInserts csvInserts;
 
+    @Autowired
+    Recommendation recommendation;
     @RequestMapping("/init/all")
     String initAll(){
         csvInserts.loginCsvInsertions("csv/login.csv",loginRepository);
@@ -34,5 +38,19 @@ public class InitController {
         csvInserts.bookInfoCsvInsertions("csv/book_info.csv",bookInfoRepository,apartmentRepository,loginRepository);
         return "redirect:/";
     }
+
+    @RequestMapping("/init/rec")
+    String initRec(){
+        recommendation.initRec();
+        return "redirect:/";
+    }
+
+    @RequestMapping("/show/rec")
+    String doRec(@RequestParam("user")String username){
+        System.out.println("Reco is : " +recommendation.getRec(username));
+        return "redirect:/";
+    }
+
+   
 
 }

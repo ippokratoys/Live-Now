@@ -7,5 +7,5 @@ import java.util.List;
 
 
 public interface ApartmentRepository extends CrudRepository<Apartment,Integer> {
-
+    public List<Apartment> findAllByOrderByApartmentId();
 }
