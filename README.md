@@ -1,10 +1,23 @@
-Status : It's almost ready
+Status : It's ready
 WebHook: To discord
-A project for like airbnb for Texnologia Efarmogwn Diadiktiou.
+
+# What is it?
+(Long story sort) A airbnb like web-application.
+
+# What technology does it use ?
+ - Spring boot
+ - Spring boot Secure
+ - Gradle
+ - MySql
+ - Jquery
+ - Thymeleaf
+ - HTML, CSS, Bootstrap, REST
+ 
+
+A project for Web Technology Application like airbnb
 
 Nhsiwths Aleksandros
 Plakias Fwtios-Apostolos
 Poludoros Athanasios
-We need to fix somethings
 
-It has minor bugs 
+(It has minor bugs)
