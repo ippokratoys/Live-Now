@@ -21,3 +21,16 @@ Plakias Fwtios-Apostolos
 Poludoros Athanasios
 
 (It has minor bugs)
+## Home Page
+![alt text](/Screenshots/ted_home.png)
+
+## Result Page
+![alt text](/Screenshots/ted_result.png)
+
+## Apartment Page
+ - There is a photo of the owner plus a gallery of the apartment
+ - You can also send a message to the owner 
+![alt text](/Screenshots/ted_hotel_page.png)
+
+## Profile Page
+![alt text](/Screenshots/ted_profile.png)
