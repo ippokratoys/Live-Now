@@ -16,9 +16,9 @@ WebHook: To discord
 
 A project for Web Technology Application like airbnb
 
-Nhsiwths Aleksandros
-Plakias Fwtios-Apostolos
-Poludoros Athanasios
+Nhsiwths Aleksandros ([@alexandrosnis](https://github.com/alexandrosnis))
+Plakias Fwtios-Apostolos ([@apostolos107](https://github.com/apostolos107))
+Poludoros Athanasios ([@ippokratoys](https://github.com/ippokratoys))
 
 (It has minor bugs)
 ## Home Page
